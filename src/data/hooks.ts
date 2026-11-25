@@ -53,11 +53,12 @@ export function useWeekPlan(date: Date, bundle: ProgramBundle | null | undefined
     const dates = weekDates(date).map(dayKey);
     const sessions = await db.sessions.where('dayKey').between(dates[0], dates[6], true, true).toArray();
     const off = !!(await getMeta<boolean>(replanOffKey(date)));
-    return { done: sessions.filter((s) => s.status === 'done').map((s) => ({ programDayId: s.programDayId, dayKey: s.dayKey })), off };
+    const since = await getMeta<string>('onboardedAt');
+    return { since, done: sessions.filter((s) => s.status === 'done').map((s) => ({ programDayId: s.programDayId, dayKey: s.dayKey })), off };
   }, [k]);
   return useMemo(() => {
     if (!bundle || !data) return undefined;
-    const plan = replanWeek({ days: bundle.days, today: date, done: data.done });
+    const plan = replanWeek({ days: bundle.days, today: date, done: data.done, since: data.since ? new Date(data.since) : undefined });
     if (data.off) return { ...plan, byDate: plan.original, adjusted: false, off: true, missed: plan.missed, dropped: [] };
     return { ...plan, off: false };
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -36,6 +36,8 @@ export function replanWeek<T extends PlanDay>(args: {
   /** programDayIds completed (status done) this week, with the date they were done. */
   done: { programDayId?: string; dayKey: string }[];
   weekStart?: 'mon' | 'sun';
+  /** Planned days before this date (e.g. onboarding) never count as missed. */
+  since?: Date;
 }): WeekPlan<T> {
   const today = startOfDay(args.today);
   const dates = weekDates(today, args.weekStart ?? 'mon');
@@ -49,7 +51,8 @@ export function replanWeek<T extends PlanDay>(args: {
     date: Date;
     day: T;
   }[];
-  const missed = training.filter((x) => isBefore(x.date, today) && !doneIds.has(x.day.id));
+  const since = args.since ? startOfDay(args.since) : undefined;
+  const missed = training.filter((x) => isBefore(x.date, today) && !doneIds.has(x.day.id) && !(since && isBefore(x.date, since)));
   const upcoming = training.filter((x) => !isBefore(x.date, today) && !doneIds.has(x.day.id));
 
   const byDate: Record<string, T | undefined> = { ...original };
@@ -106,6 +109,20 @@ export function coveredDates(days: PlanDay[], done: { programDayId?: string; day
   for (const d of weekDatesList) {
     const p = days.find((x) => x.weekday === weekdayOf(d));
     if (p && done.some((x) => x.programDayId === p.id)) out.add(dayKey(d));
+  }
+  return out;
+}
+
+/** All planned dates covered by done sessions (on the day or as a make-up within the same Mon–Sun week). */
+export function allCoveredDates(days: PlanDay[], done: { programDayId?: string; dayKey: string }[]): Set<string> {
+  const out = new Set<string>();
+  for (const s of done) {
+    out.add(s.dayKey);
+    const p = days.find((d) => d.id === s.programDayId);
+    if (!p) continue;
+    const wd = weekDates(new Date(`${s.dayKey}T12:00:00`));
+    const orig = wd.find((d) => weekdayOf(d) === p.weekday);
+    if (orig) out.add(dayKey(orig));
   }
   return out;
 }

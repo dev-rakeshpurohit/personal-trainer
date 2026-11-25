@@ -1,0 +1,2580 @@
+{
+  "patterns": {
+    "Dumbbell goblet squat": "squat",
+    "Dumbbell bench press": "horizontal push",
+    "Dumbbell floor press": "horizontal push",
+    "Lat pulldown": "vertical pull",
+    "One-arm dumbbell row (hand on rack)": "horizontal pull",
+    "Dumbbell Romanian deadlift": "hinge",
+    "Standing dumbbell shoulder press": "vertical push",
+    "Front plank": "core anti-extension",
+    "Steady cardio (any free machine)": "conditioning/cardio",
+    "Outdoor brisk walk later in the day": "conditioning/cardio",
+    "Hanging knee raise": "core flexion",
+    "Reverse crunch on a mat": "core flexion",
+    "Cable crunch": "core flexion",
+    "Weighted plate crunch": "core flexion",
+    "Side plank": "core anti-rotation",
+    "Dead bug": "core anti-extension",
+    "Mobility flow": "mobility",
+    "Leg press": "squat",
+    "Dumbbell step-up onto a bench": "lunge/single-leg",
+    "Incline dumbbell press": "horizontal push",
+    "Push-ups (feet on a bench if too easy)": "horizontal push",
+    "Seated cable row": "horizontal pull",
+    "Dumbbell bent-over row": "horizontal pull",
+    "Dumbbell reverse lunge": "lunge/single-leg",
+    "Face pull": "rear delt/scap",
+    "Band face pull": "rear delt/scap",
+    "Dumbbell hammer curl": "elbow flexion",
+    "Dumbbell overhead triceps extension": "elbow extension",
+    "Medicine-ball slam": "power/plyometric",
+    "Explosive push-ups, hands on a bench": "power/plyometric",
+    "Low box jump (30–45 cm)": "power/plyometric",
+    "Bodyweight squat jump": "power/plyometric",
+    "Kettlebell swing": "hinge",
+    "Dumbbell swing": "hinge",
+    "Farmer's carry": "carry",
+    "Farmer's march in place, 40 s": "carry",
+    "Mountain climber": "conditioning/cardio",
+    "Bike intervals": "conditioning/cardio",
+    "Rower or cross-trainer intervals": "conditioning/cardio",
+    "Trap-bar deadlift": "hinge",
+    "Heavy dumbbell deadlift": "hinge",
+    "Band-assisted pull-up": "vertical pull",
+    "Assisted pull-up machine or pulldown": "vertical pull",
+    "Dumbbell chest press": "horizontal push",
+    "Bulgarian split squat": "lunge/single-leg",
+    "Split squat with your back foot on the floor": "lunge/single-leg",
+    "Dumbbell lateral raise": "lateral delt",
+    "Cable woodchop": "core anti-rotation",
+    "Band woodchop / Pallof press": "core anti-rotation"
+  },
+  "alternates": {
+    "Dumbbell goblet squat": [
+      {
+        "name": "Bodyweight squat",
+        "freeDbId": "Bodyweight_Squat",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Pure regression; learn depth and knee tracking with no load",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell box squat to bench",
+        "freeDbId": "Dumbbell_Squat_To_A_Bench",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Bench sets depth; easy to coach, very knee-friendly",
+        "unit": "reps"
+      },
+      {
+        "name": "Leg press",
+        "freeDbId": "Leg_Press",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Same quad/glute demand with no balance or back loading",
+        "unit": "reps"
+      },
+      {
+        "name": "Hack squat machine",
+        "freeDbId": "Hack_Squat",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Deep quad-dominant squat with back support",
+        "unit": "reps"
+      },
+      {
+        "name": "Double kettlebell front squat",
+        "freeDbId": "Front_Squats_With_Two_Kettlebells",
+        "equipment": "kettlebell",
+        "level": 3,
+        "why": "Front-rack load trains core and upper back too",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell back squat",
+        "freeDbId": "Barbell_Squat",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Highest-loading squat progression once technique is solid",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell bench press": [
+      {
+        "name": "Incline push-up (hands on bench)",
+        "freeDbId": "Incline_Push-Up",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Push-up regression; adjust height to set difficulty",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine chest press",
+        "freeDbId": "Leverage_Chest_Press",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Stable press, quick to set up and to load",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable chest press",
+        "freeDbId": "Cable_Chest_Press",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Constant tension; band version works at home",
+        "unit": "reps"
+      },
+      {
+        "name": "Push-up",
+        "freeDbId": "Pushups",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Same horizontal press, needs zero equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Neutral-grip dumbbell press",
+        "freeDbId": "Dumbbell_Bench_Press_with_Neutral_Grip",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Palms facing in is easier on shoulders; adds triceps",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell bench press",
+        "freeDbId": "Barbell_Bench_Press_-_Medium_Grip",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heaviest-loading press; needs a free bench and rack",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell floor press": [
+      {
+        "name": "Push-up",
+        "freeDbId": "Pushups",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Same horizontal press, needs zero equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine chest press",
+        "freeDbId": "Leverage_Chest_Press",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Stable press, quick to set up and to load",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell bench press",
+        "freeDbId": "Dumbbell_Bench_Press",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "The base dumbbell press pattern",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable chest press",
+        "freeDbId": "Cable_Chest_Press",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Constant tension; band version works at home",
+        "unit": "reps"
+      },
+      {
+        "name": "Neutral-grip dumbbell press",
+        "freeDbId": "Dumbbell_Bench_Press_with_Neutral_Grip",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Palms facing in is easier on shoulders; adds triceps",
+        "unit": "reps"
+      }
+    ],
+    "Lat pulldown": [
+      {
+        "name": "Close-grip lat pulldown",
+        "freeDbId": "Close-Grip_Front_Lat_Pulldown",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Same pattern, longer range, often a free station",
+        "unit": "reps"
+      },
+      {
+        "name": "Underhand (chin-grip) pulldown",
+        "freeDbId": "Underhand_Cable_Pulldowns",
+        "equipment": "cable",
+        "level": 2,
+        "why": "More biceps help, usually stronger",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm cable pulldown",
+        "freeDbId": "One_Arm_Lat_Pulldown",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Single-arm pulldown on any cable tower; fixes side imbalance",
+        "unit": "reps"
+      },
+      {
+        "name": "Band-assisted pull-up",
+        "freeDbId": "Band_Assisted_Pull-Up",
+        "equipment": "band",
+        "level": 3,
+        "why": "Real pull-up with lighter bands as you get stronger",
+        "unit": "reps"
+      },
+      {
+        "name": "Chin-up",
+        "freeDbId": "Chin-Up",
+        "equipment": "bodyweight",
+        "level": 4,
+        "why": "Underhand bodyweight pull; usually the first unassisted rep",
+        "unit": "reps"
+      },
+      {
+        "name": "Pull-up",
+        "freeDbId": "Pullups",
+        "equipment": "bodyweight",
+        "level": 5,
+        "why": "Full bodyweight vertical pull; the end goal",
+        "unit": "reps"
+      }
+    ],
+    "One-arm dumbbell row (hand on rack)": [
+      {
+        "name": "Chest-supported dumbbell row",
+        "freeDbId": "Dumbbell_Incline_Row",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Bench supports the back; pure upper-back work",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm seated cable row",
+        "freeDbId": "Seated_One-arm_Cable_Pulley_Rows",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Same row, one arm at a time, any cable stack",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm kettlebell row",
+        "freeDbId": "One-Arm_Kettlebell_Row",
+        "equipment": "kettlebell",
+        "level": 2,
+        "why": "Same row with a kettlebell when dumbbells are busy",
+        "unit": "reps"
+      },
+      {
+        "name": "Inverted row (bar in rack/Smith)",
+        "freeDbId": "Inverted_Row",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Bodyweight pull; builds pulling strength towards pull-ups",
+        "unit": "reps"
+      },
+      {
+        "name": "Bent-over two-dumbbell row",
+        "freeDbId": "Bent_Over_Two-Dumbbell_Row",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Both arms at once; also trains hip-hinge holding",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell Romanian deadlift": [
+      {
+        "name": "Band good morning",
+        "freeDbId": "Band_Good_Morning",
+        "equipment": "band",
+        "level": 1,
+        "why": "Light hinge pattern practice, home-friendly",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable pull-through",
+        "freeDbId": "Pull_Through",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Hip-hinge with load pulling you back; great for learning",
+        "unit": "reps"
+      },
+      {
+        "name": "45-degree back extension",
+        "freeDbId": "Hyperextensions_Back_Extensions",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Hamstrings/glutes/back with bodyweight; hold a plate to progress",
+        "unit": "reps"
+      },
+      {
+        "name": "Single-leg Romanian deadlift (DB or KB)",
+        "freeDbId": "Kettlebell_One-Legged_Deadlift",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "One leg doubles the load per side with light weights; balance",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell Romanian deadlift",
+        "freeDbId": "Romanian_Deadlift",
+        "equipment": "barbell",
+        "level": 3,
+        "why": "Easier to load heavy than dumbbells",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine Romanian deadlift",
+        "freeDbId": "Smith_Machine_Stiff-Legged_Deadlift",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Fixed path hinge; easy to set the bar at shin height",
+        "unit": "reps"
+      }
+    ],
+    "Standing dumbbell shoulder press": [
+      {
+        "name": "Band shoulder press",
+        "freeDbId": "Shoulder_Press_-_With_Bands",
+        "equipment": "band",
+        "level": 1,
+        "why": "Light overhead press; works at home or in a busy gym",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine shoulder press",
+        "freeDbId": "Leverage_Shoulder_Press",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Stable overhead press; back supported",
+        "unit": "reps"
+      },
+      {
+        "name": "Seated dumbbell shoulder press",
+        "freeDbId": "Seated_Dumbbell_Press",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Back support removes low-back arching",
+        "unit": "reps"
+      },
+      {
+        "name": "Arnold press",
+        "freeDbId": "Arnold_Dumbbell_Press",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Rotation adds front-delt range; lighter dumbbells needed",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm dumbbell press",
+        "freeDbId": "Dumbbell_One-Arm_Shoulder_Press",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Single-arm press adds anti-lean core work",
+        "unit": "reps"
+      },
+      {
+        "name": "Standing barbell overhead press",
+        "freeDbId": "Standing_Military_Press",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heaviest overhead progression; strict bracing needed",
+        "unit": "reps"
+      }
+    ],
+    "Front plank": [
+      {
+        "name": "Dead bug",
+        "freeDbId": "Dead_Bug",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Anti-extension on your back; easiest to do well",
+        "unit": "reps"
+      },
+      {
+        "name": "Stability-ball knee tuck",
+        "freeDbId": "Exercise_Ball_Pull-In",
+        "equipment": "exercise ball",
+        "level": 3,
+        "why": "Plank plus knee drive; harder anti-extension",
+        "unit": "reps"
+      },
+      {
+        "name": "Spider crawl",
+        "freeDbId": "Spider_Crawl",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Moving plank; anti-extension plus hip mobility",
+        "unit": "reps"
+      },
+      {
+        "name": "Kneeling barbell/ab-wheel rollout",
+        "freeDbId": "Barbell_Ab_Rollout_-_On_Knees",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Strongest anti-extension challenge for the abs",
+        "unit": "reps"
+      },
+      {
+        "name": "Ab-wheel rollout",
+        "freeDbId": "Ab_Roller",
+        "equipment": "other",
+        "level": 5,
+        "why": "Long-lever rollout; progress only when kneeling rollouts are easy",
+        "unit": "reps"
+      }
+    ],
+    "Steady cardio (any free machine)": [
+      {
+        "name": "Incline treadmill walk",
+        "freeDbId": "Walking_Treadmill",
+        "equipment": "machine",
+        "level": 1,
+        "why": "Lowest-impact zone 2 option",
+        "unit": "minutes"
+      },
+      {
+        "name": "Recumbent bike",
+        "freeDbId": "Recumbent_Bike",
+        "equipment": "machine",
+        "level": 1,
+        "why": "Back-supported bike; easy on joints",
+        "unit": "minutes"
+      },
+      {
+        "name": "Outdoor walk or easy hike",
+        "freeDbId": "Trail_Running_Walking",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Zone 2 outside; pram or baby carrier counts",
+        "unit": "minutes"
+      },
+      {
+        "name": "Cross-trainer (elliptical)",
+        "freeDbId": "Elliptical_Trainer",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Full-body, no impact",
+        "unit": "minutes"
+      },
+      {
+        "name": "Rowing machine",
+        "freeDbId": "Rowing_Stationary",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Upper and lower body; good for intervals",
+        "unit": "minutes"
+      },
+      {
+        "name": "Stair climber",
+        "freeDbId": "Stairmaster",
+        "equipment": "machine",
+        "level": 3,
+        "why": "High heart rate at low speed",
+        "unit": "minutes"
+      }
+    ],
+    "Outdoor brisk walk later in the day": [
+      {
+        "name": "Outdoor walk or easy hike",
+        "freeDbId": "Trail_Running_Walking",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Zone 2 outside; pram or baby carrier counts",
+        "unit": "minutes"
+      },
+      {
+        "name": "Incline treadmill walk",
+        "freeDbId": "Walking_Treadmill",
+        "equipment": "machine",
+        "level": 1,
+        "why": "Lowest-impact zone 2 option",
+        "unit": "minutes"
+      },
+      {
+        "name": "Jump rope",
+        "freeDbId": "Rope_Jumping",
+        "equipment": "other",
+        "level": 1,
+        "why": "Short alternative: 10 x 1 min easy skipping if time is very tight",
+        "unit": "minutes"
+      },
+      {
+        "name": "Outdoor cycling",
+        "freeDbId": "Bicycling",
+        "equipment": "other",
+        "level": 2,
+        "why": "Zone 2 outside the gym",
+        "unit": "minutes"
+      },
+      {
+        "name": "Cross-trainer (elliptical)",
+        "freeDbId": "Elliptical_Trainer",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Full-body, no impact",
+        "unit": "minutes"
+      },
+      {
+        "name": "Treadmill jog",
+        "freeDbId": "Jogging_Treadmill",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Higher-impact zone 2 once joints are ready",
+        "unit": "minutes"
+      }
+    ],
+    "Hanging knee raise": [
+      {
+        "name": "Bench leg pull-in",
+        "freeDbId": "Flat_Bench_Leg_Pull-In",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Knee-tuck regression of the hanging raise",
+        "unit": "reps"
+      },
+      {
+        "name": "Seated leg tuck on bench",
+        "freeDbId": "Seated_Leg_Tucks",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Hip/spinal flexion with easy setup",
+        "unit": "reps"
+      },
+      {
+        "name": "Captain's-chair knee raise",
+        "freeDbId": "Knee_Hip_Raise_On_Parallel_Bars",
+        "equipment": "other",
+        "level": 2,
+        "why": "Same knee raise with forearm support; less grip demand",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable reverse crunch",
+        "freeDbId": "Cable_Reverse_Crunch",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Loadable lower-ab curl",
+        "unit": "reps"
+      },
+      {
+        "name": "Stability-ball knee tuck",
+        "freeDbId": "Exercise_Ball_Pull-In",
+        "equipment": "exercise ball",
+        "level": 3,
+        "why": "Plank plus knee drive; harder anti-extension",
+        "unit": "reps"
+      },
+      {
+        "name": "Hanging pike (toes to bar)",
+        "freeDbId": "Hanging_Pike",
+        "equipment": "bodyweight",
+        "level": 5,
+        "why": "Advanced straight-leg hanging raise",
+        "unit": "reps"
+      }
+    ],
+    "Reverse crunch on a mat": [
+      {
+        "name": "Bench leg pull-in",
+        "freeDbId": "Flat_Bench_Leg_Pull-In",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Knee-tuck regression of the hanging raise",
+        "unit": "reps"
+      },
+      {
+        "name": "Seated leg tuck on bench",
+        "freeDbId": "Seated_Leg_Tucks",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Hip/spinal flexion with easy setup",
+        "unit": "reps"
+      },
+      {
+        "name": "Captain's-chair knee raise",
+        "freeDbId": "Knee_Hip_Raise_On_Parallel_Bars",
+        "equipment": "other",
+        "level": 2,
+        "why": "Same knee raise with forearm support; less grip demand",
+        "unit": "reps"
+      },
+      {
+        "name": "Decline reverse crunch",
+        "freeDbId": "Decline_Reverse_Crunch",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Gravity makes the reverse crunch harder",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable reverse crunch",
+        "freeDbId": "Cable_Reverse_Crunch",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Loadable lower-ab curl",
+        "unit": "reps"
+      },
+      {
+        "name": "Hanging knee/leg raise",
+        "freeDbId": "Hanging_Leg_Raise",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Hanging pelvic curl; also trains grip",
+        "unit": "reps"
+      }
+    ],
+    "Cable crunch": [
+      {
+        "name": "Crunch",
+        "freeDbId": "Crunches",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Base spinal-flexion move, zero equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Stability-ball crunch",
+        "freeDbId": "Exercise_Ball_Crunch",
+        "equipment": "exercise ball",
+        "level": 2,
+        "why": "Longer range of motion than a floor crunch",
+        "unit": "reps"
+      },
+      {
+        "name": "Ab crunch machine",
+        "freeDbId": "Ab_Crunch_Machine",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Loadable crunch with a weight stack",
+        "unit": "reps"
+      },
+      {
+        "name": "Weighted crunch (ball or plate)",
+        "freeDbId": "Weighted_Crunches",
+        "equipment": "medicine ball",
+        "level": 3,
+        "why": "Hold a plate or ball to load the crunch",
+        "unit": "reps"
+      },
+      {
+        "name": "Decline crunch",
+        "freeDbId": "Decline_Crunch",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Bodyweight crunch made harder by the incline",
+        "unit": "reps"
+      },
+      {
+        "name": "Standing cable rope crunch",
+        "freeDbId": "Standing_Rope_Crunch",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Cable crunch done standing when floor space is busy",
+        "unit": "reps"
+      }
+    ],
+    "Weighted plate crunch": [
+      {
+        "name": "Crunch",
+        "freeDbId": "Crunches",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Base spinal-flexion move, zero equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Stability-ball crunch",
+        "freeDbId": "Exercise_Ball_Crunch",
+        "equipment": "exercise ball",
+        "level": 2,
+        "why": "Longer range of motion than a floor crunch",
+        "unit": "reps"
+      },
+      {
+        "name": "Ab crunch machine",
+        "freeDbId": "Ab_Crunch_Machine",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Loadable crunch with a weight stack",
+        "unit": "reps"
+      },
+      {
+        "name": "Weighted crunch (ball or plate)",
+        "freeDbId": "Weighted_Crunches",
+        "equipment": "medicine ball",
+        "level": 3,
+        "why": "Hold a plate or ball to load the crunch",
+        "unit": "reps"
+      },
+      {
+        "name": "Decline crunch",
+        "freeDbId": "Decline_Crunch",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Bodyweight crunch made harder by the incline",
+        "unit": "reps"
+      },
+      {
+        "name": "Kneeling cable crunch",
+        "freeDbId": "Cable_Crunch",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Heaviest loadable crunch",
+        "unit": "reps"
+      }
+    ],
+    "Side plank": [
+      {
+        "name": "Pallof press (cable or band)",
+        "freeDbId": "Pallof_Press",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Pure anti-rotation; band version anywhere",
+        "unit": "reps"
+      },
+      {
+        "name": "Suitcase carry (one dumbbell)",
+        "freeDbId": "Farmers_Walk",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "One-hand carry: same anti-side-bend demand while walking",
+        "unit": "meters"
+      },
+      {
+        "name": "Push-up to side plank",
+        "freeDbId": "Push_Up_to_Side_Plank",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Adds rotation control and shoulder stability",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable lift (low-to-high chop)",
+        "freeDbId": "Standing_Cable_Lift",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Reverse woodchop; rotational power with control",
+        "unit": "reps"
+      },
+      {
+        "name": "Kettlebell windmill",
+        "freeDbId": "Kettlebell_Windmill",
+        "equipment": "kettlebell",
+        "level": 4,
+        "why": "Lateral core and shoulder stability under load",
+        "unit": "reps"
+      }
+    ],
+    "Dead bug": [
+      {
+        "name": "Front plank",
+        "freeDbId": "Plank",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Base anti-extension hold",
+        "unit": "seconds"
+      },
+      {
+        "name": "Lying leg raise (back flat)",
+        "freeDbId": "Flat_Bench_Lying_Leg_Raise",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Lower-back-to-bench control under a longer lever",
+        "unit": "reps"
+      },
+      {
+        "name": "Stability-ball knee tuck",
+        "freeDbId": "Exercise_Ball_Pull-In",
+        "equipment": "exercise ball",
+        "level": 3,
+        "why": "Plank plus knee drive; harder anti-extension",
+        "unit": "reps"
+      },
+      {
+        "name": "Kneeling barbell/ab-wheel rollout",
+        "freeDbId": "Barbell_Ab_Rollout_-_On_Knees",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Strongest anti-extension challenge for the abs",
+        "unit": "reps"
+      },
+      {
+        "name": "Ab-wheel rollout",
+        "freeDbId": "Ab_Roller",
+        "equipment": "other",
+        "level": 5,
+        "why": "Long-lever rollout; progress only when kneeling rollouts are easy",
+        "unit": "reps"
+      }
+    ],
+    "Mobility flow": [
+      {
+        "name": "Cat-camel",
+        "freeDbId": "Cat_Stretch",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Gentle spinal mobility",
+        "unit": "minutes"
+      },
+      {
+        "name": "Kneeling hip-flexor stretch",
+        "freeDbId": "Kneeling_Hip_Flexor",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Opens hips tight from desk sitting",
+        "unit": "minutes"
+      },
+      {
+        "name": "Ankle circles / rocks",
+        "freeDbId": "Ankle_Circles",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Ankle mobility for squat depth",
+        "unit": "minutes"
+      },
+      {
+        "name": "World's greatest stretch",
+        "freeDbId": "Worlds_Greatest_Stretch",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Hips, hamstrings and thoracic spine in one move",
+        "unit": "minutes"
+      },
+      {
+        "name": "Groiner",
+        "freeDbId": "Groiners",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Dynamic hip and groin opener",
+        "unit": "minutes"
+      },
+      {
+        "name": "Inchworm",
+        "freeDbId": "Inchworm",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Hamstrings and shoulders, dynamic",
+        "unit": "minutes"
+      }
+    ],
+    "Leg press": [
+      {
+        "name": "Goblet squat",
+        "freeDbId": "Goblet_Squat",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Front-loaded squat that keeps the torso upright",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell box squat to bench",
+        "freeDbId": "Dumbbell_Squat_To_A_Bench",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Bench sets depth; easy to coach, very knee-friendly",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell squat (dumbbells at sides)",
+        "freeDbId": "Dumbbell_Squat",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Lets you load heavier than a goblet hold",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine squat",
+        "freeDbId": "Smith_Machine_Squat",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Fixed bar path; easy to load progressively",
+        "unit": "reps"
+      },
+      {
+        "name": "Hack squat machine",
+        "freeDbId": "Hack_Squat",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Deep quad-dominant squat with back support",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell back squat",
+        "freeDbId": "Barbell_Squat",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Highest-loading squat progression once technique is solid",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell step-up onto a bench": [
+      {
+        "name": "Bodyweight step-up with knee drive",
+        "freeDbId": "Step-up_with_Knee_Raise",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Step-up regression with balance work",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell split squat",
+        "freeDbId": "Split_Squat_with_Dumbbells",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Static lunge; most stable single-leg option",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell reverse lunge",
+        "freeDbId": "Dumbbell_Rear_Lunge",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Knee-friendly lunge",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell forward lunge",
+        "freeDbId": "Dumbbell_Lunges",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Deceleration demand makes it harder than the reverse lunge",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell step-up",
+        "freeDbId": "Barbell_Step_Ups",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heavier step-up with the bar on your back",
+        "unit": "reps"
+      }
+    ],
+    "Incline dumbbell press": [
+      {
+        "name": "Machine incline chest press",
+        "freeDbId": "Leverage_Incline_Chest_Press",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Upper-chest emphasis with a stable path",
+        "unit": "reps"
+      },
+      {
+        "name": "Incline cable chest press",
+        "freeDbId": "Incline_Cable_Chest_Press",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Upper-chest press with constant cable tension",
+        "unit": "reps"
+      },
+      {
+        "name": "Neutral-grip incline dumbbell press",
+        "freeDbId": "Hammer_Grip_Incline_DB_Bench_Press",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Same incline angle, friendlier on shoulders",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine incline press",
+        "freeDbId": "Smith_Machine_Incline_Bench_Press",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Fixed path, easy small-step loading",
+        "unit": "reps"
+      },
+      {
+        "name": "Feet-elevated push-up",
+        "freeDbId": "Push-Ups_With_Feet_Elevated",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Harder push-up that shifts work to upper chest",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell incline bench press",
+        "freeDbId": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heaviest upper-chest progression",
+        "unit": "reps"
+      }
+    ],
+    "Push-ups (feet on a bench if too easy)": [
+      {
+        "name": "Incline push-up (hands on bench)",
+        "freeDbId": "Incline_Push-Up",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Push-up regression; adjust height to set difficulty",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell floor press",
+        "freeDbId": "Dumbbell_Floor_Press",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Shoulder-friendly partial-range press when benches are taken",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell bench press",
+        "freeDbId": "Dumbbell_Bench_Press",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "The base dumbbell press pattern",
+        "unit": "reps"
+      },
+      {
+        "name": "Feet-elevated push-up",
+        "freeDbId": "Push-Ups_With_Feet_Elevated",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Harder push-up that shifts work to upper chest",
+        "unit": "reps"
+      },
+      {
+        "name": "Suspension-strap push-up",
+        "freeDbId": "Suspended_Push-Up",
+        "equipment": "other",
+        "level": 4,
+        "why": "Unstable handles make push-ups much harder",
+        "unit": "reps"
+      }
+    ],
+    "Seated cable row": [
+      {
+        "name": "Chest-supported dumbbell row",
+        "freeDbId": "Dumbbell_Incline_Row",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Bench supports the back; pure upper-back work",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm seated cable row",
+        "freeDbId": "Seated_One-arm_Cable_Pulley_Rows",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Same row, one arm at a time, any cable stack",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine row (plate-loaded)",
+        "freeDbId": "Leverage_Iso_Row",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Chest pad removes lower-back demand",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm dumbbell row",
+        "freeDbId": "One-Arm_Dumbbell_Row",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Needs one dumbbell and a bench; heavy and simple",
+        "unit": "reps"
+      },
+      {
+        "name": "Inverted row (bar in rack/Smith)",
+        "freeDbId": "Inverted_Row",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Bodyweight pull; builds pulling strength towards pull-ups",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell bent-over row",
+        "freeDbId": "Bent_Over_Barbell_Row",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heaviest row; needs a solid hinge",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell bent-over row": [
+      {
+        "name": "Chest-supported dumbbell row",
+        "freeDbId": "Dumbbell_Incline_Row",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Bench supports the back; pure upper-back work",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm dumbbell row",
+        "freeDbId": "One-Arm_Dumbbell_Row",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Needs one dumbbell and a bench; heavy and simple",
+        "unit": "reps"
+      },
+      {
+        "name": "Seated cable row",
+        "freeDbId": "Seated_Cable_Rows",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Base cable row pattern",
+        "unit": "reps"
+      },
+      {
+        "name": "Inverted row (bar in rack/Smith)",
+        "freeDbId": "Inverted_Row",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Bodyweight pull; builds pulling strength towards pull-ups",
+        "unit": "reps"
+      },
+      {
+        "name": "Landmine T-bar row",
+        "freeDbId": "T-Bar_Row_with_Handle",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heavy row using a bar in a corner/landmine",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell bent-over row",
+        "freeDbId": "Bent_Over_Barbell_Row",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heaviest row; needs a solid hinge",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell reverse lunge": [
+      {
+        "name": "Bodyweight walking lunge",
+        "freeDbId": "Bodyweight_Walking_Lunge",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Learn the lunge pattern with no load",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell split squat",
+        "freeDbId": "Split_Squat_with_Dumbbells",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Static lunge; most stable single-leg option",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell step-up",
+        "freeDbId": "Dumbbell_Step_Ups",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Single-leg drive onto a bench",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell forward lunge",
+        "freeDbId": "Dumbbell_Lunges",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Deceleration demand makes it harder than the reverse lunge",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine Bulgarian split squat",
+        "freeDbId": "Smith_Single-Leg_Split_Squat",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Bar path handles balance so legs can work harder",
+        "unit": "reps"
+      },
+      {
+        "name": "Deficit reverse lunge",
+        "freeDbId": "Elevated_Back_Lunge",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Front foot on a plate for a longer range",
+        "unit": "reps"
+      }
+    ],
+    "Face pull": [
+      {
+        "name": "Band pull-apart",
+        "freeDbId": "Band_Pull_Apart",
+        "equipment": "band",
+        "level": 1,
+        "why": "Rear delts and scapular retractors anywhere",
+        "unit": "reps"
+      },
+      {
+        "name": "Head-supported dumbbell rear-delt raise",
+        "freeDbId": "Bent_Over_Dumbbell_Rear_Delt_Raise_With_Head_On_Bench",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Forehead on bench stops cheating",
+        "unit": "reps"
+      },
+      {
+        "name": "Reverse pec-deck",
+        "freeDbId": "Reverse_Machine_Flyes",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Stable rear-delt fly, easy to load",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable rear-delt fly",
+        "freeDbId": "Cable_Rear_Delt_Fly",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Constant tension, crossover cable",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable rope rear-delt row",
+        "freeDbId": "Cable_Rope_Rear-Delt_Rows",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Closest cable match to the face pull",
+        "unit": "reps"
+      },
+      {
+        "name": "Reverse fly with external rotation",
+        "freeDbId": "Reverse_Flyes_With_External_Rotation",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Adds the external-rotation finish of a face pull",
+        "unit": "reps"
+      }
+    ],
+    "Band face pull": [
+      {
+        "name": "Band pull-apart",
+        "freeDbId": "Band_Pull_Apart",
+        "equipment": "band",
+        "level": 1,
+        "why": "Rear delts and scapular retractors anywhere",
+        "unit": "reps"
+      },
+      {
+        "name": "Band reverse fly",
+        "freeDbId": "Back_Flyes_-_With_Bands",
+        "equipment": "band",
+        "level": 1,
+        "why": "Band version of the rear-delt fly",
+        "unit": "reps"
+      },
+      {
+        "name": "Band external rotation",
+        "freeDbId": "External_Rotation_with_Band",
+        "equipment": "band",
+        "level": 1,
+        "why": "Rotator-cuff work that face pulls also target",
+        "unit": "reps"
+      },
+      {
+        "name": "Bent-over dumbbell reverse fly",
+        "freeDbId": "Reverse_Flyes",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Rear delts with light dumbbells",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable face pull",
+        "freeDbId": "Face_Pull",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Rear delts, mid-traps, external rotators",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell hammer curl": [
+      {
+        "name": "Cable rope hammer curl",
+        "freeDbId": "Cable_Hammer_Curls_-_Rope_Attachment",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Same neutral grip, constant tension",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine preacher curl",
+        "freeDbId": "Machine_Preacher_Curls",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Strict, no swinging",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell biceps curl",
+        "freeDbId": "Dumbbell_Bicep_Curl",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Supinated curl to add biceps emphasis",
+        "unit": "reps"
+      },
+      {
+        "name": "Cross-body hammer curl",
+        "freeDbId": "Cross_Body_Hammer_Curl",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Brachialis/brachioradialis focus with different angle",
+        "unit": "reps"
+      },
+      {
+        "name": "EZ-bar curl",
+        "freeDbId": "EZ-Bar_Curl",
+        "equipment": "barbell",
+        "level": 3,
+        "why": "Both arms together; easy to add small weight",
+        "unit": "reps"
+      },
+      {
+        "name": "Incline hammer curl",
+        "freeDbId": "Incline_Hammer_Curls",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Stretched position; harder with the same dumbbell",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell overhead triceps extension": [
+      {
+        "name": "Rope triceps pushdown",
+        "freeDbId": "Triceps_Pushdown_-_Rope_Attachment",
+        "equipment": "cable",
+        "level": 1,
+        "why": "Easiest triceps move to learn and load",
+        "unit": "reps"
+      },
+      {
+        "name": "Two-hand dumbbell overhead extension",
+        "freeDbId": "Standing_Dumbbell_Triceps_Extension",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Exact dumbbell version of the overhead extension",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable overhead triceps extension",
+        "freeDbId": "Cable_Rope_Overhead_Triceps_Extension",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Same overhead stretch position with cable tension",
+        "unit": "reps"
+      },
+      {
+        "name": "Bench dip",
+        "freeDbId": "Bench_Dips",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Bodyweight triceps; bend knees to regress",
+        "unit": "reps"
+      },
+      {
+        "name": "EZ-bar skull crusher",
+        "freeDbId": "EZ-Bar_Skullcrusher",
+        "equipment": "barbell",
+        "level": 3,
+        "why": "Lying extension; heavier loading",
+        "unit": "reps"
+      },
+      {
+        "name": "Parallel-bar dip (upright)",
+        "freeDbId": "Dips_-_Triceps_Version",
+        "equipment": "bodyweight",
+        "level": 4,
+        "why": "Heavy compound triceps; use assistance if needed",
+        "unit": "reps"
+      }
+    ],
+    "Medicine-ball slam": [
+      {
+        "name": "Medicine-ball chest pass (to wall)",
+        "freeDbId": "Medicine_Ball_Chest_Pass",
+        "equipment": "medicine ball",
+        "level": 2,
+        "why": "Explosive push with no landing impact on wrists",
+        "unit": "reps"
+      },
+      {
+        "name": "Overhead medicine-ball slam",
+        "freeDbId": "Overhead_Slam",
+        "equipment": "medicine ball",
+        "level": 2,
+        "why": "Two-hand slam; same pattern, easier coordination",
+        "unit": "reps"
+      },
+      {
+        "name": "Battle-rope slams",
+        "freeDbId": "Battling_Ropes",
+        "equipment": "other",
+        "level": 2,
+        "why": "Overhead-to-floor power with no ball",
+        "unit": "reps"
+      },
+      {
+        "name": "Overhead medicine-ball throw (to wall)",
+        "freeDbId": "Standing_Two-Arm_Overhead_Throw",
+        "equipment": "medicine ball",
+        "level": 3,
+        "why": "Same overhead power line, thrown instead of slammed",
+        "unit": "reps"
+      },
+      {
+        "name": "Sledgehammer tyre strikes",
+        "freeDbId": "Sledgehammer_Swings",
+        "equipment": "other",
+        "level": 3,
+        "why": "Rotational overhead power, if your gym has a tyre",
+        "unit": "reps"
+      },
+      {
+        "name": "Explosive push-up",
+        "freeDbId": "Plyo_Push-up",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Bodyweight upper-body power when no ball is free",
+        "unit": "reps"
+      }
+    ],
+    "Explosive push-ups, hands on a bench": [
+      {
+        "name": "Incline push-up (hands on bench)",
+        "freeDbId": "Incline_Push-Up",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Push-up regression; adjust height to set difficulty",
+        "unit": "reps"
+      },
+      {
+        "name": "Medicine-ball chest pass (to wall)",
+        "freeDbId": "Medicine_Ball_Chest_Pass",
+        "equipment": "medicine ball",
+        "level": 2,
+        "why": "Explosive push with no landing impact on wrists",
+        "unit": "reps"
+      },
+      {
+        "name": "Kneeling med-ball chest push",
+        "freeDbId": "Chest_Push_single_response",
+        "equipment": "medicine ball",
+        "level": 2,
+        "why": "Teaches fast upper-body push from a stable kneel",
+        "unit": "reps"
+      },
+      {
+        "name": "Push-up",
+        "freeDbId": "Pushups",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Regular push-up done as fast as possible on the way up",
+        "unit": "reps"
+      },
+      {
+        "name": "Incline depth push-up",
+        "freeDbId": "Incline_Push-Up_Depth_Jump",
+        "equipment": "bodyweight",
+        "level": 4,
+        "why": "Advanced reactive push; only when explosive push-ups feel easy",
+        "unit": "reps"
+      }
+    ],
+    "Low box jump (30–45 cm)": [
+      {
+        "name": "Jump rope",
+        "freeDbId": "Rope_Jumping",
+        "equipment": "other",
+        "level": 1,
+        "why": "Low-amplitude elastic jumps; trains landing stiffness",
+        "unit": "reps"
+      },
+      {
+        "name": "Standing broad jump",
+        "freeDbId": "Standing_Long_Jump",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Horizontal hip power; stick each landing",
+        "unit": "reps"
+      },
+      {
+        "name": "Lateral box jump",
+        "freeDbId": "Lateral_Box_Jump",
+        "equipment": "other",
+        "level": 3,
+        "why": "Side-to-side power and landing control",
+        "unit": "reps"
+      },
+      {
+        "name": "Repeated box jumps",
+        "freeDbId": "Box_Jump_Multiple_Response",
+        "equipment": "other",
+        "level": 4,
+        "why": "Continuous jumps; only when single jumps are crisp",
+        "unit": "reps"
+      },
+      {
+        "name": "Tuck jump",
+        "freeDbId": "Knee_Tuck_Jump",
+        "equipment": "bodyweight",
+        "level": 4,
+        "why": "Max-effort vertical jump; high landing demand",
+        "unit": "reps"
+      }
+    ],
+    "Bodyweight squat jump": [
+      {
+        "name": "Bodyweight squat",
+        "freeDbId": "Bodyweight_Squat",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Fast-up bodyweight squat if jumping is not possible (noise, knees)",
+        "unit": "reps"
+      },
+      {
+        "name": "Jump rope",
+        "freeDbId": "Rope_Jumping",
+        "equipment": "other",
+        "level": 1,
+        "why": "Low-amplitude elastic jumps; trains landing stiffness",
+        "unit": "reps"
+      },
+      {
+        "name": "Low box jump",
+        "freeDbId": "Front_Box_Jump",
+        "equipment": "other",
+        "level": 2,
+        "why": "Jump up, step down: low landing impact",
+        "unit": "reps"
+      },
+      {
+        "name": "Split jump (jump lunge)",
+        "freeDbId": "Split_Jump",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Single-leg emphasis power",
+        "unit": "reps"
+      },
+      {
+        "name": "Standing broad jump",
+        "freeDbId": "Standing_Long_Jump",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Horizontal hip power; stick each landing",
+        "unit": "reps"
+      },
+      {
+        "name": "Loaded jump squat (light bar or DBs)",
+        "freeDbId": "Weighted_Jump_Squat",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Light external load for more power output",
+        "unit": "reps"
+      }
+    ],
+    "Kettlebell swing": [
+      {
+        "name": "Glute bridge",
+        "freeDbId": "Butt_Lift_Bridge",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Teaches hip extension with no back loading",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable pull-through",
+        "freeDbId": "Pull_Through",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Hip-hinge with load pulling you back; great for learning",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell swing",
+        "freeDbId": "Vertical_Swing",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Same hip snap as a kettlebell swing, using one dumbbell",
+        "unit": "reps"
+      },
+      {
+        "name": "Kettlebell dead clean",
+        "freeDbId": "Kettlebell_Dead_Clean",
+        "equipment": "kettlebell",
+        "level": 3,
+        "why": "Explosive hip extension from the floor",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell hang clean",
+        "freeDbId": "Dumbbell_Clean",
+        "equipment": "dumbbell",
+        "level": 4,
+        "why": "Explosive pull for power; needs coordination",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell swing": [
+      {
+        "name": "Glute bridge",
+        "freeDbId": "Butt_Lift_Bridge",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Teaches hip extension with no back loading",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable pull-through",
+        "freeDbId": "Pull_Through",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Hip-hinge with load pulling you back; great for learning",
+        "unit": "reps"
+      },
+      {
+        "name": "Kettlebell swing",
+        "freeDbId": "One-Arm_Kettlebell_Swings",
+        "equipment": "kettlebell",
+        "level": 2,
+        "why": "Ballistic hinge for power and conditioning",
+        "unit": "reps"
+      },
+      {
+        "name": "Kettlebell dead clean",
+        "freeDbId": "Kettlebell_Dead_Clean",
+        "equipment": "kettlebell",
+        "level": 3,
+        "why": "Explosive hip extension from the floor",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell hang clean",
+        "freeDbId": "Dumbbell_Clean",
+        "equipment": "dumbbell",
+        "level": 4,
+        "why": "Explosive pull for power; needs coordination",
+        "unit": "reps"
+      }
+    ],
+    "Farmer's carry": [
+      {
+        "name": "Plate pinch hold",
+        "freeDbId": "Plate_Pinch",
+        "equipment": "other",
+        "level": 2,
+        "why": "Grip and core bracing in a small space",
+        "unit": "seconds"
+      },
+      {
+        "name": "Heavy dumbbell shrug + hold",
+        "freeDbId": "Dumbbell_Shrug",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Heavy dumbbells at your sides train grip and traps like a carry",
+        "unit": "reps"
+      },
+      {
+        "name": "Suitcase carry (one dumbbell, switch hands)",
+        "freeDbId": "Farmers_Walk",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Needs only one dumbbell; adds anti-side-bend core work",
+        "unit": "meters"
+      },
+      {
+        "name": "Sled push",
+        "freeDbId": "Sled_Push",
+        "equipment": "other",
+        "level": 3,
+        "why": "Loaded locomotion; legs and conditioning",
+        "unit": "meters"
+      },
+      {
+        "name": "Backward sled drag",
+        "freeDbId": "Backward_Drag",
+        "equipment": "other",
+        "level": 3,
+        "why": "Loaded walking that is easy on knees",
+        "unit": "meters"
+      }
+    ],
+    "Farmer's march in place, 40 s": [
+      {
+        "name": "Plate pinch hold",
+        "freeDbId": "Plate_Pinch",
+        "equipment": "other",
+        "level": 2,
+        "why": "Grip and core bracing in a small space",
+        "unit": "seconds"
+      },
+      {
+        "name": "Heavy dumbbell shrug + hold",
+        "freeDbId": "Dumbbell_Shrug",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Heavy dumbbells at your sides train grip and traps like a carry",
+        "unit": "reps"
+      },
+      {
+        "name": "Farmer's walk (one-arm = suitcase carry)",
+        "freeDbId": "Farmers_Walk",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "The original walking carry when there is floor space",
+        "unit": "meters"
+      },
+      {
+        "name": "Sled push",
+        "freeDbId": "Sled_Push",
+        "equipment": "other",
+        "level": 3,
+        "why": "Loaded locomotion; legs and conditioning",
+        "unit": "meters"
+      }
+    ],
+    "Mountain climber": [
+      {
+        "name": "Jump rope",
+        "freeDbId": "Rope_Jumping",
+        "equipment": "other",
+        "level": 1,
+        "why": "Low-amplitude elastic jumps; trains landing stiffness",
+        "unit": "seconds"
+      },
+      {
+        "name": "Bicycle crunch (fast)",
+        "freeDbId": "Air_Bike",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Floor-based core-and-cardio alternative",
+        "unit": "seconds"
+      },
+      {
+        "name": "Battle-rope slams",
+        "freeDbId": "Battling_Ropes",
+        "equipment": "other",
+        "level": 2,
+        "why": "Overhead-to-floor power with no ball",
+        "unit": "seconds"
+      },
+      {
+        "name": "Star jump",
+        "freeDbId": "Star_Jump",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "No-equipment burst for intervals",
+        "unit": "seconds"
+      },
+      {
+        "name": "Spider crawl",
+        "freeDbId": "Spider_Crawl",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Moving plank; anti-extension plus hip mobility",
+        "unit": "seconds"
+      }
+    ],
+    "Bike intervals": [
+      {
+        "name": "Recumbent bike",
+        "freeDbId": "Recumbent_Bike",
+        "equipment": "machine",
+        "level": 1,
+        "why": "Back-supported bike; easy on joints",
+        "unit": "seconds"
+      },
+      {
+        "name": "Jump rope",
+        "freeDbId": "Rope_Jumping",
+        "equipment": "other",
+        "level": 1,
+        "why": "Low-amplitude elastic jumps; trains landing stiffness",
+        "unit": "seconds"
+      },
+      {
+        "name": "Cross-trainer (elliptical)",
+        "freeDbId": "Elliptical_Trainer",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Full-body, no impact",
+        "unit": "seconds"
+      },
+      {
+        "name": "Battle-rope slams",
+        "freeDbId": "Battling_Ropes",
+        "equipment": "other",
+        "level": 2,
+        "why": "Overhead-to-floor power with no ball",
+        "unit": "seconds"
+      },
+      {
+        "name": "Star jump",
+        "freeDbId": "Star_Jump",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "No-equipment burst for intervals",
+        "unit": "seconds"
+      },
+      {
+        "name": "Treadmill run/sprint",
+        "freeDbId": "Running_Treadmill",
+        "equipment": "machine",
+        "level": 4,
+        "why": "Highest impact; keep sprints short",
+        "unit": "seconds"
+      }
+    ],
+    "Rower or cross-trainer intervals": [
+      {
+        "name": "Recumbent bike",
+        "freeDbId": "Recumbent_Bike",
+        "equipment": "machine",
+        "level": 1,
+        "why": "Back-supported bike; easy on joints",
+        "unit": "seconds"
+      },
+      {
+        "name": "Stationary bike",
+        "freeDbId": "Bicycling_Stationary",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Simple to pace by heart rate",
+        "unit": "seconds"
+      },
+      {
+        "name": "Cross-trainer (elliptical)",
+        "freeDbId": "Elliptical_Trainer",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Full-body, no impact",
+        "unit": "seconds"
+      },
+      {
+        "name": "Battle-rope slams",
+        "freeDbId": "Battling_Ropes",
+        "equipment": "other",
+        "level": 2,
+        "why": "Overhead-to-floor power with no ball",
+        "unit": "seconds"
+      },
+      {
+        "name": "Mountain climber",
+        "freeDbId": "Mountain_Climbers",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "No-machine interval option: 30 s fast, 90 s easy",
+        "unit": "seconds"
+      },
+      {
+        "name": "Treadmill run/sprint",
+        "freeDbId": "Running_Treadmill",
+        "equipment": "machine",
+        "level": 4,
+        "why": "Highest impact; keep sprints short",
+        "unit": "seconds"
+      }
+    ],
+    "Trap-bar deadlift": [
+      {
+        "name": "Cable deadlift",
+        "freeDbId": "Cable_Deadlifts",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Light, smooth deadlift; good when plates are taken",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine (lever) deadlift",
+        "freeDbId": "Leverage_Deadlift",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Deadlift pattern with fixed handles; easy to load",
+        "unit": "reps"
+      },
+      {
+        "name": "Single-leg Romanian deadlift (DB or KB)",
+        "freeDbId": "Kettlebell_One-Legged_Deadlift",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "One leg doubles the load per side with light weights; balance",
+        "unit": "reps"
+      },
+      {
+        "name": "Rack pull (from knee height)",
+        "freeDbId": "Rack_Pulls",
+        "equipment": "barbell",
+        "level": 3,
+        "why": "Partial deadlift; heavy lockout with less low-back strain",
+        "unit": "reps"
+      },
+      {
+        "name": "Sumo deadlift",
+        "freeDbId": "Sumo_Deadlift",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Wide stance, upright torso; more glutes/adductors",
+        "unit": "reps"
+      },
+      {
+        "name": "Conventional barbell deadlift",
+        "freeDbId": "Barbell_Deadlift",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Classic heavy hinge; most technique demand",
+        "unit": "reps"
+      }
+    ],
+    "Heavy dumbbell deadlift": [
+      {
+        "name": "Cable pull-through",
+        "freeDbId": "Pull_Through",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Hip-hinge with load pulling you back; great for learning",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine (lever) deadlift",
+        "freeDbId": "Leverage_Deadlift",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Deadlift pattern with fixed handles; easy to load",
+        "unit": "reps"
+      },
+      {
+        "name": "Single-leg Romanian deadlift (DB or KB)",
+        "freeDbId": "Kettlebell_One-Legged_Deadlift",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "One leg doubles the load per side with light weights; balance",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell Romanian deadlift",
+        "freeDbId": "Romanian_Deadlift",
+        "equipment": "barbell",
+        "level": 3,
+        "why": "Easier to load heavy than dumbbells",
+        "unit": "reps"
+      },
+      {
+        "name": "Trap-bar deadlift",
+        "freeDbId": "Trap_Bar_Deadlift",
+        "equipment": "barbell",
+        "level": 3,
+        "why": "Most back-friendly heavy deadlift",
+        "unit": "reps"
+      },
+      {
+        "name": "Conventional barbell deadlift",
+        "freeDbId": "Barbell_Deadlift",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Classic heavy hinge; most technique demand",
+        "unit": "reps"
+      }
+    ],
+    "Band-assisted pull-up": [
+      {
+        "name": "Scapular pull-up (hang + shrug down)",
+        "freeDbId": "Scapular_Pull-Up",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Builds the first part of a pull-up and grip",
+        "unit": "reps"
+      },
+      {
+        "name": "Lat pulldown",
+        "freeDbId": "Wide-Grip_Lat_Pulldown",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Adjustable-load version of the pull-up",
+        "unit": "reps"
+      },
+      {
+        "name": "Underhand (chin-grip) pulldown",
+        "freeDbId": "Underhand_Cable_Pulldowns",
+        "equipment": "cable",
+        "level": 2,
+        "why": "More biceps help, usually stronger",
+        "unit": "reps"
+      },
+      {
+        "name": "Inverted row (bar in rack/Smith)",
+        "freeDbId": "Inverted_Row",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Bodyweight pull; builds pulling strength towards pull-ups",
+        "unit": "reps"
+      },
+      {
+        "name": "Chin-up",
+        "freeDbId": "Chin-Up",
+        "equipment": "bodyweight",
+        "level": 4,
+        "why": "Underhand bodyweight pull; usually the first unassisted rep",
+        "unit": "reps"
+      },
+      {
+        "name": "Pull-up",
+        "freeDbId": "Pullups",
+        "equipment": "bodyweight",
+        "level": 5,
+        "why": "Full bodyweight vertical pull; the end goal",
+        "unit": "reps"
+      }
+    ],
+    "Assisted pull-up machine or pulldown": [
+      {
+        "name": "Close-grip lat pulldown",
+        "freeDbId": "Close-Grip_Front_Lat_Pulldown",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Same pattern, longer range, often a free station",
+        "unit": "reps"
+      },
+      {
+        "name": "V-bar pulldown",
+        "freeDbId": "V-Bar_Pulldown",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Neutral grip, shoulder-friendly",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm cable pulldown",
+        "freeDbId": "One_Arm_Lat_Pulldown",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Single-arm pulldown on any cable tower; fixes side imbalance",
+        "unit": "reps"
+      },
+      {
+        "name": "Inverted row (bar in rack/Smith)",
+        "freeDbId": "Inverted_Row",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Bodyweight pull; builds pulling strength towards pull-ups",
+        "unit": "reps"
+      },
+      {
+        "name": "Band-assisted pull-up",
+        "freeDbId": "Band_Assisted_Pull-Up",
+        "equipment": "band",
+        "level": 3,
+        "why": "Real pull-up with lighter bands as you get stronger",
+        "unit": "reps"
+      },
+      {
+        "name": "Chin-up",
+        "freeDbId": "Chin-Up",
+        "equipment": "bodyweight",
+        "level": 4,
+        "why": "Underhand bodyweight pull; usually the first unassisted rep",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell chest press": [
+      {
+        "name": "Push-up",
+        "freeDbId": "Pushups",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Same horizontal press, needs zero equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Machine bench press",
+        "freeDbId": "Machine_Bench_Press",
+        "equipment": "machine",
+        "level": 2,
+        "why": "Stable press, no spotter needed when pushing hard",
+        "unit": "reps"
+      },
+      {
+        "name": "Neutral-grip dumbbell press",
+        "freeDbId": "Dumbbell_Bench_Press_with_Neutral_Grip",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Palms facing in is easier on shoulders; adds triceps",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine bench press",
+        "freeDbId": "Smith_Machine_Bench_Press",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Fixed path lets you push close to RIR 1 safely",
+        "unit": "reps"
+      },
+      {
+        "name": "Feet-elevated push-up",
+        "freeDbId": "Push-Ups_With_Feet_Elevated",
+        "equipment": "bodyweight",
+        "level": 3,
+        "why": "Harder push-up that shifts work to upper chest",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell bench press",
+        "freeDbId": "Barbell_Bench_Press_-_Medium_Grip",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heaviest-loading press; needs a free bench and rack",
+        "unit": "reps"
+      }
+    ],
+    "Bulgarian split squat": [
+      {
+        "name": "Dumbbell step-up",
+        "freeDbId": "Dumbbell_Step_Ups",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Single-leg drive onto a bench",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell reverse lunge",
+        "freeDbId": "Dumbbell_Rear_Lunge",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Knee-friendly lunge",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine Bulgarian split squat",
+        "freeDbId": "Smith_Single-Leg_Split_Squat",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Bar path handles balance so legs can work harder",
+        "unit": "reps"
+      },
+      {
+        "name": "Suspension-strap split squat",
+        "freeDbId": "Suspended_Split_Squat",
+        "equipment": "other",
+        "level": 3,
+        "why": "Rear foot in strap; balance-heavy",
+        "unit": "reps"
+      },
+      {
+        "name": "Barbell walking lunge",
+        "freeDbId": "Barbell_Walking_Lunge",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heavy, continuous lunges",
+        "unit": "reps"
+      },
+      {
+        "name": "Pistol squat (to box)",
+        "freeDbId": "Kettlebell_Pistol_Squat",
+        "equipment": "bodyweight",
+        "level": 5,
+        "why": "Full single-leg squat; use a box to regress",
+        "unit": "reps"
+      }
+    ],
+    "Split squat with your back foot on the floor": [
+      {
+        "name": "Bodyweight walking lunge",
+        "freeDbId": "Bodyweight_Walking_Lunge",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Learn the lunge pattern with no load",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell step-up",
+        "freeDbId": "Dumbbell_Step_Ups",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Single-leg drive onto a bench",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell reverse lunge",
+        "freeDbId": "Dumbbell_Rear_Lunge",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Knee-friendly lunge",
+        "unit": "reps"
+      },
+      {
+        "name": "Dumbbell forward lunge",
+        "freeDbId": "Dumbbell_Lunges",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Deceleration demand makes it harder than the reverse lunge",
+        "unit": "reps"
+      },
+      {
+        "name": "Smith machine Bulgarian split squat",
+        "freeDbId": "Smith_Single-Leg_Split_Squat",
+        "equipment": "machine",
+        "level": 3,
+        "why": "Bar path handles balance so legs can work harder",
+        "unit": "reps"
+      }
+    ],
+    "Dumbbell lateral raise": [
+      {
+        "name": "Band lateral raise",
+        "freeDbId": "Lateral_Raise_-_With_Bands",
+        "equipment": "band",
+        "level": 1,
+        "why": "Light and joint-friendly; home or busy gym",
+        "unit": "reps"
+      },
+      {
+        "name": "Seated dumbbell lateral raise",
+        "freeDbId": "Seated_Side_Lateral_Raise",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Seated stops swinging",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable lateral raise",
+        "freeDbId": "Cable_Seated_Lateral_Raise",
+        "equipment": "cable",
+        "level": 2,
+        "why": "Tension at the bottom where dumbbells are easy",
+        "unit": "reps"
+      },
+      {
+        "name": "One-arm dumbbell lateral raise",
+        "freeDbId": "One-Arm_Side_Laterals",
+        "equipment": "dumbbell",
+        "level": 2,
+        "why": "Hold a post with the other hand for strict reps",
+        "unit": "reps"
+      },
+      {
+        "name": "Lying incline lateral raise",
+        "freeDbId": "One-Arm_Incline_Lateral_Raise",
+        "equipment": "dumbbell",
+        "level": 3,
+        "why": "Side-lying on incline: harder at the stretched position",
+        "unit": "reps"
+      },
+      {
+        "name": "Single-arm low-cable lateral raise",
+        "freeDbId": "Standing_Low-Pulley_Deltoid_Raise",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Most consistent tension across the range",
+        "unit": "reps"
+      }
+    ],
+    "Cable woodchop": [
+      {
+        "name": "Russian twist (slow, controlled)",
+        "freeDbId": "Russian_Twist",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Rotational core with no equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Plate twist",
+        "freeDbId": "Plate_Twist",
+        "equipment": "other",
+        "level": 2,
+        "why": "Loaded seated rotation with any plate",
+        "unit": "reps"
+      },
+      {
+        "name": "Pallof press with rotation",
+        "freeDbId": "Pallof_Press_With_Rotation",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Controlled rotation against cable pull",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable lift (low-to-high chop)",
+        "freeDbId": "Standing_Cable_Lift",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Reverse woodchop; rotational power with control",
+        "unit": "reps"
+      },
+      {
+        "name": "Medicine-ball full twist",
+        "freeDbId": "Medicine_Ball_Full_Twist",
+        "equipment": "medicine ball",
+        "level": 3,
+        "why": "Rotational power with a light ball",
+        "unit": "reps"
+      },
+      {
+        "name": "Landmine rainbow (180s)",
+        "freeDbId": "Landmine_180s",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heavy anti-rotation/rotation with a bar in a corner",
+        "unit": "reps"
+      }
+    ],
+    "Band woodchop / Pallof press": [
+      {
+        "name": "Side plank",
+        "freeDbId": "Side_Bridge",
+        "equipment": "bodyweight",
+        "level": 1,
+        "why": "Base anti-lateral-flexion hold",
+        "unit": "seconds"
+      },
+      {
+        "name": "Russian twist (slow, controlled)",
+        "freeDbId": "Russian_Twist",
+        "equipment": "bodyweight",
+        "level": 2,
+        "why": "Rotational core with no equipment",
+        "unit": "reps"
+      },
+      {
+        "name": "Cable woodchop",
+        "freeDbId": "Standing_Cable_Wood_Chop",
+        "equipment": "cable",
+        "level": 3,
+        "why": "High-to-low rotational chop",
+        "unit": "reps"
+      },
+      {
+        "name": "Pallof press with rotation",
+        "freeDbId": "Pallof_Press_With_Rotation",
+        "equipment": "cable",
+        "level": 3,
+        "why": "Controlled rotation against cable pull",
+        "unit": "reps"
+      },
+      {
+        "name": "Landmine rainbow (180s)",
+        "freeDbId": "Landmine_180s",
+        "equipment": "barbell",
+        "level": 4,
+        "why": "Heavy anti-rotation/rotation with a bar in a corner",
+        "unit": "reps"
+      }
+    ]
+  },
+  "periodization": {
+    "model": "double_progression + RIR autoregulation (8-week block)",
+    "weeks": [
+      {
+        "week": 1,
+        "rirMain": 3,
+        "rirAccessory": 3,
+        "focus": "Learn",
+        "setsDelta": 0,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Pick loads you could lift 3 more times; own the technique and log every set as your baseline."
+      },
+      {
+        "week": 2,
+        "rirMain": 3,
+        "rirAccessory": 3,
+        "focus": "Build baseline",
+        "setsDelta": 0,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Same loads, add reps inside the range; once every set hits the top at RIR 3, add the smallest increment."
+      },
+      {
+        "week": 3,
+        "rirMain": 2,
+        "rirAccessory": 2,
+        "focus": "Accumulate",
+        "setsDelta": 0,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Move to RIR 2: same loads should now give 1-2 more reps; progress load when all sets reach the top of the range."
+      },
+      {
+        "week": 4,
+        "rirMain": 2,
+        "rirAccessory": 2,
+        "focus": "Accumulate",
+        "setsDelta": 0,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Keep double progression going; last week before accessory rotation, so note which accessories stalled."
+      },
+      {
+        "week": 5,
+        "rirMain": 1,
+        "rirAccessory": 2,
+        "focus": "Intensify + rotate",
+        "setsDelta": 1,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Main lifts may go to RIR 1; swap in new accessory variations and add 1 accessory set only if the session still fits the time."
+      },
+      {
+        "week": 6,
+        "rirMain": 1,
+        "rirAccessory": 2,
+        "focus": "Intensify",
+        "setsDelta": 1,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Chase a rep or load PR on each main lift at RIR 1; the extra accessory set is optional on busy weeks."
+      },
+      {
+        "week": 7,
+        "rirMain": 1,
+        "rirAccessory": 2,
+        "focus": "Peak",
+        "setsDelta": 0,
+        "setsMultiplier": 1.0,
+        "deload": false,
+        "note": "Last hard week: best reps on main lifts at RIR 1, drop the extra accessory set so you reach the deload fresh."
+      },
+      {
+        "week": 8,
+        "rirMain": 3,
+        "rirAccessory": 3,
+        "focus": "Deload",
+        "setsDelta": 0,
+        "setsMultiplier": 0.5,
+        "deload": true,
+        "note": "Half the sets (round up), same weights, RIR 3; keep steps and sleep high, then restart week 1 with heavier baselines."
+      }
+    ],
+    "progressionRule": "Double progression: work inside the rep range at the week's RIR. When every set of an exercise reaches the top of the range at or above the target RIR, add the smallest step next session (dumbbell +2 kg, bar +5 kg, machine +1 plate) and drop back to the bottom of the range. If reps fall below the range two sessions in a row, reduce load ~10% and rebuild. If a session feels unusually heavy (bad sleep, baby night), keep the load and stop at RIR 3: that still counts.",
+    "undulation": {
+      "Strength A – full body": "moderate: 8-10 reps",
+      "Strength B – full body": "lighter/volume: 10-12 reps, shorter rests",
+      "Strength C – heavier": "heavy: 6-8 reps, longest rests (main lifts only may reach RIR 1 from week 5)",
+      "why": "Daily undulation spreads stress across the week and is at least as effective as linear models; in volume-equated studies periodization helps strength slightly but does not change hypertrophy (Moesgaard 2022)."
+    },
+    "rotation": {
+      "everyWeeks": 4,
+      "fixed": [
+        "Dumbbell goblet squat",
+        "Dumbbell bench press",
+        "Lat pulldown",
+        "Dumbbell Romanian deadlift",
+        "Standing dumbbell shoulder press",
+        "Leg press",
+        "Incline dumbbell press",
+        "Seated cable row",
+        "Dumbbell reverse lunge",
+        "Trap-bar deadlift",
+        "Band-assisted pull-up",
+        "Dumbbell chest press",
+        "Bulgarian split squat"
+      ],
+      "rule": "Main lifts (the fixed list) stay the same for the full 8-week block so progress is measurable; change a main lift only at the start of a new block and only if it has stalled for 2+ weeks or causes joint pain, choosing an alternate within +/-1 level of the same pattern. Accessories (face pull, curls, triceps, lateral raise, core, power and conditioning items) rotate every 4 weeks, at week 5 and at week 1 of the next block, to the next alternate of the same pattern and similar level; rotate at most 1-2 exercises per session, restart the new variation at RIR 3 for its first session, and never rotate randomly session to session. Busy-station swaps on the day do not count as a rotation: log them, but return to the planned exercise next session.",
+      "evidence": "Systematic variation can broaden regional hypertrophy while excessive/random rotation can blunt gains (Kassiano 2022); varying exercises gave similar strength and size with better motivation (Baz-Valle 2019)."
+    }
+  },
+  "express": {
+    "targetMin": 40,
+    "keepSlots": "Strength days: keep the A and B superset slots (the 4 compound lifts; on Strength C keep A, B1 and B2) and drop C and D. Wednesday: 20 min steady cardio + Dead bug and Side plank. Friday: slams + box jumps (3 sets each) + 4 bike intervals.",
+    "setsPerSlot": 2,
+    "restSec": {
+      "main": 90,
+      "accessory": 45
+    },
+    "rules": [
+      "Warm-up shrinks to 5 min: 2-3 min easy cardio, then 1 light ramp set of the first lift (skip the mobility list).",
+      "Do the kept slots as antagonist supersets (e.g. A1 squat + A2 press, B1 pull + B2 hinge): set of A1, ~45 s, set of A2, then 90 s before the next round. Paired supersets cut session time roughly in half with similar volume (Iversen 2021; Weakley 2017).",
+      "2 hard working sets per slot at the week's RIR target (never below RIR 1). If you have 5 spare minutes, give the first lift of the day a 3rd set.",
+      "Drop all C/D accessories first; if time remains, add ONE 2-set superset finisher (e.g. lateral raise + hammer curl) with 45 s rest.",
+      "Keep the same loads as a full session; Express cuts sets, not weight. Intensity, not volume, is what maintains strength (Spiering 2021).",
+      "Rest-pause option for the last set of an accessory: reach the RIR target, rest 15 s, do 2-4 more reps once. Use only on machines/cables, not on squats or deadlifts.",
+      "Cooldown is 2 min of walking; stretch later at home if possible.",
+      "Two Express sessions give each big muscle ~4+ hard sets per week, the minimum Iversen 2021 suggests for continued gains; three Express sessions give ~6."
+    ]
+  },
+  "busyWeek": {
+    "keep": [
+      "Strength A – full body",
+      "Strength B – full body",
+      "Strength C – heavier"
+    ],
+    "why": "The three full-body strength sessions train every major muscle 3x per week, which keeps weekly hard sets per muscle around 6-9 (enough to keep progressing as an intermediate-beginner; Schoenfeld 2017, Iversen 2021). Cardio and conditioning are the easiest to replace outside the gym with steps, pram walks and a short home interval, and missing them for a week costs little fitness (Spiering 2021). Space them with a rest day between if possible (e.g. Tue/Thu/Sat). If only 2 sessions are possible, keep Strength A and Strength C (both include squat or hinge, press and pull), run them as Express, and keep daily steps.",
+    "ifOnlyTwo": [
+      "Strength A – full body",
+      "Strength C – heavier"
+    ],
+    "ifOnlyOne": "Do Strength A as Express: 1 session per week with 1-2 hard sets per exercise at the same load maintains strength and muscle for months (Spiering 2021; Bickel 2011)."
+  },
+  "homeFallback": [
+    {
+      "name": "Goblet squat (one dumbbell; bodyweight squat if none)",
+      "freeDbId": "Goblet_Squat",
+      "sets": 3,
+      "reps": "10-15"
+    },
+    {
+      "name": "Push-up (hands on a sofa or bench to make easier)",
+      "freeDbId": "Pushups",
+      "sets": 3,
+      "reps": "8-15"
+    },
+    {
+      "name": "One-arm dumbbell row (hand on a chair)",
+      "freeDbId": "One-Arm_Dumbbell_Row",
+      "sets": 3,
+      "reps": "10-12 / side"
+    },
+    {
+      "name": "Dumbbell Romanian deadlift (or single-leg RDL)",
+      "freeDbId": "Stiff-Legged_Dumbbell_Deadlift",
+      "sets": 3,
+      "reps": "10-12"
+    },
+    {
+      "name": "Dumbbell reverse lunge (bodyweight if no dumbbells)",
+      "freeDbId": "Dumbbell_Rear_Lunge",
+      "sets": 2,
+      "reps": "8 / side"
+    },
+    {
+      "name": "Dead bug",
+      "freeDbId": "Dead_Bug",
+      "sets": 2,
+      "reps": "8 / side"
+    }
+  ],
+  "homeFallbackNote": "Circuit, about 15 min: do the first 4 moves back-to-back with no rest, rest 60 s, repeat for 3 rounds; then 2 rounds of lunge + dead bug if time allows. Stop each set at RIR 2. This counts as a strength session in the log.",
+  "parentTips": [
+    "Sleep is part of the program: aim for 7+ hours, and use naps to catch up. In a calorie deficit, short sleep (5.5 h) shifted weight loss from fat to lean mass and raised hunger (Nedeltcheva 2010). After a bad night, still train but use Express and RIR 3: no PR attempts.",
+    "Most fat-loss movement is outside the gym: walk with the pram or baby carrier, take calls standing, and aim for 7,000-10,000 steps. Non-exercise activity can differ by hundreds of kcal a day between people (Levine 2005), and mortality risk keeps falling with more daily steps up to roughly 6,000-8,000 for adults over 60 and 8,000-10,000 for younger adults (Paluch 2022).",
+    "A missed week is not lost progress. One or two short sessions a week at the same weights keep strength and muscle for months (Spiering 2021; Bickel 2011), so on chaotic weeks aim for 'two Express sessions', not 'all or nothing'.",
+    "Eat about 1.6 g protein per kg body weight per day, spread over 3-4 meals; extra protein above this gave no further measurable muscle gain (Morton 2018). This is the main thing that protects muscle while losing fat.",
+    "Keep the 15-minute home circuit as the fallback when the gym is impossible: training to near failure (RIR 1-3) gives most of the muscle benefit, so short, hard sets at home still count (Refalo 2023; Robinson 2024)."
+  ],
+  "sources": [
+    "Iversen VM, Norum M, Schoenfeld BJ, Fimland MS (2021). No Time to Lift? Designing Time-Efficient Training Programs for Strength and Hypertrophy: A Narrative Review. Sports Med 51:2079-2095. https://pubmed.ncbi.nlm.nih.gov/34125411/",
+    "Spiering BA, Mujika I, Sharp MA, Foulis SA (2021). Maintaining Physical Performance: The Minimal Dose of Exercise Needed to Preserve Endurance and Strength Over Time. J Strength Cond Res 35(5):1449-1458. https://pubmed.ncbi.nlm.nih.gov/33629972",
+    "Bickel CS, Cross JM, Bamman MM (2011). Exercise dosing to retain resistance training adaptations in young and older adults. Med Sci Sports Exerc 43(7):1177-1187.",
+    "Schoenfeld BJ, Ogborn D, Krieger JW (2017). Dose-response relationship between weekly resistance training volume and increases in muscle mass: a systematic review and meta-analysis. J Sports Sci 35(11):1073-1082.",
+    "Schoenfeld BJ, Ogborn D, Krieger JW (2016). Effects of Resistance Training Frequency on Measures of Muscle Hypertrophy: A Systematic Review and Meta-Analysis. Sports Med 46(11):1689-1697.",
+    "Ralston GW, Kilgore L, Wyatt FB, Baker JS (2017). The Effect of Weekly Set Volume on Strength Gain: A Meta-Analysis. Sports Med 47:2585-2601. https://pubmed.ncbi.nlm.nih.gov/28755103/",
+    "Pelland JC, Remmert JF, Robinson ZP, Hinson SR, Zourdos MC (2024 preprint). The Resistance Training Dose-Response: Meta-Regressions Exploring the Effects of Weekly Volume and Frequency on Muscle Hypertrophy and Strength Gain. SportRxiv. https://sportrxiv.org/index.php/server/preprint/view/460",
+    "Refalo MC, Helms ER, Trexler ET, Hamilton DL, Fyfe JJ (2023). Influence of Resistance Training Proximity-to-Failure on Skeletal Muscle Hypertrophy: A Systematic Review with Meta-analysis. Sports Med 53(3):649-665. https://pubmed.ncbi.nlm.nih.gov/36334240/",
+    "Robinson ZP, Pelland JC, Remmert JF, et al. (2024). Exploring the Dose-Response Relationship Between Estimated Resistance Training Proximity to Failure, Strength Gain, and Muscle Hypertrophy: A Series of Meta-Regressions. Sports Med.",
+    "Helms ER, Cronin J, Storey A, Zourdos MC (2016). Application of the Repetitions in Reserve-Based Rating of Perceived Exertion Scale for Resistance Training. Strength Cond J 38(4):42-49. https://openrepository.aut.ac.nz/items/92cefeac-7c32-44f1-bfbc-f48f4a5dd8cf",
+    "Zourdos MC, Klemp A, Dolan C, et al. (2016). Novel Resistance Training-Specific Rating of Perceived Exertion Scale Measuring Repetitions in Reserve. J Strength Cond Res 30(1):267-275.",
+    "Moesgaard L, Beck MM, Christiansen L, Aagaard P, Lundbye-Jensen J (2022). Effects of Periodization on Strength and Muscle Hypertrophy in Volume-Equated Resistance Training Programs: A Systematic Review and Meta-analysis. Sports Med 52:1647-1666. https://pubmed.ncbi.nlm.nih.gov/35044672/",
+    "Kassiano W, Nunes JP, Costa B, Ribeiro AS, Schoenfeld BJ, Cyrino ES (2022). Does Varying Resistance Exercises Promote Superior Muscle Hypertrophy and Strength Gains? A Systematic Review. J Strength Cond Res 36(6):1753-1762. https://pubmed.ncbi.nlm.nih.gov/35438660/",
+    "Baz-Valle E, Schoenfeld BJ, Torres-Unda J, Santos-Concejero J, Balsalobre-Fernandez C (2019). The effects of exercise variation in muscle thickness, maximal strength and motivation in resistance trained men. PLoS One 14(12):e0226989. https://pubmed.ncbi.nlm.nih.gov/31881066/",
+    "Bell L, Strafford BW, Coleman M, Androulakis Korakakis P, Nolan D (2023). Integrating Deloading into Strength and Physique Sports Training Programmes: An International Delphi Consensus Approach. Sports Med Open 9:87. https://pmc.ncbi.nlm.nih.gov/articles/PMC10511399/",
+    "Coleman M, Burke R, Augustin F, et al. (2024). Gaining more from doing less? The effects of a one-week deload period during supervised resistance training on muscular adaptations. PeerJ 12:e16777. https://pubmed.ncbi.nlm.nih.gov/38274324/",
+    "Weakley JJS, Till K, Read DB, et al. (2017). The effects of traditional, superset, and tri-set resistance training structures on perceived intensity and physiological responses. Eur J Appl Physiol 117(9):1877-1889. https://pmc.ncbi.nlm.nih.gov/articles/PMC5556132/",
+    "Nedeltcheva AV, Kilkus JM, Imperial J, Schoeller DA, Penev PD (2010). Insufficient sleep undermines dietary efforts to reduce adiposity. Ann Intern Med 153(7):435-441. https://pubmed.ncbi.nlm.nih.gov/20921542/",
+    "Levine JA, Lanningham-Foster LM, McCrady SK, et al. (2005). Interindividual variation in posture allocation: possible role in human obesity. Science 307:584-586. https://pubmed.ncbi.nlm.nih.gov/15681386/",
+    "Paluch AE, Bajpai S, Bassett DR, et al. (2022). Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts. Lancet Public Health 7(3):e219-e228. https://pubmed.ncbi.nlm.nih.gov/35247352/",
+    "Morton RW, Murphy KT, McKellar SR, et al. (2018). A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength in healthy adults. Br J Sports Med 52(6):376-384.",
+    "free-exercise-db (yuhonas). Public-domain exercise dataset used for all freeDbId values. https://github.com/yuhonas/free-exercise-db"
+  ],
+  "notes": [
+    "Program data fix: 'Dumbbell overhead triceps extension' uses freeDbId 'Kettlebell_Overhead_Triceps_Extension', which has fewer than 2 images in free-exercise-db. Recommend switching it to 'Standing_Dumbbell_Triceps_Extension' (two-hand dumbbell overhead extension, 2 images).",
+    "Swaps with freeDbId null in the program (Outdoor brisk walk, Weighted plate crunch, Band face pull, Dumbbell swing, Farmer's march in place) can use: Trail_Running_Walking, Weighted_Crunches, Band_Pull_Apart (closest band rear-delt move), Vertical_Swing, Farmers_Walk respectively.",
+    "Carry pattern has thin coverage in free-exercise-db (only Farmers_Walk plus strongman sled/yoke items); carry alternates therefore include grip holds and sled work."
+  ]
+}

@@ -73,6 +73,25 @@ export async function onboard(page: Page, opts: { name?: string } = {}) {
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: "Let's train" }).click();
   await expect(page).toHaveURL(/\/today/);
+  await dismissIntro(page);
+}
+
+/** Close the first-run tour and the iOS "Add to Home Screen" guide (whichever appear). */
+export async function dismissIntro(page: Page) {
+  await page.waitForTimeout(300);
+  for (let i = 0; i < 4; i++) {
+    const dialog = page.getByRole('dialog');
+    if (!(await dialog.first().isVisible().catch(() => false))) {
+      await page.waitForTimeout(400);
+      if (!(await dialog.first().isVisible().catch(() => false))) break;
+    }
+    const name = (await dialog.first().getAttribute('aria-labelledby')) ?? '';
+    const btn = dialog.first().getByRole('button', { name: /^(Skip|Got it)$/ });
+    if (await btn.first().isVisible().catch(() => false)) await btn.first().click();
+    else await page.keyboard.press('Escape');
+    void name;
+  }
+  await expect(page.getByRole('dialog')).toHaveCount(0);
 }
 
 /** Count rows in an IndexedDB table via Dexie's raw IDB. */

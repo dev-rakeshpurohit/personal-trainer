@@ -18,9 +18,9 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** fresh install → onboarding → the data shows in DevTools IndexedDB.
 
 ## M2 — Today + Train + Library (1 day)
-- [ ] Today screen with the hero card logic per weekday/type, next meal, rings, quick log sheets
-- [ ] Train tab week strip + day cards
-- [ ] Library list/search/filter + exercise detail with the 2-frame demo player
+- [x] Today screen with the hero card logic per weekday/type, next meal, rings, quick log sheets
+- [x] Train tab week strip + day cards
+- [x] Library list/search/filter + exercise detail with the 2-frame demo player
 **Done when:** every weekday shows the right content; the library works offline.
 
 ## M3 — Workout player (2 days) ★ core

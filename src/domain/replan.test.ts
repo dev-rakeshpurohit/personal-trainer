@@ -45,6 +45,11 @@ describe('replanWeek', () => {
     expect(p.byDate[key(2)]?.id).toBe('cardio');
     expect(p.byDate[key(3)]?.id).toBe('A');
   });
+  it('days before onboarding are never "missed"', () => {
+    const p = replanWeek({ days, today: d(3), done: [], since: d(3) });
+    expect(p.adjusted).toBe(false);
+    expect(p.byDate[key(3)]?.id).toBe('B');
+  });
   it('never schedules on a rest (gym closed) day', () => {
     const p = replanWeek({ days, today: d(6), done: [] });
     expect(p.byDate[key(0)]?.type).toBe('rest');
@@ -54,5 +59,13 @@ describe('replanWeek', () => {
     const cov = coveredDates(days, [{ programDayId: 'A', dayKey: key(2) }], weekDates(d(2)));
     expect(cov.has(key(1))).toBe(true);
     expect(cov.has(key(2))).toBe(true);
+  });
+});
+
+describe('allCoveredDates', () => {
+  it('adds the original planned date of a make-up session', async () => {
+    const { allCoveredDates } = await import('./replan');
+    const cov = allCoveredDates(days, [{ programDayId: 'A', dayKey: key(3) }]);
+    expect([...cov].sort()).toEqual([key(1), key(3)].sort());
   });
 });

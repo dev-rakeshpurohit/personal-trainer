@@ -6,6 +6,8 @@ import Eat from './features/eat/Eat';
 import Progress from './features/progress/Progress';
 import More from './features/more/More';
 import Onboarding from './features/onboarding/Onboarding';
+import Library from './features/library/Library';
+import ExerciseDetail from './features/library/ExerciseDetail';
 
 export const router: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   {
@@ -17,6 +19,8 @@ export const router: ReturnType<typeof createBrowserRouter> = createBrowserRoute
           { path: '/', element: <Navigate to="/today" replace /> },
           { path: '/today', element: <Today /> },
           { path: '/train', element: <Train /> },
+          { path: '/train/library', element: <Library /> },
+          { path: '/train/library/:exerciseId', element: <ExerciseDetail /> },
           { path: '/eat', element: <Eat /> },
           { path: '/progress', element: <Progress /> },
           { path: '/more', element: <More /> },
