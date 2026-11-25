@@ -24,13 +24,13 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** every weekday shows the right content; the library works offline.
 
 ## M3 — Workout player (2 days) ★ core
-- [ ] Session state machine persisted in `activeSession`; resume bar
-- [ ] Set rows with steppers (hold-to-repeat), prefill from `domain/progression`
-- [ ] Supersets flow, swap chip, notes
-- [ ] Rest timer (timestamp-based), chime, vibrate, SW notification
-- [ ] Wake lock
-- [ ] PR detection + session summary
-- [ ] e2e: log a full Strength A session; kill the page mid-session → resume on the same set
+- [x] Session state machine persisted in `activeSession`; resume bar
+- [x] Set rows with steppers (hold-to-repeat), prefill from `domain/progression`
+- [x] Supersets flow, swap chip, notes
+- [x] Rest timer (timestamp-based), chime, vibrate, SW notification
+- [x] Wake lock
+- [x] PR detection + session summary
+- [x] e2e: log a full Strength A session; kill the page mid-session → resume on the same set
 **Done when:** a Playwright offline spec runs a full session in offline mode (context.setOffline(true)).
 
 ## M4 — My clip (½ day)

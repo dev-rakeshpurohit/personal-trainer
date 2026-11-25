@@ -14,7 +14,18 @@ const BASES = ['https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main', 'htt
 const IMAGE_FALLBACK: Record<string, string> = {
   Kettlebell_Overhead_Triceps_Extension: 'Standing_Dumbbell_Triceps_Extension',
 };
-const ids: string[] = JSON.parse(readFileSync(path.join(ROOT, 'seed/free-exercise-db-ids.json'), 'utf8'));
+const seedIds: string[] = JSON.parse(readFileSync(path.join(ROOT, 'seed/free-exercise-db-ids.json'), 'utf8'));
+// Research alternates (doc 09) + images for seed swaps that had none
+const research = JSON.parse(readFileSync(path.join(ROOT, 'seed/alternates.research.json'), 'utf8')) as {
+  alternates: Record<string, { freeDbId: string }[]>;
+  homeFallback: { freeDbId: string }[];
+};
+const extra = [
+  ...Object.values(research.alternates).flatMap((l) => l.map((a) => a.freeDbId)),
+  ...research.homeFallback.map((h) => h.freeDbId),
+  'Trail_Running_Walking', 'Weighted_Crunches', 'Vertical_Swing', 'Standing_Dumbbell_Triceps_Extension',
+];
+const ids: string[] = [...new Set([...seedIds, ...extra])];
 
 interface DbEx {
   id: string;

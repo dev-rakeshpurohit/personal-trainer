@@ -83,3 +83,19 @@ export const backupSchema = z.object({
   media: z.enum(['omitted', 'included-in-zip']),
 });
 export type Backup = z.infer<typeof backupSchema>;
+
+export const researchSchema = z.object({
+  patterns: z.record(z.string(), z.string()),
+  alternates: z.record(
+    z.string(),
+    z.array(z.object({ name: z.string(), freeDbId: z.string(), equipment: z.string(), level: z.number(), why: z.string().optional(), unit: unit })),
+  ),
+  periodization: z.object({
+    weeks: z.array(
+      z.object({ week: z.number(), rirMain: z.number(), rirAccessory: z.number(), focus: z.string(), note: z.string(), setsDelta: z.number().optional(), deload: z.boolean() }),
+    ),
+  }),
+  homeFallback: z.array(z.object({ name: z.string(), freeDbId: z.string(), sets: z.number(), reps: z.string() })),
+  parentTips: z.array(z.string()),
+});
+export type Research = z.infer<typeof researchSchema>;

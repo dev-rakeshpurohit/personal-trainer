@@ -12,8 +12,10 @@ describe('seed import', () => {
     const r = await importProgramTemplate({ today: new Date(2026, 11, 1) });
     expect(r.days).toBe(7);
     expect(r.daysWithExercises).toBe(5);
-    expect(r.mediaIds).toBe(42);
     expect(ids).toHaveLength(42);
+    const mediaIds = new Set(parseMediaIndex().map((m) => m.id));
+    expect(ids.every((i: string) => mediaIds.has(i))).toBe(true);
+    expect(r.mediaIds).toBeGreaterThanOrEqual(42);
     expect(await db.programDays.count()).toBe(7);
     const tue = await db.programDays.where('weekday').equals('TUE').first();
     expect(tue?.title).toMatch(/Strength A/);
@@ -31,6 +33,19 @@ describe('seed import', () => {
     const goblet = await db.exercises.get('dumbbell-goblet-squat');
     expect(goblet?.isBodyweight).toBe(false);
     expect((await db.exercises.get('front-plank'))?.isBodyweight).toBe(true);
+  });
+  it('adds research alternates, patterns and the weekly wave', async () => {
+    const r = await importProgramTemplate();
+    const goblet = await db.exercises.get('dumbbell-goblet-squat');
+    expect(goblet?.pattern).toBe('squat');
+    expect(goblet?.alternates?.length).toBeGreaterThanOrEqual(3);
+    const alt = await db.exercises.get(goblet!.alternates![0]);
+    expect(alt?.freeDbId).toBeTruthy();
+    expect(alt?.level).toBe(1);
+    expect((await db.exercises.get('band-face-pull'))?.freeDbId).toBe('Band_Pull_Apart');
+    const prog = await db.programs.get(r.programId);
+    expect(prog?.progression.weeks).toHaveLength(8);
+    expect(prog?.progression.weeks?.[7].deload).toBe(true);
   });
   it('imports the diet with habits', async () => {
     const r = await importDietTemplate();

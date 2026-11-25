@@ -18,6 +18,8 @@ interface Props {
 /** Big ± stepper with hold-to-repeat; tapping the value allows typing. */
 export function Stepper({ label, value, onChange, step, min = 0, max = 9999, suffix, decimals = 2, inputMode = 'decimal', size = 'md', placeholder = '–' }: Props) {
   const timer = useRef<ReturnType<typeof setTimeout>>();
+  const holding = useRef(false);
+  const startedAt = useRef(0);
   const valRef = useRef(value);
   valRef.current = value;
   const [text, setText] = useState<string | null>(null);
@@ -25,19 +27,42 @@ export function Stepper({ label, value, onChange, step, min = 0, max = 9999, suf
   const clamp = (v: number) => Math.min(max, Math.max(min, Number(v.toFixed(decimals))));
   const bump = (dir: 1 | -1) => onChange(clamp((valRef.current ?? 0) + dir * step));
 
+  const stop = () => {
+    holding.current = false;
+    clearTimeout(timer.current);
+    timer.current = undefined;
+    window.removeEventListener('pointerup', stop);
+    window.removeEventListener('pointercancel', stop);
+    window.removeEventListener('touchend', stop);
+    window.removeEventListener('touchcancel', stop);
+    window.removeEventListener('blur', stop);
+    document.removeEventListener('visibilitychange', stop);
+  };
+
+  /** Hold-to-repeat. Robust on iOS: any release anywhere stops it, and it can never run longer than 6 s. */
   const start = (dir: 1 | -1) => {
+    stop();
+    holding.current = true;
+    startedAt.current = Date.now();
     bump(dir);
-    let delay = 380;
+    window.addEventListener('pointerup', stop);
+    window.addEventListener('pointercancel', stop);
+    window.addEventListener('touchend', stop);
+    window.addEventListener('touchcancel', stop);
+    window.addEventListener('blur', stop);
+    document.addEventListener('visibilitychange', stop);
+    let delay = 420;
     const loop = () => {
       timer.current = setTimeout(() => {
+        if (!holding.current || Date.now() - startedAt.current > 6000) return stop();
         bump(dir);
-        delay = Math.max(60, delay * 0.8);
+        delay = Math.max(70, delay * 0.82);
         loop();
       }, delay);
     };
     loop();
   };
-  const stop = () => clearTimeout(timer.current);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => stop, []);
 
   const h = size === 'lg' ? 'h-14' : 'h-12';
@@ -57,6 +82,7 @@ export function Stepper({ label, value, onChange, step, min = 0, max = 9999, suf
         onPointerUp={stop}
         onPointerLeave={stop}
         onPointerCancel={stop}
+        onContextMenu={(e) => e.preventDefault()}
         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && bump(-1)}
       >
         <Minus size={20} aria-hidden />
@@ -92,6 +118,7 @@ export function Stepper({ label, value, onChange, step, min = 0, max = 9999, suf
         onPointerUp={stop}
         onPointerLeave={stop}
         onPointerCancel={stop}
+        onContextMenu={(e) => e.preventDefault()}
         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && bump(1)}
       >
         <Plus size={20} aria-hidden />

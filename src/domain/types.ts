@@ -43,6 +43,12 @@ export interface Exercise {
   custom: boolean;
   isBodyweight?: boolean;
   defaultUnit: Unit;
+  /** Movement pattern (squat, hinge, horizontal_push…) */
+  pattern?: string;
+  /** 1 (easiest) … 5 (hardest) */
+  level?: number;
+  /** Ranked alternates (exercise ids), easier → harder */
+  alternates?: string[];
 }
 
 export interface CycleEntry {
@@ -51,11 +57,22 @@ export interface CycleEntry {
   deload?: boolean;
   note?: string;
 }
+export interface WeekFocus {
+  week: number;
+  rirMain: number;
+  rirAccessory: number;
+  focus: string;
+  note: string;
+  setsDelta: number;
+  deload: boolean;
+}
 export interface ProgressionCfg {
   model: 'double_progression';
   dumbbellIncrementKg: number;
   barIncrementKg: number;
   cycle: CycleEntry[];
+  /** Research-based weekly wave (doc 09) */
+  weeks?: WeekFocus[];
 }
 export interface WarmupItem {
   name: string;
@@ -116,6 +133,41 @@ export interface Session {
   notes?: string;
   cycleWeek: number;
   deload: boolean;
+  mode?: SessionMode;
+  feedback?: SessionFeedback;
+}
+
+export type SessionMode = 'full' | 'express';
+export type Feel = 'too_easy' | 'just_right' | 'too_hard';
+export interface SessionFeedback {
+  rpe: number;
+  feel: Feel;
+  /** exercise ids that caused joint pain */
+  pain: string[];
+  /** exercise ids the user didn't enjoy */
+  disliked: string[];
+  ranOutOfTime: boolean;
+  energy?: 'low' | 'ok' | 'high';
+  note?: string;
+}
+
+/** One exercise as it will be performed in a session (snapshot at start). */
+export interface SessionExercise {
+  plannedExerciseId: string;
+  exerciseId: string;
+  originalExerciseId: string;
+  slot: string;
+  supersetGroup?: string;
+  sets: number;
+  repsMin: number;
+  repsMax: number;
+  unit: Unit;
+  perSide: boolean;
+  restSec: number;
+  rir?: number;
+  isMain: boolean;
+  cue?: string;
+  note?: string;
 }
 
 export interface SetLog {
@@ -143,6 +195,12 @@ export interface ActiveSessionState {
   restTotalSec?: number;
   swaps: Record<string, string>;
   extraSets?: Record<string, number>;
+  plan?: SessionExercise[];
+  prShown?: string[];
+  /** hold weight increases this session (feedback said too hard) */
+  hold?: boolean;
+  /** exercise ids that hurt last time */
+  pain?: string[];
 }
 
 export interface DietPlan {

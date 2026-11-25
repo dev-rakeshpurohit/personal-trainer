@@ -1,8 +1,9 @@
 import programJson from '../../seed/program.lean-athletic-v2.json';
 import dietJson from '../../seed/diet.lean-veg-egg-2000.json';
 import mediaIndexJson from '../../public/media/exercises/index.json';
+import researchJson from '../../seed/alternates.research.json';
 import { db, setMeta, uid } from './db';
-import { mediaIndexSchema, seedDietSchema, seedProgramSchema, type MediaIndex, type SeedDiet, type SeedProgram } from './schemas';
+import { mediaIndexSchema, researchSchema, seedDietSchema, seedProgramSchema, type MediaIndex, type Research, type SeedDiet, type SeedProgram } from './schemas';
 import { dayKey, weekStartOf } from '@/domain/schedule';
 import type { Category, DayType, Exercise, HabitDef, PlannedExercise, PlannedMeal, Program, ProgramDay, Unit, Weekday } from '@/domain/types';
 import { WEEKDAYS, isTrainingType } from '@/domain/types';
@@ -17,6 +18,16 @@ export const slugify = (s: string): string =>
 export const parseSeedProgram = (): SeedProgram => seedProgramSchema.parse(programJson);
 export const parseSeedDiet = (): SeedDiet => seedDietSchema.parse(dietJson);
 export const parseMediaIndex = (): MediaIndex => mediaIndexSchema.parse(mediaIndexJson);
+export const parseResearch = (): Research => researchSchema.parse(researchJson);
+
+/** Seed swaps that have no free-exercise-db id get the closest available demo (doc 09 notes). */
+const NULL_SWAP_IMAGES: Record<string, string> = {
+  'Outdoor brisk walk later in the day': 'Trail_Running_Walking',
+  'Weighted plate crunch': 'Weighted_Crunches',
+  'Band face pull': 'Band_Pull_Apart',
+  'Dumbbell swing': 'Vertical_Swing',
+  "Farmer's march in place, 40 s": 'Farmers_Walk',
+};
 
 const BODYWEIGHT_EQUIP = new Set(['body only', 'bands', 'none', 'foam roll', 'exercise ball']);
 
@@ -29,13 +40,14 @@ function category(dbCat: string | undefined, muscles: string[], unit: Unit): Cat
 }
 
 /** Build library entries for every exercise/swap/warm-up item in the seed (upsert by slug). */
-export function buildExercises(program: SeedProgram, media: MediaIndex): Map<string, Exercise> {
+export function buildExercises(program: SeedProgram, media: MediaIndex, research?: Research): Map<string, Exercise> {
   const byDb = new Map(media.map((m) => [m.id, m]));
   const out = new Map<string, Exercise>();
-  const add = (name: string, freeDbId: string | null | undefined, unit: Unit, extra: { cue?: string; youtubeQuery?: string }) => {
+  const add = (name: string, rawId: string | null | undefined, unit: Unit, extra: { cue?: string; youtubeQuery?: string; level?: number; pattern?: string; equipment?: string }) => {
     const id = slugify(name);
+    const freeDbId = rawId ?? NULL_SWAP_IMAGES[name];
     const m = freeDbId ? byDb.get(freeDbId) : undefined;
-    const equipment = m?.equipment ?? [];
+    const equipment = m?.equipment?.length ? m.equipment : extra.equipment ? [extra.equipment === 'bodyweight' ? 'body only' : extra.equipment] : [];
     const cat = category(m?.category, m?.primaryMuscles ?? [], unit);
     const prev = out.get(id);
     const ex: Exercise = {
@@ -50,16 +62,32 @@ export function buildExercises(program: SeedProgram, media: MediaIndex): Map<str
       youtubeQuery: prev?.youtubeQuery ?? extra.youtubeQuery,
       custom: false,
       isBodyweight: cat === 'cardio' || cat === 'mobility' || !m || equipment.every((e) => BODYWEIGHT_EQUIP.has(e)),
-      defaultUnit: unit,
+      defaultUnit: prev?.defaultUnit ?? unit,
+      level: prev?.level ?? extra.level,
+      pattern: prev?.pattern ?? extra.pattern,
+      alternates: prev?.alternates,
     };
     out.set(id, prev ? { ...ex, cue: prev.cue ?? ex.cue } : ex);
     return id;
+  };
+  const addAlternates = (name: string) => {
+    const alts = research?.alternates[name];
+    if (!alts) return;
+    const pattern = research?.patterns[name];
+    const ids = alts.map((a) => add(a.name, a.freeDbId, a.unit, { level: a.level, pattern, equipment: a.equipment }));
+    const parent = out.get(slugify(name))!;
+    out.set(parent.id, { ...parent, pattern: parent.pattern ?? pattern, alternates: ids.filter((x) => x !== parent.id) });
   };
   for (const w of program.warmup.items) if (w.freeDbId !== undefined) add(w.name, w.freeDbId, 'reps', { youtubeQuery: w.youtubeQuery });
   for (const d of program.days)
     for (const e of d.exercises ?? []) {
       add(e.name, e.freeDbId, e.target.unit, { cue: e.cue, youtubeQuery: e.youtubeQuery });
       if (e.swap) add(e.swap.name, e.swap.freeDbId, e.target.unit, { youtubeQuery: e.swap.youtubeQuery });
+    }
+  for (const d of program.days)
+    for (const e of d.exercises ?? []) {
+      addAlternates(e.name);
+      if (e.swap) addAlternates(e.swap.name);
     }
   return out;
 }
@@ -97,7 +125,8 @@ export interface ImportResult {
 export async function importProgramTemplate(opts: { trainingDays?: Weekday[]; today?: Date } = {}): Promise<ImportResult> {
   const program = parseSeedProgram();
   const media = parseMediaIndex();
-  const exercises = buildExercises(program, media);
+  const research = parseResearch();
+  const exercises = buildExercises(program, media, research);
   const today = opts.today ?? new Date();
   const programId = uid();
   const p: Program = {
@@ -113,7 +142,10 @@ export async function importProgramTemplate(opts: { trainingDays?: Weekday[]; to
     })),
     cooldown: program.cooldown,
     rules: program.rules,
-    progression: program.progression,
+    progression: {
+      ...program.progression,
+      weeks: research.periodization.weeks.map((w) => ({ ...w, setsDelta: w.setsDelta ?? 0 })),
+    },
     templateId: program.id,
   };
   const mapped = remapDays(program.days, opts.trainingDays);

@@ -8,6 +8,9 @@ import More from './features/more/More';
 import Onboarding from './features/onboarding/Onboarding';
 import Library from './features/library/Library';
 import ExerciseDetail from './features/library/ExerciseDetail';
+import Player from './features/workout/Player';
+import Prestart from './features/workout/Prestart';
+import Summary from './features/workout/Summary';
 
 export const router: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   {
@@ -27,6 +30,10 @@ export const router: ReturnType<typeof createBrowserRouter> = createBrowserRoute
         ],
       },
       { path: '/onboarding', element: <Onboarding /> },
+      { path: '/workout', element: <Player /> },
+      { path: '/workout/today', element: <Prestart /> },
+      { path: '/workout/start/:dayId', element: <Prestart /> },
+      { path: '/workout/summary/:sessionId', element: <Summary /> },
       { path: '*', element: <Navigate to="/today" replace /> },
     ],
   },
