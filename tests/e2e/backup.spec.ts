@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import { dismissIntro, onboard } from './helpers';
+import { dismissIntro, onboard, unlock } from './helpers';
 
 async function snapshot(page: Page) {
   return page.evaluate(
@@ -51,7 +51,8 @@ test('backup round-trip: export → erase all data → restore on "new phone" �
   await page.getByRole('button', { name: 'Erase all data on this phone' }).click();
   await page.getByRole('button', { name: 'Erase all data', exact: true }).click();
   await expect(page).toHaveURL(/onboarding/);
-
+  // erasing also forgets the invite unlock, like a brand-new phone
+  await unlock(page);
   await page.getByLabel('Backup file').setInputFiles(path);
   await expect(page).toHaveURL(/today/);
   await dismissIntro(page);

@@ -1,4 +1,4 @@
-import { ChevronRight, ClipboardList, Code2, Database, HardDriveDownload, Info, LayoutTemplate, Salad, Settings as Cog } from 'lucide-react';
+import { ChevronRight, ClipboardList, Code2, Database, HardDriveDownload, Info, LayoutTemplate, Salad, Settings as Cog, SlidersHorizontal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '@/components/ui';
 import { useProfile } from '@/data/hooks';
@@ -14,6 +14,7 @@ const devOn = () => {
 export default function More() {
   const profile = useProfile();
   const groups = [
+    [{ to: '/more/setup', label: 'My plan setup', sub: 'Goal, body, schedule, equipment, food', Icon: SlidersHorizontal }],
     [
       { to: '/more/plan', label: 'Workout plan', sub: 'Days, exercises, sets, swaps', Icon: ClipboardList },
       { to: '/more/diet', label: 'Diet plan', sub: 'Meals and daily targets', Icon: Salad },

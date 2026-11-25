@@ -7,12 +7,7 @@ test('library and exercise detail work with no network', async ({ page }) => {
   try {
     await page.goto(server.url + '/');
     await waitForSW(page);
-    await page.goto(server.url + '/onboarding');
-    await page.getByRole('button', { name: 'Get started' }).click();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.getByRole('button', { name: "Let's train" }).click();
-    await expect(page).toHaveURL(/today/);
+    await onboard(page, { base: server.url });
     await server.stop();
 
     await page.goto(server.url + '/train/library');

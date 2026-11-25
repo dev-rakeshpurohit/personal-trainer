@@ -1,4 +1,6 @@
 import { spawn, type ChildProcess } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { expect, type Page } from '@playwright/test';
 
 /**
@@ -63,14 +65,23 @@ export async function expectNoServer(url: string) {
   await expect(fetch(url)).rejects.toThrow();
 }
 
-/** Complete onboarding with the ready-made template (defaults). */
-export async function onboard(page: Page, opts: { name?: string; base?: string } = {}) {
-  await page.goto((opts.base ?? '') + '/');
+export const ACCESS_CODE = (process.env.REPMATE_CODE ?? readFileSync(path.resolve(import.meta.dirname, '../../.access-code.local'), 'utf8')).trim();
+
+export async function unlock(page: Page, base = '') {
+  await page.goto(base + '/');
+  await expect(page.getByRole('heading', { name: 'Repmate is invite-only' })).toBeVisible();
+  await page.getByPlaceholder('RPM-XXXX-XXXX').fill(ACCESS_CODE);
+  await page.getByRole('button', { name: 'Unlock' }).click();
   await expect(page.getByRole('heading', { name: /Your coach/ })).toBeVisible();
+}
+
+/** Complete onboarding with the Lean & Athletic template (defaults, full gym). */
+export async function onboard(page: Page, opts: { name?: string; base?: string } = {}) {
+  await unlock(page, opts.base);
+  await page.getByRole('button', { name: /Lean & Athletic template/ }).click();
   await page.getByRole('button', { name: 'Get started' }).click();
   await page.getByPlaceholder('What should we call you?').fill(opts.name ?? 'Alex');
-  await page.getByRole('button', { name: 'Continue' }).click();
-  await page.getByRole('button', { name: 'Continue' }).click();
+  for (let i = 0; i < 3; i++) await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: "Let's train" }).click();
   await expect(page).toHaveURL(/\/today/);
   await dismissIntro(page);

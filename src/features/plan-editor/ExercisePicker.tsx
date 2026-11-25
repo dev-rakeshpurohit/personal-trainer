@@ -8,13 +8,18 @@ import { db } from '@/data/db';
 import { slugify } from '@/data/seed-import';
 import type { Category, Exercise, Unit } from '@/domain/types';
 import { demoSrc } from '@/lib/clips';
+import { isAvailable, PRESETS } from '@/domain/equipment';
 
 /** Pick an exercise from the library, or create a custom one. */
 export function ExercisePicker({ open, onClose, onPick, title = 'Add exercise' }: { open: boolean; onClose: () => void; onPick: (id: string) => void; title?: string }) {
   const [q, setQ] = useState('');
   const [creating, setCreating] = useState(false);
-  const list = useLiveQuery(() => db.exercises.orderBy('name').toArray(), []);
-  const shown = (list ?? []).filter((e) => !q || e.name.toLowerCase().includes(q.toLowerCase())).slice(0, 60);
+  const data = useLiveQuery(async () => {
+    const eq = (await db.profile.get('me'))?.equipment ?? PRESETS.full_gym;
+    const all = await db.exercises.orderBy('name').toArray();
+    return { list: all.filter((e) => isAvailable(e, eq)), hidden: all.filter((e) => !isAvailable(e, eq)).length };
+  }, []);
+  const shown = (data?.list ?? []).filter((e) => !q || e.name.toLowerCase().includes(q.toLowerCase())).slice(0, 60);
   return (
     <Sheet open={open} onClose={() => { setCreating(false); onClose(); }} title={creating ? 'Custom exercise' : title} tall>
       {creating ? (
@@ -36,6 +41,7 @@ export function ExercisePicker({ open, onClose, onPick, title = 'Add exercise' }
           <button type="button" onClick={() => setCreating(true)} className="mt-2 flex min-h-[52px] w-full items-center gap-2 rounded-btn px-2 font-semibold text-primary-ink active:bg-surface2">
             <Plus size={20} aria-hidden /> Create custom exercise{q ? `: "${q}"` : ''}
           </button>
+          {!!data?.hidden && <p className="px-2 text-caption text-muted">{data.hidden} exercises hidden: they need equipment you haven't selected.</p>}
           <ul className="mt-1">
             {shown.map((e) => {
               const t = demoSrc(e.freeDbId, 0);

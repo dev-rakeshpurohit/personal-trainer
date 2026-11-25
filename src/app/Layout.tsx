@@ -32,7 +32,7 @@ export function RootLayout() {
 
   if (profile === undefined) return <Splash />;
   if (profile === null && loc.pathname !== '/onboarding') return <Navigate to="/onboarding" replace />;
-  if (profile && loc.pathname === '/onboarding') return <Navigate to="/today" replace />;
+  if (profile && loc.pathname === '/onboarding' && !loc.search.includes('fresh=1')) return <Navigate to="/today" replace />;
   return (
     <>
       <Outlet />

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { dismissIntro, KillableServer, waitForSW } from './helpers';
+import { KillableServer, onboard, waitForSW } from './helpers';
 
 test('airplane mode: open app, run a full Strength A session, finish with summary', async ({ page }) => {
   test.setTimeout(120_000);
@@ -9,12 +9,7 @@ test('airplane mode: open app, run a full Strength A session, finish with summar
   try {
     await page.goto(server.url + '/');
     await waitForSW(page);
-    await page.getByRole('button', { name: 'Get started' }).click();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.getByRole('button', { name: 'Continue' }).click();
-    await page.getByRole('button', { name: "Let's train" }).click();
-    await expect(page).toHaveURL(/today/);
-    await dismissIntro(page);
+    await onboard(page, { base: server.url });
 
     // ✈️ network gone
     await server.stop();

@@ -8,7 +8,6 @@ test('a clip recorded offline plays after an app restart', async ({ page, contex
   try {
     await page.goto(server.url + '/');
     await waitForSW(page);
-    await page.goto(server.url + '/onboarding');
     await onboard(page, { base: server.url });
     await server.stop();
 

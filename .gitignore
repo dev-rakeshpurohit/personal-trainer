@@ -8,3 +8,4 @@ playwright-report
 .DS_Store
 .env*
 Claude outputs/
+.access-code.local

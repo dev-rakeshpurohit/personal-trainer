@@ -6,6 +6,7 @@ import { Sheet } from '@/components/Sheet';
 import { db } from '@/data/db';
 import type { Exercise } from '@/domain/types';
 import { demoSrc } from '@/lib/clips';
+import { isAvailable, PRESETS } from '@/domain/equipment';
 
 /** Lists the planned exercise, its plan swap and the research alternates (easier → harder). */
 export function AlternatesSheet({
@@ -26,11 +27,16 @@ export function AlternatesSheet({
   allowToday?: boolean;
 }) {
   const [sel, setSel] = useState<string>();
-  const list = useLiveQuery(async () => {
+  const data = useLiveQuery(async () => {
     const orig = await db.exercises.get(originalId);
+    const eq = (await db.profile.get('me'))?.equipment ?? PRESETS.full_gym;
     const ids = [originalId, swapId, ...(orig?.alternates ?? [])].filter((x, i, a): x is string => !!x && a.indexOf(x) === i);
-    return (await db.exercises.bulkGet(ids)).filter((e): e is Exercise => !!e);
-  }, [originalId, swapId]);
+    const all = (await db.exercises.bulkGet(ids)).filter((e): e is Exercise => !!e);
+    // never offer an exercise the user's gym can't support (the current one stays visible)
+    const ok = all.filter((e) => e.id === currentId || isAvailable(e, eq));
+    return { list: ok, hidden: all.length - ok.length };
+  }, [originalId, swapId, currentId]);
+  const list = data?.list;
 
   const close = () => {
     setSel(undefined);
@@ -71,6 +77,7 @@ export function AlternatesSheet({
       }
     >
       <p className="mb-2 text-[15px] text-muted">Same movement, different equipment or difficulty. Each keeps its own history.</p>
+      {!!data?.hidden && <p className="mb-2 text-caption text-muted">{data.hidden} more need equipment you haven't selected (More → My plan setup).</p>}
       <ul className="space-y-2 pb-2">
         {list?.map((e) => {
           const t = demoSrc(e.freeDbId, 0);

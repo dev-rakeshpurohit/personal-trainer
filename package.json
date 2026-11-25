@@ -18,7 +18,8 @@
     "gen:icons": "tsx scripts/gen-icons.ts",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc -b --noEmit",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "gen:code": "tsx scripts/gen-code.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "6.1.0",

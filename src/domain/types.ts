@@ -4,6 +4,8 @@ export type DayType = 'strength' | 'cardio' | 'conditioning' | 'rest' | 'active_
 export type Weekday = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 export type Sex = 'male' | 'female' | 'other';
 export type DietType = 'veg' | 'veg_egg' | 'nonveg' | 'vegan';
+export type Goal = 'fat_loss' | 'lean' | 'muscle' | 'strength' | 'general';
+export type Experience = 'beginner' | 'intermediate' | 'advanced';
 
 export interface Profile {
   id: 'me';
@@ -26,6 +28,13 @@ export interface Profile {
   stepKg: { dumbbell: number; barbell: number; machine: number };
   weekStart: 'mon' | 'sun';
   createdAt: string;
+  goal?: Goal;
+  experience?: Experience;
+  sessionMin?: number;
+  /** available gym equipment (EquipmentId[]); undefined = full gym (older profiles) */
+  equipment?: string[];
+  planSource?: 'generated' | 'template' | 'blank';
+  dietSource?: 'generated' | 'template' | 'blank';
 }
 
 export type Category = 'strength' | 'cardio' | 'mobility' | 'power' | 'core';
