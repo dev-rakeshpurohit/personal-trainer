@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+.dark {
+  --bg: 11 15 20;
+  --surface: 20 26 34;
+  --surface2: 28 36 48;
+  --line: 40 50 64;
+  --text: 242 245 248;
+  --muted: 154 167 180;
+  --primary: 255 122 26;
+  --primary-ink: 255 145 66;
+  --on-primary: 11 15 20;
+  --success: 43 212 125;
+  --warning: 255 193 77;
+  --danger: 255 92 92;
+  --info: 77 163 255;
+  color-scheme: dark;
+}
+.light {
+  --bg: 245 246 248;
+  --surface: 255 255 255;
+  --surface2: 236 239 243;
+  --line: 218 223 230;
+  --text: 15 20 26;
+  --muted: 84 96 110;
+  --primary: 255 122 26;
+  --primary-ink: 180 71 8;
+  --on-primary: 11 15 20;
+  --success: 18 128 72;
+  --warning: 160 98 0;
+  --danger: 200 40 40;
+  --info: 20 100 200;
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  background: rgb(var(--bg));
+}
+body {
+  @apply bg-bg text-text font-sans antialiased;
+  overscroll-behavior: none;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+a,
+[role='button'],
+label {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+input,
+select,
+textarea {
+  font-size: 16px; /* prevents iOS focus zoom */
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+:focus-visible {
+  outline: 2px solid rgb(var(--primary));
+  outline-offset: 2px;
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.app-shell {
+  height: 100dvh;
+  overscroll-behavior: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.glass {
+  background: rgb(var(--bg) / 0.78);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+}
+.card-glow {
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgb(var(--primary) / 0.22), transparent 55%),
+    linear-gradient(180deg, rgb(var(--surface2)), rgb(var(--surface)));
+}
+.pr-shimmer {
+  background: linear-gradient(90deg, transparent, rgb(var(--warning) / 0.35), transparent);
+  background-size: 200% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

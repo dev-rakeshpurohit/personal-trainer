@@ -1,0 +1,142 @@
+{
+  "id": "lean-veg-egg-2000",
+  "name": "Lean diet – vegetarian + eggs, low lactose",
+  "kcalTarget": 2000,
+  "proteinTargetG": 150,
+  "constraints": [
+    "vegetarian + eggs",
+    "no meat/chicken",
+    "no paneer",
+    "lactose-conscious",
+    "banana may cause acidity"
+  ],
+  "trainingDay": [
+    {
+      "time": "08:30",
+      "meal": "Pre-gym",
+      "items": [
+        "Tea or black coffee",
+        "4 almonds + 3 walnut halves (or 2 dates)"
+      ],
+      "proteinG": 2,
+      "kcal": 65,
+      "skipOnRestDay": true
+    },
+    {
+      "time": "10:45",
+      "meal": "Breakfast",
+      "items": [
+        "1 scoop whey isolate in water",
+        "Omelette: 2 whole eggs + 4 whites, onion/tomato/spinach/capsicum, 1 tsp oil"
+      ],
+      "proteinG": 51,
+      "kcal": 390
+    },
+    {
+      "time": "12:30",
+      "meal": "Lunch",
+      "items": [
+        "50 g dry soya chunks (curry/sabzi)",
+        "200 g cooked thick moong dal",
+        "100 g cooked rice",
+        "1 bowl non-starchy sabzi",
+        "Salad"
+      ],
+      "proteinG": 46,
+      "kcal": 680
+    },
+    {
+      "time": "15:30",
+      "meal": "Snack",
+      "items": [
+        "250 ml unsweetened soy milk"
+      ],
+      "rotate": [
+        "100 g edamame",
+        "30 g roasted chana",
+        "1 cup sprouts chaat"
+      ],
+      "proteinG": 17,
+      "kcal": 200
+    },
+    {
+      "time": "18:00",
+      "meal": "Evening",
+      "items": [
+        "1 fruit (guava/apple/orange/papaya)",
+        "150 g hung curd or Greek yogurt (skip if it doesn't suit you)"
+      ],
+      "proteinG": 8,
+      "kcal": 170
+    },
+    {
+      "time": "20:30",
+      "meal": "Dinner",
+      "items": [
+        "Egg bhurji: 2 whole eggs + 3 whites with vegetables",
+        "2 medium rotis",
+        "Sabzi or salad"
+      ],
+      "proteinG": 31,
+      "kcal": 500
+    },
+    {
+      "time": "22:00",
+      "meal": "Only if needed",
+      "items": [
+        "½ scoop whey in water – only if protein < 130 g"
+      ],
+      "proteinG": 12,
+      "kcal": 55,
+      "optional": true
+    }
+  ],
+  "habits": [
+    {
+      "id": "oil",
+      "label": "Oil ≤ 4 tsp (20 ml) for the day"
+    },
+    {
+      "id": "water",
+      "label": "Water 3–3.5 L",
+      "target": 3.0,
+      "unit": "L"
+    },
+    {
+      "id": "creatine",
+      "label": "Creatine 3–5 g"
+    },
+    {
+      "id": "steps",
+      "label": "8,000–10,000 steps",
+      "target": 8000,
+      "unit": "steps"
+    },
+    {
+      "id": "sleep",
+      "label": "Sleep 7–8 h",
+      "target": 7,
+      "unit": "h"
+    }
+  ],
+  "adjustmentRules": [
+    {
+      "if": "weeklyLossKg between 0.5 and 0.75",
+      "then": "No change"
+    },
+    {
+      "if": "weeklyLossKg < 0.3 for 2 consecutive weeks",
+      "then": "+2,000 steps/day first; if still stuck, lunch rice to 50 g (≈ −65 kcal)"
+    },
+    {
+      "if": "weeklyLossKg > 1.0 or strength dropping",
+      "then": "Rice back to 100 g, or +1 slice multigrain toast at breakfast (≈ +70 kcal)"
+    }
+  ],
+  "annualChecks": [
+    "Lipid profile",
+    "HbA1c",
+    "Vitamin D",
+    "Vitamin B12"
+  ]
+}
