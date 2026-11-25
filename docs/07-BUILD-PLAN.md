@@ -50,10 +50,10 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** with 30 days of fake data (dev-only seeding script), every chart and coach card renders correctly.
 
 ## M7 — Plan editor + Settings + Backup (1 day)
-- [ ] Edit days, exercises (add from library / custom), sets/reps/rest/swap, reorder (dnd-kit)
-- [ ] Edit meals and targets
-- [ ] Settings (units, theme, timer, increments), About + licences
-- [ ] Export/import JSON (+ optional zip with media); monthly backup reminder
+- [x] Edit days, exercises (add from library / custom), sets/reps/rest/swap, reorder (dnd-kit)
+- [x] Edit meals and targets
+- [x] Settings (units, theme, timer, increments), About + licences
+- [x] Export/import JSON (+ optional zip with media); monthly backup reminder
 **Done when:** a backup round-trip restores an identical DB (e2e).
 
 ## M8 — Polish + QA + Production (1 day)

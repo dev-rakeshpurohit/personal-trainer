@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { db } from './db';
-import { buildBackup, exportBackup, parseBackupFile, restoreBackup } from './backup';
+import { buildBackup, exportBackup, markBackedUp, parseBackupFile, restoreBackup } from './backup';
 import { importDietTemplate, importProgramTemplate } from './seed-import';
 
 const snapshot = async () => {
@@ -31,8 +31,9 @@ beforeEach(async () => {
 
 describe('backup', () => {
   it('JSON round-trip restores an identical DB (media omitted)', async () => {
+    const { blob, filename, exportedAt } = await exportBackup(false, new Date(2026, 11, 1));
+    await markBackedUp(exportedAt);
     const before = await snapshot();
-    const { blob, filename } = await exportBackup(false, new Date(2026, 11, 1));
     expect(filename).toBe('repmate-backup-2026-12-01.json');
     await db.delete();
     await db.open();
@@ -41,8 +42,9 @@ describe('backup', () => {
     expect({ ...after, media: undefined }).toEqual({ ...before, media: undefined });
   });
   it('zip round-trip includes media', async () => {
+    const { blob, filename, exportedAt } = await exportBackup(true);
+    await markBackedUp(exportedAt);
     const before = await snapshot();
-    const { blob, filename } = await exportBackup(true);
     expect(filename.endsWith('.zip')).toBe(true);
     await db.delete();
     await db.open();

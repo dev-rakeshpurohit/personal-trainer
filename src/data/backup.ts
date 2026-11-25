@@ -8,27 +8,30 @@ export const SCHEMA_VERSION = 1;
 
 type Row = Record<string, unknown>;
 
-export async function buildBackup(includeMedia: boolean): Promise<Backup> {
+export async function buildBackup(includeMedia: boolean, now = new Date()): Promise<Backup> {
+  const exportedAt = now.toISOString();
   const tables: Record<string, Row[]> = {};
   for (const t of DATA_TABLES) tables[t] = (await db.table(t).toArray()) as Row[];
+  // the backup records itself as the latest backup, so a restore shows the right date
+  tables.meta = [...tables.meta.filter((m) => m.key !== 'lastBackupAt'), { key: 'lastBackupAt', value: exportedAt }];
   if (includeMedia) {
     const media = await db.media.toArray();
     tables.media = media.map(({ data: _d, ...rest }) => rest);
   }
-  return { app: 'repmate', schemaVersion: SCHEMA_VERSION, exportedAt: new Date().toISOString(), tables, media: includeMedia ? 'included-in-zip' : 'omitted' };
+  return { app: 'repmate', schemaVersion: SCHEMA_VERSION, exportedAt, tables, media: includeMedia ? 'included-in-zip' : 'omitted' };
 }
 
 const ext = (mime: string) => (mime.includes('quicktime') ? 'mov' : mime.split('/')[1]?.split(';')[0] || 'bin');
 
-export async function exportBackup(includeMedia: boolean, now = new Date()): Promise<{ blob: Blob; filename: string }> {
-  const data = await buildBackup(includeMedia);
+export async function exportBackup(includeMedia: boolean, now = new Date()): Promise<{ blob: Blob; filename: string; exportedAt: string }> {
+  const data = await buildBackup(includeMedia, now);
   const base = `repmate-backup-${format(now, 'yyyy-MM-dd')}`;
   const json = JSON.stringify(data);
-  if (!includeMedia) return { blob: new Blob([json], { type: 'application/json' }), filename: `${base}.json` };
+  if (!includeMedia) return { blob: new Blob([json], { type: 'application/json' }), filename: `${base}.json`, exportedAt: data.exportedAt };
   const files: Record<string, Uint8Array> = { 'backup.json': strToU8(json) };
   for (const m of await db.media.toArray()) files[`media/${m.id}.${ext(m.mime)}`] = new Uint8Array(m.data);
   const zipped = zipSync(files, { level: 0 });
-  return { blob: new Blob([zipped], { type: 'application/zip' }), filename: `${base}.zip` };
+  return { blob: new Blob([zipped], { type: 'application/zip' }), filename: `${base}.zip`, exportedAt: data.exportedAt };
 }
 
 function blobToArrayBuffer(b: Blob): Promise<ArrayBuffer> {
@@ -87,8 +90,8 @@ export async function restoreBackup(p: ParsedBackup, mode: 'replace' | 'merge'):
   });
 }
 
-export async function markBackedUp() {
-  await setMeta('lastBackupAt', new Date().toISOString());
+export async function markBackedUp(at = new Date().toISOString()) {
+  await setMeta('lastBackupAt', at);
 }
 
 /** Share sheet on iOS (Save to Files / iCloud), download elsewhere. */

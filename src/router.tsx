@@ -18,6 +18,14 @@ const ExerciseDetail = lazy(() => import('./features/library/ExerciseDetail'));
 const History = lazy(() => import('./features/history/History'));
 const DayDetail = lazy(() => import('./features/history/DayDetail'));
 const Developer = lazy(() => import('./features/settings/Developer'));
+const Settings = lazy(() => import('./features/settings/Settings'));
+const StoragePage = lazy(() => import('./features/settings/Storage'));
+const About = lazy(() => import('./features/settings/About'));
+const Backup = lazy(() => import('./features/backup/Backup'));
+const PlanEditor = lazy(() => import('./features/plan-editor/PlanEditor'));
+const DayEditor = lazy(() => import('./features/plan-editor/DayEditor'));
+const DietEditor = lazy(() => import('./features/plan-editor/DietEditor'));
+const Templates = lazy(() => import('./features/plan-editor/Templates'));
 
 const L = (el: ReactNode) => (
   <Suspense fallback={<div className="flex h-40 items-center justify-center text-muted" aria-busy="true">Loading…</div>}>{el}</Suspense>
@@ -43,6 +51,14 @@ export const router: ReturnType<typeof createBrowserRouter> = createBrowserRoute
           { path: '/progress', element: L(<Progress />) },
           { path: '/more', element: <More /> },
           { path: '/more/dev', element: L(<Developer />) },
+          { path: '/more/settings', element: L(<Settings />) },
+          { path: '/more/storage', element: L(<StoragePage />) },
+          { path: '/more/about', element: L(<About />) },
+          { path: '/more/backup', element: L(<Backup />) },
+          { path: '/more/plan', element: L(<PlanEditor />) },
+          { path: '/more/plan/day/:dayId', element: L(<DayEditor />) },
+          { path: '/more/diet', element: L(<DietEditor />) },
+          { path: '/more/templates', element: L(<Templates />) },
         ],
       },
       { path: '/onboarding', element: <Onboarding /> },
