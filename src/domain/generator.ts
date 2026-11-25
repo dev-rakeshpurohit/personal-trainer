@@ -141,8 +141,13 @@ function candidatesFor(lib: Exercise[], p: PKey, role: Role, exp: Experience, eq
     const reps = list.filter((e) => e.defaultUnit === 'reps');
     if (reps.length) list = reps;
   }
-  const loadedBonus = (e: Exercise) => (role === 'main' && e.isBodyweight ? 1.5 : 0);
-  return [...list].sort((a, b) => Math.abs((a.level ?? target) - target) + loadedBonus(a) - (Math.abs((b.level ?? target) - target) + loadedBonus(b)) || a.name.localeCompare(b.name));
+  // main lifts: prefer loaded, proven compound movements (the library's "parent" exercises carry alternates)
+  const score = (e: Exercise) =>
+    Math.abs((e.level ?? target) - target) +
+    (role === 'main' && e.isBodyweight ? 1.5 : 0) -
+    ((role === 'main' || role === 'acc') && e.alternates?.length ? 1 : 0) +
+    (role === 'main' && /assisted|machine|back extension|hyperextension/i.test(e.name) ? 0.75 : 0);
+  return [...list].sort((a, b) => score(a) - score(b) || a.name.localeCompare(b.name));
 }
 
 export function generateProgram(input: GenInput): { name: string; days: GenDay[] } {

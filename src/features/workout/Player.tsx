@@ -12,7 +12,7 @@ import { detectPRs, incrementFor, suggestNext, type Suggestion } from '@/domain/
 import { buildFlow, nextStep, stepKey } from '@/domain/sessionFlow';
 import type { ActiveSessionState, Exercise, Profile, Session, SessionExercise, SetLog } from '@/domain/types';
 import { displayWeight, formatDuration, fromUserUnits, stepFor, toUserUnits } from '@/domain/units';
-import { cancelRestNotification, notificationsSupported, requestNotificationPermission, scheduleRestNotification } from '@/lib/notify';
+import { cancelRestNotification, notificationsSupported, requestNotificationPermission, scheduleRestNotification, vibrate } from '@/lib/notify';
 import { useWakeLock } from '@/lib/wakeLock';
 import { useUI } from '@/store/ui';
 import { AlternatesSheet } from './AlternatesSheet';
@@ -56,6 +56,10 @@ function PlayerInner({ active, session, profile, exMap }: { active: ActiveSessio
   const [notes, setNotes] = useState(session.notes ?? '');
   const [, tick] = useState(0);
   const touch = useRef<{ x: number; y: number }>();
+  const mainRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [idx]);
 
   useEffect(() => {
     const t = setInterval(() => tick((n) => n + 1), 1000);
@@ -140,6 +144,7 @@ function PlayerInner({ active, session, profile, exMap }: { active: ActiveSessio
     if (ex?.isBodyweight) delete v.weightKg;
     const prior = await db.sets.where('exerciseId').equals(se.exerciseId).filter((s) => !s.isWarmup).toArray();
     const row = await logSet(session.id, se, setIndex, v);
+    vibrate(12);
     setRirFor(se.unit === 'reps' ? row.id : undefined);
 
     // PR toast once per exercise per session
@@ -223,18 +228,17 @@ function PlayerInner({ active, session, profile, exMap }: { active: ActiveSessio
         </div>
       </header>
 
-      <main className={`flex-1 overflow-y-auto px-4 ${restEndsAt ? 'pb-[260px]' : 'pb-4'}`}>
-        <DemoPlayer exercise={ex} className="h-[30dvh] w-full" />
+      <main ref={mainRef} className={`flex-1 overflow-y-auto px-4 ${restEndsAt ? 'pb-[260px]' : 'pb-4'}`}>
+        <DemoPlayer exercise={ex} className="h-[23dvh] min-h-[150px] w-full" />
 
-        <div className="mt-3 flex items-start justify-between gap-3">
+        <div className="mt-2.5 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-primary-ink">
               <span className="rounded-md bg-primary/15 px-1.5 py-0.5">{se.slot}</span>
               {se.isMain ? 'Main lift' : 'Accessory'}
               {swapped && <span className="text-info">· swapped</span>}
             </p>
-            <h1 className="mt-1 text-[24px] font-bold leading-tight">{ex?.name ?? se.exerciseId}</h1>
-            {partner && <p className="text-[15px] text-muted">then {partner.slot}: {exMap.get(partner.exerciseId)?.name}</p>}
+            <h1 className="mt-0.5 text-[22px] font-bold leading-tight">{ex?.name ?? se.exerciseId}</h1>
           </div>
           <div className="flex shrink-0 gap-1">
             <button type="button" onClick={() => go(idx - 1)} disabled={idx === 0} className="flex h-12 w-12 items-center justify-center rounded-full bg-surface2 disabled:opacity-30" aria-label="Previous exercise">
@@ -246,25 +250,25 @@ function PlayerInner({ active, session, profile, exMap }: { active: ActiveSessio
           </div>
         </div>
 
-        {(se.cue ?? ex?.cue) && (
-          <button type="button" onClick={() => setCueOpen(!cueOpen)} className={`mt-1 block text-left text-[15px] text-text/80 ${cueOpen ? '' : 'line-clamp-2'}`} aria-expanded={cueOpen}>
-            {se.cue ?? ex?.cue}
-            {cueOpen && ex?.instructions?.length ? <span className="mt-1 block text-muted">{ex.instructions.join(' ')}</span> : null}
-          </button>
-        )}
-        {se.note && <p className="mt-1 text-[14px] font-medium text-info">{se.note}</p>}
-
-        {painful && (
-          <div className="mt-2 rounded-btn border border-warning/40 bg-warning/10 p-3 text-[15px]">
-            You reported pain here last time.{' '}
-            <button type="button" onClick={() => setAlts(true)} className="font-semibold text-warning underline">
-              Try an alternate
-            </button>
-          </div>
-        )}
+        {/* Target line (compact) */}
+        <div className="mt-2 rounded-btn bg-surface px-3 py-2">
+          <p className="text-[16px] font-bold tnum">
+            {totalSets(idx)} × {unitLabel(se)}
+            {se.rir != null && <span className="font-medium text-muted"> · RIR {se.rir}</span>}
+            {se.restSec > 0 && <span className="font-medium text-muted"> · rest {se.restSec}s</span>}
+          </p>
+          {cur && cur.kind !== 'first' && (
+            <p className={`flex items-center gap-1.5 text-[14px] font-semibold ${cur.kind === 'increase' || cur.kind === 'time_increase' ? 'text-success' : cur.kind === 'decrease' ? 'text-warning' : 'text-text/80'}`}>
+              {(cur.kind === 'increase' || cur.kind === 'time_increase') && <TrendingUp size={15} aria-hidden />}
+              {cur.message}
+            </p>
+          )}
+          {cur?.last && <p className="truncate text-[13px] text-muted tnum">Last: {cur.last}</p>}
+          {cur?.kind === 'first' && <p className="text-[13px] text-muted">{cur.message}</p>}
+        </div>
 
         {/* Swap chips */}
-        <div className="no-scrollbar -mx-4 mt-3 flex gap-2 overflow-x-auto px-4">
+        <div className="no-scrollbar -mx-4 mt-2 flex gap-2 overflow-x-auto px-4">
           {swapped ? (
             <button type="button" onClick={() => swapExercise(active, idx, se.originalExerciseId, false)} className="flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-info/50 bg-info/10 px-3.5 text-[15px] font-semibold text-info">
               <Repeat size={16} aria-hidden /> Back to {exMap.get(se.originalExerciseId)?.name}
@@ -279,22 +283,14 @@ function PlayerInner({ active, session, profile, exMap }: { active: ActiveSessio
           </button>
         </div>
 
-        {/* Target line */}
-        <div className="mt-3 rounded-card border border-line/50 bg-surface p-3">
-          <p className="text-[17px] font-bold tnum">
-            {totalSets(idx)} × {unitLabel(se)}
-            {se.rir != null && <span className="font-medium text-muted"> · RIR {se.rir}</span>}
-            {se.restSec > 0 && <span className="font-medium text-muted"> · rest {se.restSec}s</span>}
-          </p>
-          {cur?.last && <p className="mt-0.5 text-[14px] text-muted tnum">Last: {cur.last}</p>}
-          {cur && cur.kind !== 'first' && (
-            <p className={`mt-1 flex items-center gap-1.5 text-[15px] font-semibold ${cur.kind === 'increase' || cur.kind === 'time_increase' ? 'text-success' : cur.kind === 'decrease' ? 'text-warning' : 'text-text/80'}`}>
-              {(cur.kind === 'increase' || cur.kind === 'time_increase') && <TrendingUp size={16} aria-hidden />}
-              {cur.message}
-            </p>
-          )}
-          {cur?.kind === 'first' && <p className="mt-1 text-[14px] text-muted">{cur.message}</p>}
-        </div>
+        {painful && (
+          <div className="mt-2 rounded-btn border border-warning/40 bg-warning/10 p-3 text-[15px]">
+            You reported pain here last time.{' '}
+            <button type="button" onClick={() => setAlts(true)} className="font-semibold text-warning underline">
+              Try an alternate
+            </button>
+          </div>
+        )}
 
         {/* Set rows */}
         <ol className="mt-3 space-y-2" aria-label="Sets">
@@ -383,6 +379,18 @@ function PlayerInner({ active, session, profile, exMap }: { active: ActiveSessio
             );
           })}
         </ol>
+        {(partner || se.cue || ex?.cue || se.note) && (
+          <div className="mt-3 rounded-btn bg-surface px-3 py-2.5">
+            {partner && <p className="text-[14px] font-semibold text-muted">Superset: then {partner.slot} {exMap.get(partner.exerciseId)?.name}</p>}
+            {se.note && <p className="text-[14px] font-medium text-info">{se.note}</p>}
+            {(se.cue ?? ex?.cue) && (
+              <button type="button" onClick={() => setCueOpen(!cueOpen)} className={`mt-0.5 block text-left text-[15px] text-text/85 ${cueOpen ? '' : 'line-clamp-2'}`} aria-expanded={cueOpen}>
+                {se.cue ?? ex?.cue}
+                {cueOpen && ex?.instructions?.length ? <span className="mt-1 block text-muted">{ex.instructions.join(' ')}</span> : null}
+              </button>
+            )}
+          </div>
+        )}
         <button
           type="button"
           onClick={() => patchActive({ extraSets: { ...(active.extraSets ?? {}), [se.plannedExerciseId]: (active.extraSets?.[se.plannedExerciseId] ?? 0) + 1 } })}

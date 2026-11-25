@@ -6,7 +6,6 @@ import Today from './features/today/Today';
 import Train from './features/train/Train';
 import Eat from './features/eat/Eat';
 import More from './features/more/More';
-import Onboarding from './features/onboarding/Onboarding';
 import Library from './features/library/Library';
 import Player from './features/workout/Player';
 import Prestart from './features/workout/Prestart';
@@ -14,6 +13,7 @@ import Summary from './features/workout/Summary';
 
 // Heavier, less-used screens are code-split (charts, editor, dev tools)
 const Progress = lazy(() => import('./features/progress/Progress'));
+const Onboarding = lazy(() => import('./features/onboarding/Onboarding'));
 const ExerciseDetail = lazy(() => import('./features/library/ExerciseDetail'));
 const History = lazy(() => import('./features/history/History'));
 const DayDetail = lazy(() => import('./features/history/DayDetail'));
@@ -63,7 +63,7 @@ export const router: ReturnType<typeof createBrowserRouter> = createBrowserRoute
           { path: '/more/setup', element: L(<Setup />) },
         ],
       },
-      { path: '/onboarding', element: <Onboarding /> },
+      { path: '/onboarding', element: L(<Onboarding />) },
       { path: '/workout', element: <Player /> },
       { path: '/workout/today', element: <Prestart /> },
       { path: '/workout/start/:dayId', element: <Prestart /> },

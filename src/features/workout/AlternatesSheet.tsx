@@ -93,12 +93,12 @@ export function AlternatesSheet({
                 <span className="h-14 w-14 shrink-0 overflow-hidden rounded-btn bg-white">{t && <img src={t} alt="" className="h-full w-full object-cover" loading="lazy" />}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block font-semibold leading-snug">{e.name}</span>
-                  <span className="mt-0.5 flex items-center gap-2 text-caption capitalize text-muted">
+                  <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-caption capitalize text-muted">
                     {e.level != null && <LevelDots level={e.level} />}
-                    {e.equipment[0] ?? e.category}
-                    {e.id === originalId && <span className="text-primary-ink">· planned</span>}
-                    {e.id === swapId && <span className="text-info">· plan swap</span>}
-                    {e.id === currentId && <span className="text-success">· current</span>}
+                    <span>{e.equipment[0] ?? e.category}</span>
+                    {e.id === originalId && <Badge tone="text-primary-ink bg-primary/15">Planned</Badge>}
+                    {e.id === swapId && <Badge tone="text-info bg-info/15">Plan swap</Badge>}
+                    {e.id === currentId && <Badge tone="text-success bg-success/15">Current</Badge>}
                   </span>
                 </span>
                 {active && <Check size={20} className="text-primary-ink" aria-hidden />}
@@ -110,6 +110,8 @@ export function AlternatesSheet({
     </Sheet>
   );
 }
+
+const Badge = ({ tone, children }: { tone: string; children: React.ReactNode }) => <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold normal-case ${tone}`}>{children}</span>;
 
 export function LevelDots({ level }: { level: number }) {
   return (

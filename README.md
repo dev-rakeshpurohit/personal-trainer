@@ -1,14 +1,42 @@
-# Repmate — personal trainer PWA
+# Repmate: offline gym coach & food diary (PWA)
 
-Spec-first repo. **Claude Code: start with `CLAUDE.md`.**
+Open → today's plan → tap, tap, done. Repmate runs your gym routine, diet and progress tracking from your phone, **fully offline** after the first load. No account, no backend, no tracking: everything lives on the device (IndexedDB).
 
-- `CLAUDE.md`: instructions, non-negotiables, stack, commands
-- `docs/01–08`: PRD, UX, architecture, data model, offline/media, logic rules, build plan, deployment
-- `seed/`: the Lean & Athletic program, the veg + egg 2,000 kcal diet, and the exercise-image id list
+**Live:** https://repmate-test.vercel.app (invite-only: you need the access code from the owner)
 
-## Before you start (one time, 2 minutes)
-1. In the VS Code terminal: `pnpm dlx vercel@latest login` (finish it in the browser).
-2. In Claude Code, set the permission mode you're comfortable with (e.g. Shift+Tab → "accept edits on", and allow `pnpm`, `git` and `vercel` commands when it first asks) so the build doesn't stall waiting for approval.
+## Install on iPhone
+1. Open the link in **Safari** (once, with signal).
+2. Enter the access code → set up your plan (2 minutes).
+3. Tap **Share → Add to Home Screen**, then open Repmate from the icon.
+It now works in airplane mode, keeps the screen awake during workouts, and can notify you when rest is over (iOS 16.4+, Home Screen app, after you allow it).
 
-## Kick-off prompt for Claude in VS Code
-> Read CLAUDE.md, every file in docs/ and seed/. Build Repmate completely end to end in autonomous mode: run milestones M0 to M8 from docs/07-BUILD-PLAN.md back to back without asking me anything. Where something is unclear, choose the sensible default, log it in docs/DECISIONS.md and continue. Commit after each milestone, and fix all failing lint, type, unit and Playwright (including offline) tests before moving on. When everything is done, deploy to production on my Vercel account as project `repmate-test` (`vercel deploy --prod --yes`), verify the live URL, sw.js and manifest headers. Optimise only for my iPhone 13 as a Home Screen app (see the iPhone section in CLAUDE.md), write HANDOFF.md, and end with the production URL as your final message. Don't stop for approvals. The only exception: if Vercel isn't logged in, finish building first and then ask me once.
+Android: Chrome → ⋮ → **Install app**.
+
+## What it does
+- **Build my plan**: goal (fat loss / lean & athletic / muscle / strength / general), experience, measurements, schedule, session length, **gym equipment** and food → a generated training plan + Indian-friendly diet. Or start from the *Lean & Athletic* template, or blank.
+- **Workout player**: prefilled sets, supersets, timestamp-based rest timer (chime + flash + notification), work timer for holds, one-tap swap + 3–6 ranked **alternates** per exercise (only ones your gym supports), Express (~40 min) mode, PR detection, wake lock, resume after a kill.
+- **Auto-coach**: double progression ("↑ Try 16 kg"), 8-week wave with deload, gentle HIIT ramp, **post-session feedback** that tunes the next session, missed-session **auto re-plan**, 2-weekly diet adjustment with one-tap apply.
+- **Eat**: meals with eaten/swap/skip + undo, rotating snacks, rest-day menu, protein/kcal totals, habits (water, steps, sleep, creatine, oil).
+- **Progress**: weight (daily dots, 7-day average, goal, projection), waist, photos compare, strength trends + PRs, consistency, history calendar.
+- **My clip**: record your trainer's demo; it plays offline. 190 public-domain demo images are bundled.
+- **Backup**: export to Files/iCloud via the share sheet (JSON, or zip with media); restore on a new phone.
+
+## Develop
+Requires Node 20 + pnpm 9.
+```bash
+pnpm i
+pnpm dev                     # local dev (no service worker)
+pnpm build && pnpm preview   # real PWA on http://localhost:4173
+pnpm test                    # unit (Vitest): domain logic, data layer, backups
+pnpm e2e                     # Playwright, iPhone 13 / WebKit, incl. offline specs
+pnpm lint && pnpm typecheck
+pnpm fetch:media             # re-download exercise images (free-exercise-db, Unlicense)
+pnpm gen:icons               # app icons + iPhone 13 splash
+pnpm gen:code                # rotate the invite code (writes .access-code.local, not committed)
+```
+E2E needs the invite code: it reads `.access-code.local` or `REPMATE_CODE`.
+
+Deploy: `pnpm dlx vercel@latest deploy --prod --yes` (project `repmate-test`).
+
+## Layout
+`src/domain` pure logic (+ tests) · `src/data` Dexie schema, seed import, plan builder, backup · `src/features/*` screens · `src/sw.ts` service worker · `seed/` program, diet, research alternates · `docs/` specs, research (09) and the decisions log.

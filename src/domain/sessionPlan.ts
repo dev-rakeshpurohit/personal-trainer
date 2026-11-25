@@ -154,10 +154,11 @@ export function targetsForUnit(se: Pick<SessionExercise, 'unit' | 'repsMin' | 'r
 }
 
 export function estimateMinutes(plan: Pick<SessionExercise, 'sets' | 'restSec' | 'unit' | 'repsMax' | 'supersetGroup'>[]): number {
-  let sec = 300; // warm-up
+  const express = plan.length <= 4 && plan.every((e) => e.sets <= 3);
+  let sec = express ? 300 : 600 + 300; // warm-up (+ cool-down for full sessions)
   for (const e of plan) {
-    const work = e.unit === 'minutes' ? e.repsMax * 60 : e.unit === 'seconds' ? e.repsMax : 40;
-    sec += e.sets * (work + e.restSec + 15);
+    const work = e.unit === 'minutes' ? e.repsMax * 60 : e.unit === 'seconds' ? e.repsMax : 45;
+    sec += e.sets * (work + e.restSec + 20);
   }
   return Math.round(sec / 60 / 5) * 5;
 }

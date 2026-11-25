@@ -61,7 +61,7 @@ export default function Eat() {
         </button>
       </div>
 
-      <div className="space-y-3 px-4 pb-24 pt-3">
+      <div className="space-y-3 px-4 pb-[96px] pt-3">
         {restDay && (
           <p className="flex items-center gap-2 rounded-btn bg-surface2 px-3 py-2 text-[14px] text-muted">
             <Moon size={16} aria-hidden /> Rest day: the pre-gym snack is hidden ({plan.kcal.toLocaleString()} kcal planned).

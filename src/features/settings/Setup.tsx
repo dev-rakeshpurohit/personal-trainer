@@ -62,11 +62,11 @@ function SetupInner({ profile }: { profile: Profile }) {
   const goal = GOALS.find((g) => g.id === d.goal);
   const eqLabel = PRESETS.full_gym.every((x) => d.equipment.includes(x)) ? 'Full gym' : `${d.equipment.length} of ${EQUIPMENT.length} items`;
   const rows: { id: Section; label: string; value: string }[] = [
-    { id: 'goal', label: 'Goal & experience', value: `${goal?.label} · ${d.experience}` },
+    { id: 'goal', label: 'Goal & experience', value: `${goal?.label} · ${d.experience[0].toUpperCase()}${d.experience.slice(1)}` },
     { id: 'about', label: 'Body & measurements', value: `${d.weightKg} → ${d.goalKg} kg · ${d.heightCm} cm` },
     { id: 'schedule', label: 'Schedule', value: `${d.days.map((x) => WEEKDAY_LABEL[x]).join(' ')} · ${d.sessionMin} min` },
     { id: 'equipment', label: 'Gym equipment', value: eqLabel },
-    { id: 'food', label: 'Food', value: `${d.diet.replace('_', ' + ')}${d.intolerances.length ? ` · no ${d.intolerances.join(', ')}` : ''}` },
+    { id: 'food', label: 'Food', value: `${{ veg: 'Vegetarian', veg_egg: 'Veg + eggs', nonveg: 'Non-veg', vegan: 'Vegan' }[d.diet]}${d.intolerances.length ? ` · no ${d.intolerances.join(', ')}` : ''}` },
   ];
 
   return (
@@ -79,7 +79,7 @@ function SetupInner({ profile }: { profile: Profile }) {
               <button type="button" onClick={() => setOpen(r.id)} className="flex min-h-[64px] w-full items-center gap-3 px-4 text-left active:bg-surface2">
                 <span className="min-w-0 flex-1">
                   <span className="block font-semibold">{r.label}</span>
-                  <span className="block truncate text-caption capitalize text-muted">{r.value}</span>
+                  <span className="block truncate text-caption text-muted">{r.value}</span>
                 </span>
                 <ChevronRight size={18} className="text-muted" aria-hidden />
               </button>

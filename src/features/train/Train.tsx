@@ -25,6 +25,7 @@ export default function Train() {
   const doneOn = (k: string) => sessions?.some((s) => s.dayKey === k && s.status === 'done');
   const cw = bundle ? cycleWeek(now, bundle.program.startedOn) : 1;
   const ce = bundle ? cycleEntry(cw, bundle.program.progression.cycle) : undefined;
+  const wf = bundle?.program.progression.weeks?.find((w) => w.week === cw);
 
   return (
     <div className="animate-fade-in">
@@ -34,9 +35,13 @@ export default function Train() {
           <div className="mb-3 rounded-card border border-line/50 bg-surface p-4">
             <p className="text-[13px] font-bold uppercase tracking-wider text-primary-ink">This week's focus</p>
             <p className="mt-1 text-[17px] font-semibold">
-              {ce.deload ? 'Deload: half the sets, same weights' : `Stop each set with ${ce.rir} reps in reserve`}
+              {ce.deload || wf?.deload
+                ? 'Deload: half the sets, same weights'
+                : wf
+                  ? `${wf.focus}: main lifts ${wf.rirMain} reps in reserve, accessories ${wf.rirAccessory}`
+                  : `Stop each set with ${ce.rir} reps in reserve`}
             </p>
-            {ce.note && <p className="mt-0.5 text-[15px] text-muted">{ce.note}</p>}
+            {(wf?.note ?? ce.note) && <p className="mt-0.5 text-[15px] text-muted">{wf?.note ?? ce.note}</p>}
           </div>
         )}
 

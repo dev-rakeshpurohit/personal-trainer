@@ -124,14 +124,10 @@ function TodayInner({ profile }: { profile: Profile }) {
   return (
     <div className="animate-fade-in">
       <header className="pt-safe">
-        <div className="flex items-start justify-between px-4 pb-1 pt-4">
-          <div className="min-w-0">
+        <div className="px-4 pb-1 pt-4">
+          <div className="flex items-center justify-between gap-2">
             <p className="text-[15px] font-medium text-muted">{format(now, 'EEEE, d MMMM')}</p>
-            <h1 className="truncate text-[28px] font-bold leading-tight tracking-tight">
-              {greeting(now.getHours())}, {profile.name}
-            </h1>
-          </div>
-          <div className="flex shrink-0 items-center gap-2 pt-1">
+          <div className="flex shrink-0 items-center gap-2">
             {streak > 0 && (
               <span className="flex h-9 items-center gap-1 rounded-full bg-warning/15 px-3 text-[15px] font-bold text-warning" aria-label={`${streak} session streak`}>
                 <Flame size={16} aria-hidden /> {streak}
@@ -139,6 +135,10 @@ function TodayInner({ profile }: { profile: Profile }) {
             )}
             <span className={`h-2.5 w-2.5 rounded-full ${online ? 'bg-success' : 'bg-muted'}`} role="img" aria-label={online ? 'Online' : 'Offline'} />
           </div>
+          </div>
+          <h1 className="mt-0.5 text-[28px] font-bold leading-tight tracking-tight">
+            {greeting(now.getHours())}, {profile.name}
+          </h1>
         </div>
         {!online && (
           <p className="mx-4 mt-1 inline-flex items-center gap-1.5 rounded-full bg-surface2 px-3 py-1 text-caption font-medium text-muted">
@@ -361,8 +361,10 @@ function RingStat(p: { label: string; value: number; max: number; unit: string; 
       <Ring value={p.value} max={p.max} size={64} stroke={6} color={p.color} label={p.label}>
         <span className="text-[14px] font-bold leading-none tnum">{shown}</span>
       </Ring>
-      <span className="text-[12px] font-medium text-muted">
-        {p.remaining ? `${Math.max(0, Math.round(p.max - p.value))} left` : p.label}
+      <span className="text-center text-[12px] font-medium leading-tight text-muted">
+        {p.label}
+        <br />
+        <span className="tnum">{p.remaining ? `${Math.max(0, Math.round(p.max - p.value)).toLocaleString()} left` : `/ ${p.compact ? `${p.max / 1000}k` : p.max}${p.unit ? ` ${p.unit}` : ''}`}</span>
       </span>
     </div>
   );

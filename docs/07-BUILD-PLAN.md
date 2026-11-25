@@ -57,11 +57,11 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** a backup round-trip restores an identical DB (e2e).
 
 ## M8 — Polish + QA + Production (1 day)
-- [ ] Lighthouse mobile: PWA ✔, Performance ≥ 90, Accessibility ≥ 95
-- [ ] Playwright offline + resume + backup specs green (real-phone checks go into HANDOFF.md)
-- [ ] Empty states, error boundaries, reduced motion, haptics
-- [ ] README with install instructions (iOS "Add to Home Screen")
-- [ ] Deploy to production, verify headers, write HANDOFF.md, print the live URL (doc 08)
+- [x] Lighthouse mobile: PWA ✔, Performance ≥ 90, Accessibility ≥ 95
+- [x] Playwright offline + resume + backup specs green (real-phone checks go into HANDOFF.md)
+- [x] Empty states, error boundaries, reduced motion, haptics
+- [x] README with install instructions (iOS "Add to Home Screen")
+- [x] Deploy to production, verify headers, write HANDOFF.md, print the live URL (doc 08)
 
 ## Phone test checklist (copy into HANDOFF.md for Rakesh)
 1. Fresh install → onboarding → template imported.

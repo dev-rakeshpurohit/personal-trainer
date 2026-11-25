@@ -16,7 +16,7 @@ test('log sets with superset flow, rest timer, and resume after reload', async (
   await startToday(page);
 
   await expect(page.getByRole('heading', { level: 1, name: 'Dumbbell goblet squat' })).toBeVisible();
-  await expect(page.getByText('then A2: Dumbbell bench press')).toBeVisible();
+  await expect(page.getByText('Superset: then A2 Dumbbell bench press')).toBeVisible();
 
   // first time: enter a weight, then log
   await page.getByRole('button', { name: 'Increase Set 1 weight' }).click();

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { TabBar } from './TabBar';
 import { Toasts } from './Toasts';
@@ -8,6 +8,8 @@ import { FlashOverlay } from './FlashOverlay';
 import { useActiveSession, useProfile } from '@/data/hooks';
 import { applyTheme } from '@/lib/theme';
 import { unlockAudioOnFirstTap } from '@/lib/notify';
+import { isUnlocked } from '@/lib/access';
+import { Gate } from '@/features/onboarding/Gate';
 
 export function TabLayout() {
   return (
@@ -25,12 +27,15 @@ export function RootLayout() {
   const profile = useProfile();
   const active = useActiveSession();
   const loc = useLocation();
+  const [unlocked, setUnlocked] = useState(() => isUnlocked());
   useEffect(() => {
     if (profile) applyTheme(profile.theme);
   }, [profile]);
   useEffect(() => unlockAudioOnFirstTap(), []);
 
   if (profile === undefined) return <Splash />;
+  // invite gate renders eagerly (tiny) so a first visit paints immediately
+  if (profile === null && !unlocked) return <Gate onUnlock={() => setUnlocked(true)} />;
   if (profile === null && loc.pathname !== '/onboarding') return <Navigate to="/onboarding" replace />;
   if (profile && loc.pathname === '/onboarding' && !loc.search.includes('fresh=1')) return <Navigate to="/today" replace />;
   return (
