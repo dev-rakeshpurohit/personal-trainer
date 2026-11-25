@@ -7,7 +7,7 @@ const snapshot = async () => {
   const out: Record<string, unknown[]> = {};
   for (const t of db.tables) {
     if (t.name === 'media') {
-      out.media = (await t.toArray()).map((m: { id: string; bytes: number }) => ({ id: m.id, bytes: m.bytes }));
+      out.media = (await t.toArray()).map((m: { id: string; bytes: number; data: ArrayBuffer }) => ({ id: m.id, bytes: m.bytes, data: [...new Uint8Array(m.data)] }));
     } else out[t.name] = (await t.toArray()).sort((a: { id?: string; key?: string; exerciseId?: string }, b: typeof a) =>
       String(a.id ?? a.key ?? a.exerciseId).localeCompare(String(b.id ?? b.key ?? b.exerciseId)));
   }
@@ -25,7 +25,7 @@ beforeEach(async () => {
     restTimer: { sound: true, vibrate: true, notify: false }, stepKg: { dumbbell: 2, barbell: 5, machine: 5 }, weekStart: 'mon', createdAt: new Date().toISOString(),
   });
   await db.bodyLogs.add({ id: 'b1', dayKey: '2026-12-01', weightKg: 79.2 });
-  await db.media.put({ id: 'm1', kind: 'clip', mime: 'video/mp4', bytes: 3, blob: new Blob([new Uint8Array([1, 2, 3])], { type: 'video/mp4' }), createdAt: 'x' });
+  await db.media.put({ id: 'm1', kind: 'clip', mime: 'video/mp4', bytes: 3, data: new Uint8Array([1, 2, 3]).buffer, createdAt: 'x' });
   await db.clips.put({ exerciseId: 'front-plank', blobId: 'm1', durationSec: 5 });
 });
 

@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { db } from '@/data/db';
+import { mediaToBlob } from '@/data/media';
 
 /** Object URL for the user's clip of an exercise (revoked on unmount). */
 export function useClipUrl(exerciseId: string | undefined): string | undefined {
@@ -8,7 +9,8 @@ export function useClipUrl(exerciseId: string | undefined): string | undefined {
     if (!exerciseId) return null;
     const c = await db.clips.get(exerciseId);
     if (!c) return null;
-    return (await db.media.get(c.blobId))?.blob ?? null;
+    const m = await db.media.get(c.blobId);
+    return m ? mediaToBlob(m) : null;
   }, [exerciseId]);
   const [url, setUrl] = useState<string>();
   useEffect(() => {

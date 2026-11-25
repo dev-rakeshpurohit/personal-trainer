@@ -13,7 +13,7 @@ export async function buildBackup(includeMedia: boolean): Promise<Backup> {
   for (const t of DATA_TABLES) tables[t] = (await db.table(t).toArray()) as Row[];
   if (includeMedia) {
     const media = await db.media.toArray();
-    tables.media = media.map(({ blob: _b, ...rest }) => rest);
+    tables.media = media.map(({ data: _d, ...rest }) => rest);
   }
   return { app: 'repmate', schemaVersion: SCHEMA_VERSION, exportedAt: new Date().toISOString(), tables, media: includeMedia ? 'included-in-zip' : 'omitted' };
 }
@@ -26,7 +26,7 @@ export async function exportBackup(includeMedia: boolean, now = new Date()): Pro
   const json = JSON.stringify(data);
   if (!includeMedia) return { blob: new Blob([json], { type: 'application/json' }), filename: `${base}.json` };
   const files: Record<string, Uint8Array> = { 'backup.json': strToU8(json) };
-  for (const m of await db.media.toArray()) files[`media/${m.id}.${ext(m.mime)}`] = new Uint8Array(await blobToArrayBuffer(m.blob));
+  for (const m of await db.media.toArray()) files[`media/${m.id}.${ext(m.mime)}`] = new Uint8Array(m.data);
   const zipped = zipSync(files, { level: 0 });
   return { blob: new Blob([zipped], { type: 'application/zip' }), filename: `${base}.zip` };
 }
@@ -79,10 +79,10 @@ export async function restoreBackup(p: ParsedBackup, mode: 'replace' | 'merge'):
       const rows = data.tables[t];
       if (rows?.length) await db.table(t).bulkPut(rows);
     }
-    const metaRows = (data.tables.media ?? []) as unknown as Omit<MediaBlob, 'blob'>[];
+    const metaRows = (data.tables.media ?? []) as unknown as Omit<MediaBlob, 'data'>[];
     for (const m of metaRows) {
       const bytes = media.get(m.id);
-      if (bytes) await db.media.put({ ...m, blob: new Blob([bytes], { type: m.mime }) });
+      if (bytes) await db.media.put({ ...m, data: bytes.slice().buffer });
     }
   });
 }

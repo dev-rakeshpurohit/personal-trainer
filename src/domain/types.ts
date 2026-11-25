@@ -269,7 +269,8 @@ export interface MediaBlob {
   kind: 'clip' | 'photo';
   mime: string;
   bytes: number;
-  blob: Blob;
+  /** Raw bytes. Stored as ArrayBuffer (not Blob): works in Safari Private mode / ephemeral contexts too. */
+  data: ArrayBuffer;
   createdAt: string;
 }
 export interface ExerciseClip {

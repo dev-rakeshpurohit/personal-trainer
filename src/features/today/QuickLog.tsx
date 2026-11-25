@@ -4,6 +4,7 @@ import { Button, Chip } from '@/components/ui';
 import { Sheet } from '@/components/Sheet';
 import { Stepper } from '@/components/Stepper';
 import { db, uid } from '@/data/db';
+import { storeMedia } from '@/data/media';
 import { getHabit, lastWaist, lastWeight, setHabit, upsertBody } from '@/data/repo';
 import { fromUserUnits, toUserUnits } from '@/domain/units';
 import type { Pose, Profile } from '@/domain/types';
@@ -48,8 +49,7 @@ export function QuickLogSheet({ kind, onClose, dayKey, profile }: { kind: QuickK
   };
 
   const savePhoto = async (file: File) => {
-    const blobId = uid();
-    await db.media.add({ id: blobId, kind: 'photo', mime: file.type || 'image/jpeg', bytes: file.size, blob: file, createdAt: new Date().toISOString() });
+    const blobId = await storeMedia(file, 'photo', 'image/jpeg');
     await db.photos.add({ id: uid(), dayKey, pose, blobId });
     void navigator.storage?.persist?.();
     toast(`${pose[0].toUpperCase() + pose.slice(1)} photo saved on this phone`, { tone: 'success' });

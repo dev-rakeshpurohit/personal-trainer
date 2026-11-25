@@ -34,7 +34,7 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** a Playwright offline spec runs a full session in offline mode (context.setOffline(true)).
 
 ## M4 — My clip (½ day)
-- [ ] Record/upload, size/duration guard, store the blob, playback toggle, delete/replace, storage usage
+- [x] Record/upload, size/duration guard, store the blob, playback toggle, delete/replace, storage usage
 **Done when:** a clip recorded offline plays after an app restart.
 
 ## M5 — Eat + Habits (1 day)

@@ -64,8 +64,8 @@ export async function expectNoServer(url: string) {
 }
 
 /** Complete onboarding with the ready-made template (defaults). */
-export async function onboard(page: Page, opts: { name?: string } = {}) {
-  await page.goto('/');
+export async function onboard(page: Page, opts: { name?: string; base?: string } = {}) {
+  await page.goto((opts.base ?? '') + '/');
   await expect(page.getByRole('heading', { name: /Your coach/ })).toBeVisible();
   await page.getByRole('button', { name: 'Get started' }).click();
   await page.getByPlaceholder('What should we call you?').fill(opts.name ?? 'Alex');

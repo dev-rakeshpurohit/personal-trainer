@@ -4,6 +4,7 @@ import type { Exercise } from '@/domain/types';
 import { demoSrc, useClipUrl, youtubeUrl } from '@/lib/clips';
 import { useOnline } from '@/lib/online';
 import { prefersReducedMotion } from '@/lib/platform';
+import { CLIP_LOOP_SEC } from '@/lib/recorder';
 
 /** Layer 1: 2-frame crossfade demo (offline). Layer 2: user's clip (preferred). Layer 3: YouTube link (online only). */
 export function DemoPlayer({ exercise, className = '', compact }: { exercise: Exercise | undefined; className?: string; compact?: boolean }) {
@@ -25,7 +26,19 @@ export function DemoPlayer({ exercise, className = '', compact }: { exercise: Ex
   return (
     <div className={`relative overflow-hidden rounded-card bg-white ${className}`}>
       {showClip ? (
-        <video key={clip} src={clip} className="h-full w-full bg-black object-contain" muted loop playsInline autoPlay aria-label={`My clip: ${exercise?.name}`} />
+        <video
+          key={clip}
+          src={clip}
+          className="h-full w-full bg-black object-contain"
+          muted
+          loop
+          playsInline
+          autoPlay
+          aria-label={`My clip: ${exercise?.name}`}
+          onTimeUpdate={(e) => {
+            if (e.currentTarget.currentTime > CLIP_LOOP_SEC) e.currentTarget.currentTime = 0;
+          }}
+        />
       ) : src0 ? (
         <button type="button" className="relative block h-full w-full" onClick={() => reduced && setFrame((f) => (f ? 0 : 1))} aria-label={`${exercise?.name} demonstration`}>
           <img src={src0} alt="" className="absolute inset-0 h-full w-full object-contain" decoding="async" />
