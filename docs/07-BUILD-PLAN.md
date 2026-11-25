@@ -38,8 +38,8 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** a clip recorded offline plays after an app restart.
 
 ## M5 — Eat + Habits (1 day)
-- [ ] Meal timeline with eaten/swap/skip, rotation chips, rest-day variant, sticky totals bar
-- [ ] Habits: water taps, oil/creatine checks, steps and sleep numbers
+- [x] Meal timeline with eaten/swap/skip, rotation chips, rest-day variant, sticky totals bar
+- [x] Habits: water taps, oil/creatine checks, steps and sleep numbers
 **Done when:** totals match the seed (training day ≈ 150 g / ≈ 2,000 kcal; rest day ≈ 1,950 kcal).
 
 ## M6 — Body + Progress + History (1½ days)
