@@ -52,3 +52,23 @@ describe('diet adjustment coach', () => {
   it('warns below the kcal floor', () =>
     expect(dietAdjustment({ ...base, kcalTarget: 1750, checks: [0.1, 0.1], adherence: 90 })?.floorWarning).toBe(true));
 });
+
+describe('diet changes', () => {
+  it('stalled → lunch rice 100 g → 50 g, then eat_more puts it back', async () => {
+    const { dietChangeFor, riceReduced } = await import('./diet');
+    const c = dietChangeFor('stalled', meals)!;
+    expect(c.description).toMatch(/Lunch: rice → 50 g/);
+    expect(c.kcal).toBe(680 - 65);
+    const after = meals.map((m) => (m.id === c.mealId ? { ...m, items: c.items, kcal: c.kcal } : m));
+    expect(riceReduced(after)).toBe(true);
+    expect(dietChangeFor('stalled', after)).toBeUndefined();
+    const back = dietChangeFor('eat_more', after)!;
+    expect(back.items.some((i) => i.includes('100 g cooked rice'))).toBe(true);
+  });
+  it('eat_more without reduced rice adds toast at breakfast', async () => {
+    const { dietChangeFor } = await import('./diet');
+    const c = dietChangeFor('eat_more', meals)!;
+    expect(c.description).toMatch(/Breakfast: \+1 slice multigrain toast/);
+    expect(c.kcal).toBe(390 + 70);
+  });
+});

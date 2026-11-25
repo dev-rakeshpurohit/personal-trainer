@@ -53,3 +53,47 @@ export function suggestTargets(p: { sex: 'male' | 'female' | 'other'; age: numbe
 }
 
 export const kcalFloor = (sex: 'male' | 'female' | 'other') => (sex === 'female' ? 1400 : 1700);
+
+export interface MealChange {
+  mealId: string;
+  items: string[];
+  kcal: number;
+  proteinG: number;
+  description: string;
+}
+
+/** Turn a diet-coach card into a concrete meal edit (doc 06 §6). Pure. */
+export function dietChangeFor(kind: 'stalled' | 'eat_more', meals: Pick<PlannedMeal, 'id' | 'meal' | 'items' | 'kcal' | 'proteinG'>[]): MealChange | undefined {
+  const riceMeal = meals.find((m) => m.items.some((i) => /cooked rice/i.test(i)));
+  const riceItem = riceMeal?.items.find((i) => /cooked rice/i.test(i));
+  const reduced = !!riceItem && /\b50 g\b/.test(riceItem);
+  if (kind === 'stalled') {
+    if (!riceMeal || !riceItem || reduced) return undefined;
+    return {
+      mealId: riceMeal.id,
+      items: riceMeal.items.map((i) => (i === riceItem ? i.replace(/\d+\s*g/, '50 g') : i)),
+      kcal: riceMeal.kcal - 65,
+      proteinG: riceMeal.proteinG - 1,
+      description: `${riceMeal.meal}: rice → 50 g (−65 kcal)`,
+    };
+  }
+  if (riceMeal && riceItem && reduced)
+    return {
+      mealId: riceMeal.id,
+      items: riceMeal.items.map((i) => (i === riceItem ? i.replace(/50\s*g/, '100 g') : i)),
+      kcal: riceMeal.kcal + 65,
+      proteinG: riceMeal.proteinG + 1,
+      description: `${riceMeal.meal}: rice back to 100 g (+65 kcal)`,
+    };
+  const breakfast = meals.find((m) => /breakfast/i.test(m.meal)) ?? meals[0];
+  if (!breakfast || breakfast.items.some((i) => /multigrain toast/i.test(i))) return undefined;
+  return {
+    mealId: breakfast.id,
+    items: [...breakfast.items, '1 slice multigrain toast'],
+    kcal: breakfast.kcal + 70,
+    proteinG: breakfast.proteinG + 3,
+    description: `${breakfast.meal}: +1 slice multigrain toast (+70 kcal)`,
+  };
+}
+
+export const riceReduced = (meals: Pick<PlannedMeal, 'items'>[]) => meals.some((m) => m.items.some((i) => /cooked rice/i.test(i) && /\b50 g\b/.test(i)));

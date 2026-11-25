@@ -43,10 +43,10 @@ Run every milestone back to back with no pauses for approval. Each one ends with
 **Done when:** totals match the seed (training day ≈ 150 g / ≈ 2,000 kcal; rest day ≈ 1,950 kcal).
 
 ## M6 — Body + Progress + History (1½ days)
-- [ ] Weight/waist quick log; photos (front/side/back) with compare view
-- [ ] Charts: weight (dots + 7-day average + goal + projection), waist, strength sparklines, consistency
-- [ ] History calendar heatmap + day detail + edit/delete with undo
-- [ ] Coach cards: go-heavier list, deload banner, diet adjustment (doc 06 §6)
+- [x] Weight/waist quick log; photos (front/side/back) with compare view
+- [x] Charts: weight (dots + 7-day average + goal + projection), waist, strength sparklines, consistency
+- [x] History calendar heatmap + day detail + edit/delete with undo
+- [x] Coach cards: go-heavier list, deload banner, diet adjustment (doc 06 §6)
 **Done when:** with 30 days of fake data (dev-only seeding script), every chart and coach card renders correctly.
 
 ## M7 — Plan editor + Settings + Backup (1 day)
