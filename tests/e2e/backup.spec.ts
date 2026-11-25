@@ -50,8 +50,8 @@ test('backup round-trip: export → erase all data → restore on "new phone" �
   await page.goto('/more/settings');
   await page.getByRole('button', { name: 'Erase all data on this phone' }).click();
   await page.getByRole('button', { name: 'Erase all data', exact: true }).click();
-  await expect(page).toHaveURL(/onboarding/);
   // erasing also forgets the invite unlock, like a brand-new phone
+  await expect(page.getByRole('heading', { name: 'Repmate is invite-only' })).toBeVisible();
   await unlock(page);
   await page.getByLabel('Backup file').setInputFiles(path);
   await expect(page).toHaveURL(/today/);
