@@ -62,3 +62,36 @@ export async function waitForSW(page: Page) {
 export async function expectNoServer(url: string) {
   await expect(fetch(url)).rejects.toThrow();
 }
+
+/** Complete onboarding with the ready-made template (defaults). */
+export async function onboard(page: Page, opts: { name?: string } = {}) {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: /Your coach/ })).toBeVisible();
+  await page.getByRole('button', { name: 'Get started' }).click();
+  await page.getByPlaceholder('What should we call you?').fill(opts.name ?? 'Alex');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByRole('button', { name: "Let's train" }).click();
+  await expect(page).toHaveURL(/\/today/);
+}
+
+/** Count rows in an IndexedDB table via Dexie's raw IDB. */
+export async function idbCount(page: Page, table: string): Promise<number> {
+  return page.evaluate(
+    (t) =>
+      new Promise<number>((resolve, reject) => {
+        const req = indexedDB.open('repmate');
+        req.onsuccess = () => {
+          const tx = req.result.transaction(t, 'readonly');
+          const c = tx.objectStore(t).count();
+          c.onsuccess = () => {
+            resolve(c.result);
+            req.result.close();
+          };
+          c.onerror = () => reject(c.error);
+        };
+        req.onerror = () => reject(req.error);
+      }),
+    table,
+  );
+}

@@ -3,18 +3,18 @@
 Run every milestone back to back with no pauses for approval. Each one ends with `pnpm lint && pnpm typecheck && pnpm test && pnpm build`, a Playwright check on the WebKit `iPhone 13` device profile, and a git commit. Preview deploys are optional; only the final production deploy is required.
 
 ## M0 — Scaffold (½ day)
-- [ ] Vite React TS + Tailwind + ESLint/Prettier + Vitest + Playwright, pnpm
-- [ ] Self-hosted Inter, design tokens in `tailwind.config` (doc 02 §4), dark theme default
-- [ ] App shell: tab bar, routes, placeholder screens
-- [ ] vite-plugin-pwa (`injectManifest`), manifest, icons (generate a simple orange "R" mark), update prompt
-- [ ] `vercel.json` (doc 08); first preview deploy
+- [x] Vite React TS + Tailwind + ESLint/Prettier + Vitest + Playwright, pnpm
+- [x] Self-hosted Inter, design tokens in `tailwind.config` (doc 02 §4), dark theme default
+- [x] App shell: tab bar, routes, placeholder screens
+- [x] vite-plugin-pwa (`injectManifest`), manifest, icons (generate a simple orange "R" mark), update prompt
+- [x] `vercel.json` (doc 08); first preview deploy
 **Done when:** Lighthouse says it's installable and the shell loads with Playwright offline.
 
 ## M1 — Data layer + seed (1 day)
-- [ ] Dexie schema v1 (doc 04), repositories, zod schemas
-- [ ] `seed-import.ts` imports the program and diet JSON; unit test the counts (7 program days, 5 with exercises, 42 media ids)
-- [ ] `pnpm fetch:media` script, and commit the generated WebP files + index.json
-- [ ] Onboarding flow (doc 02 §3.1) → profile + template import + `storage.persist()`
+- [x] Dexie schema v1 (doc 04), repositories, zod schemas
+- [x] `seed-import.ts` imports the program and diet JSON; unit test the counts (7 program days, 5 with exercises, 42 media ids)
+- [x] `pnpm fetch:media` script, and commit the generated WebP files + index.json
+- [x] Onboarding flow (doc 02 §3.1) → profile + template import + `storage.persist()`
 **Done when:** fresh install → onboarding → the data shows in DevTools IndexedDB.
 
 ## M2 — Today + Train + Library (1 day)

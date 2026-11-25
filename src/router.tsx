@@ -5,6 +5,7 @@ import Train from './features/train/Train';
 import Eat from './features/eat/Eat';
 import Progress from './features/progress/Progress';
 import More from './features/more/More';
+import Onboarding from './features/onboarding/Onboarding';
 
 export const router: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ export const router: ReturnType<typeof createBrowserRouter> = createBrowserRoute
           { path: '/more', element: <More /> },
         ],
       },
+      { path: '/onboarding', element: <Onboarding /> },
       { path: '*', element: <Navigate to="/today" replace /> },
     ],
   },
