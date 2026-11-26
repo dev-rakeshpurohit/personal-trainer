@@ -1,0 +1,744 @@
+{
+  "id": "lean-athletic-v2",
+  "name": "Lean & Athletic (Tue–Sat)",
+  "goal": "fat loss + lean muscle + athletic",
+  "sessionWindow": {
+    "start": "09:15",
+    "end": "10:30"
+  },
+  "warmup": {
+    "durationMin": 10,
+    "items": [
+      {
+        "name": "Easy cardio, any machine",
+        "minutes": 5
+      },
+      {
+        "name": "World's greatest stretch",
+        "reps": "4 / side",
+        "freeDbId": "Worlds_Greatest_Stretch",
+        "youtubeQuery": "worlds greatest stretch proper form"
+      },
+      {
+        "name": "Glute bridge",
+        "reps": "10",
+        "freeDbId": "Butt_Lift_Bridge",
+        "youtubeQuery": "glute bridge proper form"
+      },
+      {
+        "name": "Band pull-apart",
+        "reps": "15",
+        "freeDbId": "Band_Pull_Apart",
+        "youtubeQuery": "band pull apart proper form"
+      },
+      {
+        "name": "Bodyweight squat",
+        "reps": "10",
+        "freeDbId": null,
+        "youtubeQuery": "bodyweight squat proper form"
+      },
+      {
+        "name": "2 light sets of the first exercise",
+        "reps": "–"
+      }
+    ]
+  },
+  "cooldown": "5 min walk + stretch hips, hamstrings, chest, calves",
+  "rules": [
+    "Stop each set with 2 reps left in the tank (RIR 2). Never train to failure.",
+    "Station busy for more than 3 minutes? Use the swap or do the next exercise first.",
+    "Keep a resistance band in your bag. It replaces every cable exercise.",
+    "Sharp joint pain means stop the exercise. Muscle burn is fine."
+  ],
+  "progression": {
+    "model": "double_progression",
+    "dumbbellIncrementKg": 2,
+    "barIncrementKg": 5,
+    "cycle": [
+      {
+        "weeks": [
+          1,
+          2
+        ],
+        "rir": 3,
+        "note": "Learn the movements"
+      },
+      {
+        "weeks": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "rir": 2,
+        "note": "Main lifts can go to RIR 1 from week 5"
+      },
+      {
+        "weeks": [
+          8
+        ],
+        "rir": 3,
+        "deload": true,
+        "note": "Half the sets, same weights"
+      }
+    ]
+  },
+  "dailyTargets": {
+    "stepsMin": 8000,
+    "stepsMax": 10000,
+    "sleepHours": "7–8"
+  },
+  "days": [
+    {
+      "weekday": "MON",
+      "type": "rest",
+      "title": "Rest – gym closed",
+      "notes": "At least 7,000 steps."
+    },
+    {
+      "weekday": "TUE",
+      "type": "strength",
+      "title": "Strength A – full body",
+      "durationMin": 75,
+      "exercises": [
+        {
+          "slot": "A1",
+          "name": "Dumbbell goblet squat",
+          "freeDbId": "Goblet_Squat",
+          "youtubeQuery": "dumbbell goblet squat proper form",
+          "cue": "Dumbbell at your chest, chest up, sit down between your heels.",
+          "target": {
+            "sets": 4,
+            "repsMin": 8,
+            "repsMax": 10,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "supersetGroup": "A"
+        },
+        {
+          "slot": "A2",
+          "name": "Dumbbell bench press",
+          "freeDbId": "Dumbbell_Bench_Press",
+          "youtubeQuery": "dumbbell bench press proper form",
+          "cue": "Shoulder blades squeezed together, lower over 2 seconds.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 10,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 90,
+          "supersetGroup": "A",
+          "swap": {
+            "name": "Dumbbell floor press",
+            "freeDbId": "Dumbbell_Floor_Press",
+            "youtubeQuery": "dumbbell floor press proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "B1",
+          "name": "Lat pulldown",
+          "freeDbId": "Wide-Grip_Lat_Pulldown",
+          "youtubeQuery": "lat pulldown proper form",
+          "cue": "Pull to your upper chest, no swinging.",
+          "target": {
+            "sets": 3,
+            "repsMin": 10,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "supersetGroup": "B",
+          "swap": {
+            "name": "One-arm dumbbell row (hand on rack)",
+            "freeDbId": "One-Arm_Dumbbell_Row",
+            "youtubeQuery": "one arm dumbbell row proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "B2",
+          "name": "Dumbbell Romanian deadlift",
+          "freeDbId": "Stiff-Legged_Dumbbell_Deadlift",
+          "youtubeQuery": "dumbbell romanian deadlift proper form",
+          "cue": "Hips back, soft knees, flat back.",
+          "target": {
+            "sets": 3,
+            "repsMin": 10,
+            "repsMax": 10,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 90,
+          "supersetGroup": "B"
+        },
+        {
+          "slot": "C",
+          "name": "Standing dumbbell shoulder press",
+          "freeDbId": "Standing_Dumbbell_Press",
+          "youtubeQuery": "standing dumbbell shoulder press proper form",
+          "cue": "Squeeze your glutes and brace your abs. Don't arch your back.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 10,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 75
+        },
+        {
+          "slot": "D",
+          "name": "Front plank",
+          "freeDbId": "Plank",
+          "youtubeQuery": "front plank proper form",
+          "cue": "Squeeze your glutes, ribs down.",
+          "target": {
+            "sets": 3,
+            "repsMin": 30,
+            "repsMax": 45,
+            "unit": "seconds",
+            "perSide": false
+          },
+          "restSec": 45
+        }
+      ]
+    },
+    {
+      "weekday": "WED",
+      "type": "cardio",
+      "title": "Steady cardio + core",
+      "durationMin": 70,
+      "exercises": [
+        {
+          "slot": "1",
+          "name": "Steady cardio (any free machine)",
+          "freeDbId": "Bicycling_Stationary",
+          "youtubeQuery": "zone 2 cardio incline treadmill walk proper form",
+          "cue": "Heart rate about 115–135 bpm. You can talk in short sentences.",
+          "target": {
+            "sets": 1,
+            "repsMin": 30,
+            "repsMax": 30,
+            "unit": "minutes",
+            "perSide": false
+          },
+          "restSec": 0,
+          "swap": {
+            "name": "Outdoor brisk walk later in the day",
+            "freeDbId": null,
+            "youtubeQuery": "zone 2 cardio walking explained proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "2",
+          "name": "Hanging knee raise",
+          "freeDbId": "Hanging_Leg_Raise",
+          "youtubeQuery": "hanging knee raise proper form",
+          "cue": "Curl your pelvis up. Don't swing.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 45,
+          "swap": {
+            "name": "Reverse crunch on a mat",
+            "freeDbId": "Reverse_Crunch",
+            "youtubeQuery": "reverse crunch proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "3",
+          "name": "Cable crunch",
+          "freeDbId": "Cable_Crunch",
+          "youtubeQuery": "cable crunch proper form",
+          "cue": "Curl your ribs toward your hips.",
+          "target": {
+            "sets": 2,
+            "repsMin": 12,
+            "repsMax": 15,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 45,
+          "swap": {
+            "name": "Weighted plate crunch",
+            "freeDbId": null,
+            "youtubeQuery": "weighted crunch plate proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "4",
+          "name": "Side plank",
+          "freeDbId": "Side_Bridge",
+          "youtubeQuery": "side plank proper form",
+          "cue": "Straight line from head to heels.",
+          "target": {
+            "sets": 2,
+            "repsMin": 20,
+            "repsMax": 30,
+            "unit": "seconds",
+            "perSide": true
+          },
+          "restSec": 30
+        },
+        {
+          "slot": "5",
+          "name": "Dead bug",
+          "freeDbId": "Dead_Bug",
+          "youtubeQuery": "dead bug exercise proper form",
+          "cue": "Lower back pressed down, move slowly.",
+          "target": {
+            "sets": 2,
+            "repsMin": 8,
+            "repsMax": 8,
+            "unit": "reps",
+            "perSide": true
+          },
+          "restSec": 30
+        },
+        {
+          "slot": "6",
+          "name": "Mobility flow",
+          "freeDbId": "90_90_Hamstring",
+          "youtubeQuery": "hip ankle thoracic mobility routine proper form",
+          "cue": "90/90 hip switches, ankle rocks, open-book stretch.",
+          "target": {
+            "sets": 1,
+            "repsMin": 8,
+            "repsMax": 8,
+            "unit": "minutes",
+            "perSide": false
+          },
+          "restSec": 0
+        }
+      ]
+    },
+    {
+      "weekday": "THU",
+      "type": "strength",
+      "title": "Strength B – full body",
+      "durationMin": 75,
+      "exercises": [
+        {
+          "slot": "A1",
+          "name": "Leg press",
+          "freeDbId": "Leg_Press",
+          "youtubeQuery": "leg press proper form",
+          "cue": "Lower until your knees reach about 90°. Don't lock your knees.",
+          "target": {
+            "sets": 3,
+            "repsMin": 10,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "supersetGroup": "A",
+          "swap": {
+            "name": "Dumbbell step-up onto a bench",
+            "freeDbId": "Dumbbell_Step_Ups",
+            "youtubeQuery": "dumbbell step up proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "A2",
+          "name": "Incline dumbbell press",
+          "freeDbId": "Incline_Dumbbell_Press",
+          "youtubeQuery": "incline dumbbell press proper form",
+          "cue": "Bench at 30°, lower slowly.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 10,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 90,
+          "supersetGroup": "A",
+          "swap": {
+            "name": "Push-ups (feet on a bench if too easy)",
+            "freeDbId": "Pushups",
+            "youtubeQuery": "push up proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "B1",
+          "name": "Seated cable row",
+          "freeDbId": "Seated_Cable_Rows",
+          "youtubeQuery": "seated cable row proper form",
+          "cue": "Sit tall, pull to your belly button.",
+          "target": {
+            "sets": 3,
+            "repsMin": 10,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "supersetGroup": "B",
+          "swap": {
+            "name": "Dumbbell bent-over row",
+            "freeDbId": "Bent_Over_Two-Dumbbell_Row",
+            "youtubeQuery": "dumbbell bent over row proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "B2",
+          "name": "Dumbbell reverse lunge",
+          "freeDbId": "Dumbbell_Rear_Lunge",
+          "youtubeQuery": "dumbbell reverse lunge proper form",
+          "cue": "Step back, drive up through the front heel.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 8,
+            "unit": "reps",
+            "perSide": true
+          },
+          "restSec": 75,
+          "supersetGroup": "B"
+        },
+        {
+          "slot": "C",
+          "name": "Face pull",
+          "freeDbId": "Face_Pull",
+          "youtubeQuery": "cable face pull proper form",
+          "cue": "Pull to your forehead, elbows high.",
+          "target": {
+            "sets": 2,
+            "repsMin": 15,
+            "repsMax": 15,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 45,
+          "swap": {
+            "name": "Band face pull",
+            "freeDbId": null,
+            "youtubeQuery": "band face pull proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "D1",
+          "name": "Dumbbell hammer curl",
+          "freeDbId": "Hammer_Curls",
+          "youtubeQuery": "dumbbell hammer curl proper form",
+          "cue": "Elbows pinned to your sides.",
+          "target": {
+            "sets": 2,
+            "repsMin": 10,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 0,
+          "supersetGroup": "D"
+        },
+        {
+          "slot": "D2",
+          "name": "Dumbbell overhead triceps extension",
+          "freeDbId": "Kettlebell_Overhead_Triceps_Extension",
+          "youtubeQuery": "dumbbell overhead triceps extension proper form",
+          "cue": "Elbows point forward, full stretch.",
+          "target": {
+            "sets": 2,
+            "repsMin": 10,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "supersetGroup": "D"
+        }
+      ]
+    },
+    {
+      "weekday": "FRI",
+      "type": "conditioning",
+      "title": "Athletic power + intervals",
+      "durationMin": 70,
+      "notes": "Week 1: 3 sets of exercises 1–2 and 4 intervals.",
+      "exercises": [
+        {
+          "slot": "1",
+          "name": "Medicine-ball slam",
+          "freeDbId": "One-Arm_Medicine_Ball_Slam",
+          "youtubeQuery": "medicine ball slam proper form",
+          "cue": "Reach tall, then slam the ball using your abs.",
+          "target": {
+            "sets": 4,
+            "repsMin": 6,
+            "repsMax": 6,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "swap": {
+            "name": "Explosive push-ups, hands on a bench",
+            "freeDbId": "Plyo_Push-up",
+            "youtubeQuery": "explosive incline push up proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "2",
+          "name": "Low box jump (30–45 cm)",
+          "freeDbId": "Front_Box_Jump",
+          "youtubeQuery": "box jump for beginners proper form",
+          "cue": "Land softly. Step down, don't jump down.",
+          "target": {
+            "sets": 3,
+            "repsMin": 5,
+            "repsMax": 5,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 60,
+          "swap": {
+            "name": "Bodyweight squat jump",
+            "freeDbId": "Freehand_Jump_Squat",
+            "youtubeQuery": "squat jump proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "3a",
+          "name": "Kettlebell swing",
+          "freeDbId": "One-Arm_Kettlebell_Swings",
+          "youtubeQuery": "kettlebell swing proper form",
+          "cue": "Hinge at the hips and snap them forward.",
+          "target": {
+            "sets": 3,
+            "repsMin": 12,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 0,
+          "supersetGroup": "C",
+          "swap": {
+            "name": "Dumbbell swing",
+            "freeDbId": null,
+            "youtubeQuery": "dumbbell swing proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "3b",
+          "name": "Farmer's carry",
+          "freeDbId": "Farmers_Walk",
+          "youtubeQuery": "farmers carry proper form",
+          "cue": "Heavy dumbbells, stand tall. 30 m per round.",
+          "target": {
+            "sets": 3,
+            "repsMin": 30,
+            "repsMax": 30,
+            "unit": "meters",
+            "perSide": false
+          },
+          "restSec": 0,
+          "supersetGroup": "C",
+          "swap": {
+            "name": "Farmer's march in place, 40 s",
+            "freeDbId": null,
+            "youtubeQuery": "farmers march in place proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "3c",
+          "name": "Mountain climber",
+          "freeDbId": "Mountain_Climbers",
+          "youtubeQuery": "mountain climber proper form",
+          "cue": "Hips level, steady pace.",
+          "target": {
+            "sets": 3,
+            "repsMin": 20,
+            "repsMax": 20,
+            "unit": "seconds",
+            "perSide": false
+          },
+          "restSec": 90,
+          "supersetGroup": "C"
+        },
+        {
+          "slot": "4",
+          "name": "Bike intervals",
+          "freeDbId": "Bicycling_Stationary",
+          "youtubeQuery": "stationary bike interval training proper form",
+          "cue": "30 s hard / 90 s easy × 6.",
+          "target": {
+            "sets": 6,
+            "repsMin": 30,
+            "repsMax": 30,
+            "unit": "seconds",
+            "perSide": false
+          },
+          "restSec": 90,
+          "swap": {
+            "name": "Rower or cross-trainer intervals",
+            "freeDbId": "Rowing_Stationary",
+            "youtubeQuery": "rowing machine intervals proper form",
+            "reason": "Station busy"
+          }
+        }
+      ]
+    },
+    {
+      "weekday": "SAT",
+      "type": "strength",
+      "title": "Strength C – heavier",
+      "durationMin": 75,
+      "notes": "If Friday wiped you out, do 1 set fewer of each exercise.",
+      "exercises": [
+        {
+          "slot": "A",
+          "name": "Trap-bar deadlift",
+          "freeDbId": "Trap_Bar_Deadlift",
+          "youtubeQuery": "trap bar deadlift proper form",
+          "cue": "Push the floor away, finish tall.",
+          "target": {
+            "sets": 3,
+            "repsMin": 6,
+            "repsMax": 8,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 120,
+          "swap": {
+            "name": "Heavy dumbbell deadlift",
+            "freeDbId": "Stiff-Legged_Dumbbell_Deadlift",
+            "youtubeQuery": "dumbbell deadlift proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "B1",
+          "name": "Band-assisted pull-up",
+          "freeDbId": "Band_Assisted_Pull-Up",
+          "youtubeQuery": "band assisted pull up proper form",
+          "cue": "Chest to the bar, lower over 3 seconds.",
+          "target": {
+            "sets": 3,
+            "repsMin": 5,
+            "repsMax": 8,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 90,
+          "supersetGroup": "B",
+          "swap": {
+            "name": "Assisted pull-up machine or pulldown",
+            "freeDbId": "Wide-Grip_Lat_Pulldown",
+            "youtubeQuery": "neutral grip lat pulldown proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "B2",
+          "name": "Dumbbell chest press",
+          "freeDbId": "Dumbbell_Bench_Press",
+          "youtubeQuery": "dumbbell chest press proper form",
+          "cue": "Add a little weight compared with Tuesday.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 12,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 90,
+          "supersetGroup": "B",
+          "swap": {
+            "name": "Dumbbell floor press",
+            "freeDbId": "Dumbbell_Floor_Press",
+            "youtubeQuery": "dumbbell floor press proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "C",
+          "name": "Bulgarian split squat",
+          "freeDbId": "Split_Squat_with_Dumbbells",
+          "youtubeQuery": "dumbbell bulgarian split squat proper form",
+          "cue": "Back foot on a bench, front heel stays down.",
+          "target": {
+            "sets": 3,
+            "repsMin": 8,
+            "repsMax": 8,
+            "unit": "reps",
+            "perSide": true
+          },
+          "restSec": 75,
+          "swap": {
+            "name": "Split squat with your back foot on the floor",
+            "freeDbId": "Split_Squat_with_Dumbbells",
+            "youtubeQuery": "dumbbell split squat proper form",
+            "reason": "Station busy"
+          }
+        },
+        {
+          "slot": "D1",
+          "name": "Dumbbell lateral raise",
+          "freeDbId": "Side_Lateral_Raise",
+          "youtubeQuery": "dumbbell lateral raise proper form",
+          "cue": "Light weight, stop at shoulder height.",
+          "target": {
+            "sets": 3,
+            "repsMin": 12,
+            "repsMax": 15,
+            "unit": "reps",
+            "perSide": false
+          },
+          "restSec": 0,
+          "supersetGroup": "D"
+        },
+        {
+          "slot": "D2",
+          "name": "Cable woodchop",
+          "freeDbId": "Standing_Cable_Wood_Chop",
+          "youtubeQuery": "cable woodchop proper form",
+          "cue": "Rotate through your upper back.",
+          "target": {
+            "sets": 2,
+            "repsMin": 10,
+            "repsMax": 10,
+            "unit": "reps",
+            "perSide": true
+          },
+          "restSec": 45,
+          "supersetGroup": "D",
+          "swap": {
+            "name": "Band woodchop / Pallof press",
+            "freeDbId": "Pallof_Press",
+            "youtubeQuery": "band pallof press proper form",
+            "reason": "Station busy"
+          }
+        }
+      ]
+    },
+    {
+      "weekday": "SUN",
+      "type": "active_recovery",
+      "title": "Active recovery",
+      "notes": "45–60 min brisk walk + 10 min mobility."
+    }
+  ]
+}
