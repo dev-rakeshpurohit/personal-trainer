@@ -12,3 +12,7 @@ Claude outputs/
 
 # Exercise demo media © Gym visual: personal use only, never commit
 public/media/demos/
+
+# Apple App Store Connect API keys: never commit
+keys/
+*.p8

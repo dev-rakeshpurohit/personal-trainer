@@ -6,3 +6,5 @@ playwright-report
 .env*
 tests
 api/**/*.test.ts
+keys
+*.p8
