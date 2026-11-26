@@ -41,3 +41,9 @@
 | 2026-11-26 | Backup files stamp `lastBackupAt` = export time inside the file | A restore then shows the correct "last backup" date (round-trip is byte-identical) |
 | 2026-11-26 | Onboarding/setup screens are code-split; the tiny invite gate renders eagerly from the root layout | Keeps first-load JS at ~155 KB gzip and Lighthouse mobile Performance at 96 (it was 89 with the gate inside a lazy chunk) |
 | 2026-11-26 | Lighthouse 12 has no PWA category; installability is verified by the manifest + service-worker e2e specs instead | Tooling change since the spec was written |
+
+## 2026-11-26: Animated 3D exercise demos (Gym visual via hasaneyldrm/exercises-dataset)
+- **Decision:** Replace the 2-frame free-exercise-db photos with animated 3D demos (white background, working muscles in red) for 204 of 216 library exercises (169 unique clips). The other 12 (rower, sled, box jumps, tuck jump, plate pinch, cat-camel, groiner, hip-flexor stretch, step-up with knee drive) keep the photos.
+- **Why:** The owner found the photos unclear and asked for the 3D style. No openly licensed 3D exercise animations exist (searched Wikimedia, RepDB, ExerciseDB, MoveKit, WorkoutLabs). A hand-built vector figure was prototyped and rejected by the owner. The owner chose this dataset for personal, non-commercial use.
+- **Licence handling:** The media is © Gym visual. The dataset's MIT licence explicitly excludes it, so: the files are git-ignored (`public/media/demos/`) and only the id mapping (`seed/demo-map.json`) is committed. `pnpm fetch:demos` downloads and converts them before a build/deploy. The credit "© Gym visual" is shown on every demo and in About → Licences. 180×180 is kept (no upscaling). For anything beyond personal use, buy a licence from gymvisual.com.
+- **Format:** The GIFs are converted to animated WebP (q72), which is ≈⅓ the size (≈35 KB each, 5.9 MB total), plus a still frame for list thumbnails. Everything is precached, so the demos work offline.

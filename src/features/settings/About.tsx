@@ -54,11 +54,17 @@ export default function About() {
         <SectionTitle>Licences</SectionTitle>
         <Card className="space-y-2 text-[15px]">
           <p>
-            Exercise images from <strong>free-exercise-db</strong> (public domain, Unlicense).
+            Animated 3D exercise demos <strong>© Gym visual</strong> (gymvisual.com), via the hasaneyldrm exercises-dataset. Personal, non-commercial use.
+          </p>
+          <p>
+            Fallback exercise photos from <strong>free-exercise-db</strong> (public domain, Unlicense).
           </p>
           <p>
             <strong>Inter</strong> typeface (SIL Open Font License). <strong>Lucide</strong> icons (ISC). React, Dexie, Recharts, date-fns, Zod, fflate (MIT / Apache-2.0).
           </p>
+          <a href="https://gymvisual.com/" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-1 font-semibold text-primary-ink">
+            Gym visual <ExternalLink size={14} aria-hidden />
+          </a>
           <a href="https://github.com/yuhonas/free-exercise-db" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[44px] items-center gap-1 font-semibold text-primary-ink">
             free-exercise-db <ExternalLink size={14} aria-hidden />
           </a>

@@ -1,0 +1,32 @@
+import { describe, expect, it } from 'vitest';
+import demoMap from '../../seed/demo-map.json';
+import { staticLibrary } from './plan-builder';
+import { demoAnimSrc, demoIdFor, exerciseThumb } from '@/lib/clips';
+
+const map = demoMap.map as Record<string, string | null>;
+const files = demoMap.files as Record<string, string>;
+
+describe('demo map', () => {
+  it('covers every library exercise and nothing else', () => {
+    const ids = new Set(staticLibrary().map((e) => e.id));
+    expect(Object.keys(map).sort()).toEqual([...ids].sort());
+  });
+
+  it('has a source file for every mapped demo', () => {
+    for (const id of Object.values(map)) if (id) expect(files[id], id).toMatch(/^videos\/\d{4}-\w+\.gif$/);
+  });
+
+  it('maps most of the library to an animated demo', () => {
+    const mapped = Object.values(map).filter(Boolean).length;
+    expect(mapped / Object.keys(map).length).toBeGreaterThan(0.9);
+  });
+
+  it('resolves animated + still sources, falling back to photos', () => {
+    expect(demoIdFor('dumbbell-goblet-squat')).toBe('1760');
+    expect(demoAnimSrc('dumbbell-goblet-squat')).toBe('/media/demos/1760.webp');
+    expect(exerciseThumb({ id: 'dumbbell-goblet-squat', freeDbId: 'Goblet_Squat' })).toBe('/media/demos/1760-t.webp');
+    expect(exerciseThumb({ id: 'rowing-machine', freeDbId: 'Rowing_Stationary' })).toBe('/media/exercises/Rowing_Stationary/0.webp');
+    expect(exerciseThumb({ id: 'my-custom-move' })).toBeUndefined();
+    expect(demoAnimSrc(undefined)).toBeUndefined();
+  });
+});

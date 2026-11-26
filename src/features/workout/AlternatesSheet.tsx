@@ -5,7 +5,7 @@ import { Button } from '@/components/ui';
 import { Sheet } from '@/components/Sheet';
 import { db } from '@/data/db';
 import type { Exercise } from '@/domain/types';
-import { demoSrc } from '@/lib/clips';
+import { exerciseThumb } from '@/lib/clips';
 import { isAvailable, PRESETS } from '@/domain/equipment';
 
 /** Lists the planned exercise, its plan swap and the research alternates (easier → harder). */
@@ -80,7 +80,7 @@ export function AlternatesSheet({
       {!!data?.hidden && <p className="mb-2 text-caption text-muted">{data.hidden} more need equipment you haven't selected (More → My plan setup).</p>}
       <ul className="space-y-2 pb-2">
         {list?.map((e) => {
-          const t = demoSrc(e.freeDbId, 0);
+          const t = exerciseThumb(e);
           const active = (sel ?? currentId) === e.id;
           return (
             <li key={e.id}>

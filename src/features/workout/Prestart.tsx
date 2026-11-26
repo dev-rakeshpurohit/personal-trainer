@@ -7,7 +7,7 @@ import { Segmented } from '@/components/Segmented';
 import { useActiveSession, useExerciseMap, useProgram, useWeekPlan } from '@/data/hooks';
 import { dayKey } from '@/domain/schedule';
 import type { SessionMode } from '@/domain/types';
-import { demoSrc } from '@/lib/clips';
+import { exerciseThumb } from '@/lib/clips';
 import { prepareSession, startSession, type Prepared } from './session';
 
 /** Pre-flight: choose Full or Express, see adaptations and the warm-up, then begin. */
@@ -139,7 +139,7 @@ export default function Prestart() {
         <ul className="space-y-2">
           {prep?.plan.map((e) => {
             const ex = exMap.get(e.exerciseId);
-            const t = demoSrc(ex?.freeDbId, 0);
+            const t = exerciseThumb(ex);
             return (
               <li key={e.plannedExerciseId} className="flex items-center gap-3 rounded-card border border-line/50 bg-surface p-2.5">
                 <span className="h-12 w-12 shrink-0 overflow-hidden rounded-btn bg-white">{t && <img src={t} alt="" className="h-full w-full object-cover" />}</span>

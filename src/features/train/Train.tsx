@@ -9,7 +9,7 @@ import { db } from '@/data/db';
 import { useExerciseMap, useProgram, useWeekPlan } from '@/data/hooks';
 import { cycleEntry, cycleWeek, dayKey, weekDates } from '@/domain/schedule';
 import { isTrainingType, type DayType, type ProgramDay } from '@/domain/types';
-import { demoSrc } from '@/lib/clips';
+import { exerciseThumb } from '@/lib/clips';
 
 export const DAY_ICON: Record<DayType, typeof Dumbbell> = { strength: Dumbbell, cardio: HeartPulse, conditioning: Zap, rest: Moon, active_recovery: HeartPulse };
 
@@ -147,7 +147,7 @@ export default function Train() {
                 .filter((p) => p.dayId === open.id)
                 .map((p) => {
                   const ex = exMap.get(p.exerciseId);
-                  const thumb = demoSrc(ex?.freeDbId, 0);
+                  const thumb = exerciseThumb(ex);
                   return (
                     <li key={p.id}>
                       <Link to={`/train/library/${p.exerciseId}`} className="flex min-h-[64px] items-center gap-3 py-2">

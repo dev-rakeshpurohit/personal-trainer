@@ -18,8 +18,8 @@ test('airplane mode: open app, run a full Strength A session, finish with summar
     await page.getByRole('button', { name: /Start workout/ }).click();
     await page.getByRole('button', { name: /Begin workout/ }).click();
 
-    // demo image served offline by the SW
-    const img = page.locator('img[src*="Goblet_Squat/0.webp"]').first();
+    // animated 3D demo served offline by the SW
+    const img = page.locator('img[src*="media/demos/1760.webp"]').first();
     await expect(img).toBeVisible();
     expect(await img.evaluate((el: HTMLImageElement) => el.naturalWidth > 0)).toBe(true);
 

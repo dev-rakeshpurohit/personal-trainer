@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Chip, Empty, PageHeader } from '@/components/ui';
 import { db } from '@/data/db';
-import { demoSrc } from '@/lib/clips';
+import { exerciseThumb } from '@/lib/clips';
 import { BackButton } from '@/components/BackButton';
 
 export default function Library() {
@@ -61,7 +61,7 @@ export default function Library() {
       </div>
       <ul className="px-4 pt-1">
         {list.map((e) => {
-          const t = demoSrc(e.freeDbId, 0);
+          const t = exerciseThumb(e);
           return (
             <li key={e.id}>
               <Link to={`/train/library/${e.id}`} className="flex min-h-[68px] items-center gap-3 border-b border-line/40 py-2">

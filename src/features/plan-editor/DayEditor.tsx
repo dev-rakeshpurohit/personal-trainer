@@ -14,7 +14,7 @@ import { db, uid } from '@/data/db';
 import { useExerciseMap } from '@/data/hooks';
 import type { DayType, Exercise, PlannedExercise, Unit } from '@/domain/types';
 import { WEEKDAY_LABEL } from '@/domain/types';
-import { demoSrc } from '@/lib/clips';
+import { exerciseThumb } from '@/lib/clips';
 import { useUI } from '@/store/ui';
 import { AlternatesSheet } from '@/features/workout/AlternatesSheet';
 import { makePermanentSwap } from '@/features/workout/session';
@@ -118,7 +118,7 @@ export default function DayEditor() {
 
 function SortableRow({ pe, ex, swap, onOpen }: { pe: PlannedExercise; ex?: Exercise; swap?: Exercise; onOpen: () => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: pe.id });
-  const t = demoSrc(ex?.freeDbId, 0);
+  const t = exerciseThumb(ex);
   return (
     <li ref={setNodeRef} style={{ transform: CSS.Transform.toString(transform), transition }} className={`flex items-center gap-2 rounded-card border border-line/50 bg-surface p-2 ${isDragging ? 'z-10 shadow-2xl ring-2 ring-primary' : ''}`}>
       <button type="button" className="flex h-12 w-9 shrink-0 touch-none items-center justify-center text-muted" aria-label={`Reorder ${ex?.name}`} {...attributes} {...listeners}>

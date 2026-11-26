@@ -7,7 +7,7 @@ import { Sheet } from '@/components/Sheet';
 import { db } from '@/data/db';
 import { slugify } from '@/data/seed-import';
 import type { Category, Exercise, Unit } from '@/domain/types';
-import { demoSrc } from '@/lib/clips';
+import { exerciseThumb } from '@/lib/clips';
 import { isAvailable, PRESETS } from '@/domain/equipment';
 
 /** Pick an exercise from the library, or create a custom one. */
@@ -44,7 +44,7 @@ export function ExercisePicker({ open, onClose, onPick, title = 'Add exercise' }
           {!!data?.hidden && <p className="px-2 text-caption text-muted">{data.hidden} exercises hidden: they need equipment you haven't selected.</p>}
           <ul className="mt-1">
             {shown.map((e) => {
-              const t = demoSrc(e.freeDbId, 0);
+              const t = exerciseThumb(e);
               return (
                 <li key={e.id}>
                   <button type="button" onClick={() => { onPick(e.id); onClose(); }} className="flex min-h-[60px] w-full items-center gap-3 border-b border-line/40 py-1.5 text-left">

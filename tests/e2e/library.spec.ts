@@ -14,7 +14,7 @@ test('library and exercise detail work with no network', async ({ page }) => {
     await page.getByPlaceholder('Search exercises').fill('goblet');
     await page.getByRole('link', { name: /Dumbbell goblet squat/ }).click();
     await expect(page.getByRole('heading', { name: 'Dumbbell goblet squat' })).toBeVisible();
-    const img = page.locator('img[src*="Goblet_Squat/0.webp"]');
+    const img = page.locator('img[src*="media/demos/1760.webp"]');
     await expect(img).toBeVisible();
     const loaded = await img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0);
     expect(loaded).toBe(true);

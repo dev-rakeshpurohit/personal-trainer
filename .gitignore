@@ -9,3 +9,6 @@ playwright-report
 .env*
 Claude outputs/
 .access-code.local
+
+# Exercise demo media © Gym visual: personal use only, never commit
+public/media/demos/
