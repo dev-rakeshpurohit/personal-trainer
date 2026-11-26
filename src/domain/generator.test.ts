@@ -1,9 +1,9 @@
-import { buildExercises, parseMediaIndex, parseResearch, parseSeedProgram } from '@/data/seed-import';
+import { staticLibrary } from '@/data/plan-builder';
 import { isAvailable, PRESETS } from './equipment';
 import { generateProgram, type Experience, type Goal } from './generator';
 import type { Weekday } from './types';
 
-const library = [...buildExercises(parseSeedProgram(), parseMediaIndex(), parseResearch()).values()];
+const library = staticLibrary();
 const DAYS: Record<number, Weekday[]> = {
   2: ['TUE', 'FRI'],
   3: ['MON', 'WED', 'FRI'],
@@ -63,5 +63,23 @@ describe('program generator', () => {
     const b = generateProgram({ goal: 'muscle', experience: 'beginner', days: DAYS[3], sessionMin: 60, equipment: PRESETS.full_gym, library });
     const byId = new Map(library.map((e) => [e.id, e]));
     for (const d of b.days) for (const e of d.exercises) expect(byId.get(e.exerciseId)!.level ?? 1).toBeLessThanOrEqual(3);
+  });
+});
+
+describe('isolation work from the 3D library', () => {
+  it('lower days for muscle goals get a plain leg curl and calf raise, never odd variants', () => {
+    const p = generateProgram({ goal: 'muscle', experience: 'intermediate', days: ['MON', 'TUE', 'THU', 'FRI'], sessionMin: 75, equipment: PRESETS.full_gym, library });
+    const byId = new Map(library.map((e) => [e.id, e]));
+    const names = p.days.flatMap((d) => d.exercises.map((e) => byId.get(e.exerciseId)!.name));
+    expect(names.some((n) => /leg curl/i.test(n))).toBe(true);
+    expect(names.some((n) => /calf raise/i.test(n))).toBe(true);
+    expect(names.some((n) => /exercise ball|bosu|arm blaster|\(v\d\)/i.test(n))).toBe(false);
+  });
+
+  it('curated main lifts still win over dataset variants', () => {
+    const p = generateProgram({ goal: 'lean', experience: 'beginner', days: ['TUE', 'THU', 'SAT'], sessionMin: 60, equipment: PRESETS.full_gym, library });
+    const byId = new Map(library.map((e) => [e.id, e]));
+    const mains = p.days.flatMap((d) => d.exercises.filter((e) => e.slot.startsWith('A')).map((e) => byId.get(e.exerciseId)!));
+    expect(mains.every((e) => e.source === 'curated')).toBe(true);
   });
 });

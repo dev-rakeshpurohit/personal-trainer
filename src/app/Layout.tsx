@@ -10,6 +10,8 @@ import { applyTheme } from '@/lib/theme';
 import { unlockAudioOnFirstTap } from '@/lib/notify';
 import { isUnlocked } from '@/lib/access';
 import { Gate } from '@/features/onboarding/Gate';
+import { useUI } from '@/store/ui';
+import { cachePlanDemos } from '@/lib/demoCache';
 
 export function TabLayout() {
   return (
@@ -32,6 +34,18 @@ export function RootLayout() {
     if (profile) applyTheme(profile.theme);
   }, [profile]);
   useEffect(() => unlockAudioOnFirstTap(), []);
+  const hasProfile = !!profile;
+  useEffect(() => {
+    if (!hasProfile) return;
+    // Existing installs: merge newly bundled exercises once, then keep the plan's demos cached for the gym.
+    void import('@/data/plan-builder')
+      .then((m) => m.upgradeLibraryIfNeeded())
+      .then((upgraded) => {
+        if (upgraded) useUI.getState().toast('Library updated: 1,300+ exercises with 3D demos');
+      })
+      .catch(() => undefined)
+      .finally(() => void cachePlanDemos().catch(() => undefined));
+  }, [hasProfile]);
 
   if (profile === undefined) return <Splash />;
   // invite gate renders eagerly (tiny) so a first visit paints immediately

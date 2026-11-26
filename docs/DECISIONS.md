@@ -47,3 +47,22 @@
 - **Why:** The owner found the photos unclear and asked for the 3D style. No openly licensed 3D exercise animations exist (searched Wikimedia, RepDB, ExerciseDB, MoveKit, WorkoutLabs). A hand-built vector figure was prototyped and rejected by the owner. The owner chose this dataset for personal, non-commercial use.
 - **Licence handling:** The media is © Gym visual. The dataset's MIT licence explicitly excludes it, so: the files are git-ignored (`public/media/demos/`) and only the id mapping (`seed/demo-map.json`) is committed. `pnpm fetch:demos` downloads and converts them before a build/deploy. The credit "© Gym visual" is shown on every demo and in About → Licences. 180×180 is kept (no upscaling). For anything beyond personal use, buy a licence from gymvisual.com.
 - **Format:** The GIFs are converted to animated WebP (q72), which is ≈⅓ the size (≈35 KB each, 5.9 MB total), plus a still frame for list thumbnails. Everything is precached, so the demos work offline.
+
+## 2026-11-26: Full 3D exercise library (1,320 exercises)
+- **Decision:** Import the whole hasaneyldrm/exercises-dataset (data + instructions are MIT) as ~1,100 extra library exercises (`pnpm import:dataset` → `seed/library.dataset.json`). Names are cleaned, equipment is mapped to the gym model, movement patterns are classified by rules, and difficulty and logging unit are estimated. Curated exercises keep priority and get the dataset's helper muscles and demo-matched instructions.
+- **Offline budget:** All thumbnails plus the curated animations are precached (~6 MB). The other ~1,100 animations (~38 MB) are cached on first view, the active plan's demos are cached automatically, and Settings → Storage has "Download all demos". The old photos are precached only for the 12 exercises without a 3D demo.
+- **Upgrade path:** `LIBRARY_VERSION` meta. The app shell merges new exercises and refreshes library-owned fields once, and never touches custom exercises or user settings (cue, Track weight).
+- **Generator:** Adds isolation patterns (leg curl, leg extension, calves, chest fly, glute) as trailing slots, so they appear only when the session is long enough or the split has room. It prefers curated lifts and plain gym staples over odd variants.
+
+## 2026-11-26: Plan check
+- Weekly working sets per muscle group (direct sets count 1, helper sets ½; calves/core as helpers count 0/¼, because squats don't train calves). Minimums are set by goal. Each gap gets three equipment-safe options and a day choice next to related work. Applying is one tap and never edits history.
+
+## 2026-11-26: Other days are preview-only
+- Only today's scheduled session (after missed-session re-planning) can be started. Other days open read-only, and Prestart shows "Preview · starts on …" instead of Begin. The owner asked for this to stop accidental early or late starts.
+
+## 2026-11-26: AI coach (OpenRouter) — first server code
+- **Why it breaks "no backend":** The owner asked for AI plan generation and changes. An API key can't ship in a public PWA, so a single Vercel Function `api/coach.ts` holds `OPENROUTER_API_KEY` (encrypted env).
+- **Guard rails:** The function requires the invite code (same salted hash as the gate), builds the prompt server-side from zod-validated fields (it is not a general LLM proxy), caps output tokens and the model's reasoning budget, and rate-limits 12 requests/h per IP per instance.
+- **Model:** `anthropic/claude-haiku-5.5` by default (override with `OPENROUTER_MODEL`). A live test took 47 s and cost US$0.009 for a full 5-day workout + diet.
+- **Safety of output:** The model may only choose exercise ids from an equipment-filtered list the app sends. `normaliseAiPlan` drops unknown ids, clamps numbers, fills the week and checks diet totals. The user previews before anything is saved, and history is kept.
+- **Privacy:** The coach screen says exactly what is sent (age, height, weight, goal, schedule, equipment, food preferences, the note). Everything else stays on the device. Without internet the coach is disabled and the saved plan keeps working offline.

@@ -30,7 +30,26 @@ export function isUnlocked(): boolean {
   }
 }
 
-export function markUnlocked() {
+const CODE_KEY = 'repmate:code';
+
+/** The invite code itself is kept on this device so the AI coach can prove access to the server. */
+export function storedCode(): string | undefined {
+  try {
+    return localStorage.getItem(CODE_KEY) ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+export function storeCode(code: string) {
+  try {
+    localStorage.setItem(CODE_KEY, normaliseCode(code));
+  } catch {
+    /* private mode */
+  }
+}
+
+export function markUnlocked(code?: string) {
+  if (code) storeCode(code);
   try {
     localStorage.setItem(KEY, ACCESS_HASH.slice(0, 16));
   } catch {

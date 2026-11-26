@@ -4,7 +4,8 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/((?!assets|media|icons|fonts|splash|sw.js|manifest.webmanifest|wake.mp4).*)", "destination": "/index.html" }],
+  "functions": { "api/coach.ts": { "maxDuration": 120 } },
+  "rewrites": [{ "source": "/((?!api/|assets|media|icons|fonts|splash|sw.js|manifest.webmanifest|wake.mp4).*)", "destination": "/index.html" }],
   "headers": [
     { "source": "/sw.js", "headers": [
       { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },

@@ -5,6 +5,8 @@ import { BackButton } from '@/components/BackButton';
 import { Button, Card, PageHeader } from '@/components/ui';
 import { db } from '@/data/db';
 import { formatBytes, requestPersistence, storageEstimate } from '@/lib/storage';
+import { downloadAllDemos, offlineDemoCount } from '@/lib/demoCache';
+import { useOnline } from '@/lib/online';
 
 export default function Storage() {
   const [est, setEst] = useState<{ usage: number; quota: number; persisted: boolean }>();
@@ -19,6 +21,7 @@ export default function Storage() {
     <div className="pb-6">
       <PageHeader title="Storage" right={<BackButton to="/more" />} />
       <div className="space-y-3 px-4">
+        <DemoDownloads onDone={refresh} />
         <Card>
           <p className="flex items-center gap-2 font-semibold">
             {est?.persisted ? <ShieldCheck size={20} className="text-success" aria-hidden /> : <ShieldAlert size={20} className="text-warning" aria-hidden />}
@@ -41,5 +44,43 @@ export default function Storage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+/** Plan exercises' demos are cached automatically; this fetches the rest of the library for offline browsing. */
+function DemoDownloads({ onDone }: { onDone: () => void }) {
+  const online = useOnline();
+  const [count, setCount] = useState<{ cached: number; total: number }>();
+  const [prog, setProg] = useState<{ done: number; total: number }>();
+  const [busy, setBusy] = useState(false);
+  const recount = () => void offlineDemoCount().then(setCount);
+  useEffect(recount, []);
+  const all = count && count.cached >= count.total;
+  return (
+    <Card>
+      <p className="font-semibold">3D exercise demos</p>
+      <p className="mt-1 text-[15px] text-muted">
+        {count ? `${count.cached.toLocaleString()} of ${count.total.toLocaleString()} work offline.` : 'Checking…'} Your plan's exercises are always kept. Download the rest (≈40 MB) to browse the whole library with no signal.
+      </p>
+      {busy && prog && (
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface2" role="progressbar" aria-valuemin={0} aria-valuemax={prog.total} aria-valuenow={prog.done} aria-label="Downloading demos">
+          <div className="h-full rounded-full bg-primary transition-[width]" style={{ width: `${(prog.done / Math.max(prog.total, 1)) * 100}%` }} />
+        </div>
+      )}
+      <Button
+        variant="secondary"
+        className="mt-3"
+        disabled={busy || !online || !!all}
+        onClick={async () => {
+          setBusy(true);
+          await downloadAllDemos((done, total) => setProg({ done, total }));
+          setBusy(false);
+          recount();
+          onDone();
+        }}
+      >
+        {all ? 'All demos downloaded' : busy ? `Downloading ${prog?.done ?? 0} / ${prog?.total ?? '…'}` : online ? 'Download all demos' : 'Connect to download'}
+      </Button>
+    </Card>
   );
 }

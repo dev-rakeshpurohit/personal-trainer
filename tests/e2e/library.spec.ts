@@ -11,7 +11,7 @@ test('library and exercise detail work with no network', async ({ page }) => {
     await server.stop();
 
     await page.goto(server.url + '/train/library');
-    await page.getByPlaceholder('Search exercises').fill('goblet');
+    await page.getByPlaceholder('Search name or muscle').fill('goblet');
     await page.getByRole('link', { name: /Dumbbell goblet squat/ }).click();
     await expect(page.getByRole('heading', { name: 'Dumbbell goblet squat' })).toBeVisible();
     const img = page.locator('img[src*="media/demos/1760.webp"]');
@@ -29,7 +29,16 @@ test('train tab lists the week and opens a day', async ({ page }) => {
   await page.clock.install({ time: new Date(2026, 11, 1, 8) });
   await onboard(page);
   await page.getByRole('link', { name: 'Train' }).click();
+  // Tue 1 Dec: today's session can be started
+  await page.getByRole('button', { name: /Strength A – full body/ }).first().click();
+  await expect(page.getByRole('button', { name: /Start this session/ })).toBeVisible();
+  await page.getByRole('button', { name: 'Close' }).last().click();
+  // Thursday's session is preview-only
   await page.getByRole('button', { name: /Strength B – full body/ }).first().click();
   await expect(page.getByRole('dialog')).toContainText('Leg press');
-  await expect(page.getByRole('button', { name: /Start this session/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start this session/ })).toHaveCount(0);
+  await expect(page.getByRole('dialog')).toContainText('Starts on Thursday 3 Dec');
+  await page.getByRole('button', { name: /Preview full session/ }).click();
+  await expect(page.getByRole('status').filter({ hasText: 'Preview' })).toContainText('starts on Thursday 3 Dec');
+  await expect(page.getByRole('button', { name: /Begin workout/ })).toHaveCount(0);
 });

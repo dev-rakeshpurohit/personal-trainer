@@ -12,6 +12,20 @@ clientsClaim();
 // SPA navigation: serve the precached shell instantly (works in airplane mode and lie-fi).
 registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
 
+// 3D demos that aren't precached: cache-first once seen (or after "Download all demos"), so they work offline.
+export const DEMO_CACHE = 'demos-v1';
+registerRoute(
+  ({ url }) => url.origin === self.location.origin && url.pathname.startsWith('/media/demos/'),
+  async ({ request }) => {
+    const cache = await caches.open(DEMO_CACHE);
+    const hit = await cache.match(request);
+    if (hit) return hit;
+    const res = await fetch(request);
+    if (res.ok) void cache.put(request, res.clone());
+    return res;
+  },
+);
+
 let restTimer: ReturnType<typeof setTimeout> | undefined;
 
 self.addEventListener('message', (event) => {

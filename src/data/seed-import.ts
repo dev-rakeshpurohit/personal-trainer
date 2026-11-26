@@ -2,18 +2,16 @@ import programJson from '../../seed/program.lean-athletic-v2.json';
 import dietJson from '../../seed/diet.lean-veg-egg-2000.json';
 import mediaIndexJson from '../../public/media/exercises/index.json';
 import researchJson from '../../seed/alternates.research.json';
+import demoMapJson from '../../seed/demo-map.json';
+import curatedMetaJson from '../../seed/library.curated-meta.json';
+import { slugify } from '@/lib/slug';
 import { db, setMeta, uid } from './db';
 import { mediaIndexSchema, researchSchema, seedDietSchema, seedProgramSchema, type MediaIndex, type Research, type SeedDiet, type SeedProgram } from './schemas';
 import { dayKey, weekStartOf } from '@/domain/schedule';
 import type { Category, DayType, Exercise, HabitDef, PlannedExercise, PlannedMeal, Program, ProgramDay, Unit, Weekday } from '@/domain/types';
 import { WEEKDAYS, isTrainingType } from '@/domain/types';
 
-export const slugify = (s: string): string =>
-  s
-    .toLowerCase()
-    .replace(/[’']/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
+export { slugify } from '@/lib/slug';
 
 export const parseSeedProgram = (): SeedProgram => seedProgramSchema.parse(programJson);
 export const parseSeedDiet = (): SeedDiet => seedDietSchema.parse(dietJson);
@@ -89,6 +87,21 @@ export function buildExercises(program: SeedProgram, media: MediaIndex, research
       addAlternates(e.name);
       if (e.swap) addAlternates(e.swap.name);
     }
+  // Curated exercises that share a 3D demo get its helper muscles and matching instructions.
+  const demoMap = demoMapJson.map as Record<string, string | null>;
+  const meta = curatedMetaJson.meta as Record<string, { secondaryMuscles?: string[]; bodyPart: string; instructions: string[] }>;
+  for (const [id, ex] of out) {
+    const demoId = demoMap[id] ?? undefined;
+    const m = demoId ? meta[demoId] : undefined;
+    out.set(id, {
+      ...ex,
+      source: 'curated',
+      demoId,
+      secondaryMuscles: m?.secondaryMuscles?.filter((x) => !ex.primaryMuscles.includes(x)),
+      bodyPart: m?.bodyPart,
+      instructions: m?.instructions.length ? m.instructions : ex.instructions,
+    });
+  }
   return out;
 }
 

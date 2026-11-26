@@ -33,8 +33,8 @@ export interface Profile {
   sessionMin?: number;
   /** available gym equipment (EquipmentId[]); undefined = full gym (older profiles) */
   equipment?: string[];
-  planSource?: 'generated' | 'template' | 'blank';
-  dietSource?: 'generated' | 'template' | 'blank';
+  planSource?: 'generated' | 'template' | 'blank' | 'ai';
+  dietSource?: 'generated' | 'template' | 'blank' | 'ai';
 }
 
 export type Category = 'strength' | 'cardio' | 'mobility' | 'power' | 'core';
@@ -58,6 +58,14 @@ export interface Exercise {
   level?: number;
   /** Ranked alternates (exercise ids), easier → harder */
   alternates?: string[];
+  /** Muscles worked as a helper (free-exercise-db vocabulary). */
+  secondaryMuscles?: string[];
+  /** Region from the 3D dataset (upper legs, back, waist…). */
+  bodyPart?: string;
+  /** Animated 3D demo id (public/media/demos/<id>.webp). */
+  demoId?: string;
+  /** Where the library entry came from. Curated = hand-picked plan exercises. */
+  source?: 'curated' | 'dataset';
 }
 
 export interface CycleEntry {

@@ -35,7 +35,7 @@ export function requiredEquipment(ex: Pick<Exercise, 'name' | 'equipment' | 'cat
   const name = ex.name.toLowerCase();
   const eq = ex.equipment.map((e) => e.toLowerCase());
   const out = new Set<EquipmentId>();
-  const cardioName = /bike|cycling|bicycl|treadmill|rower|rowing machine|rowing,|elliptical|cross-?trainer|stair|assault|airdyne|ski erg/;
+  const cardioName = /bike|cycling|bicycl|treadmill|rower|rowing machine|rowing,|elliptical|cross-?trainer|stair|stepmill|ergometer|assault|airdyne|ski erg/;
   for (const e of eq) {
     if (/dumbbell/.test(e)) out.add('dumbbells');
     else if (/barbell|e-z|ez bar/.test(e)) out.add('barbell');
@@ -54,7 +54,7 @@ export function requiredEquipment(ex: Pick<Exercise, 'name' | 'equipment' | 'cat
     out.delete('machines');
     out.add('cardio_machines');
   }
-  if (has(name, /leg press|hack squat|pulldown|pull-?down|smith|pec deck|leg curl|leg extension|assisted pull-?up machine|chest press machine/)) out.add('machines');
+  if (has(name, /leg press|hack squat|pulldown|pull-?down|smith|pec deck|leg curl|leg extension|assisted pull-?up machine|chest press machine|glute-ham|calf press/)) out.add('machines');
   if (has(name, /cable|woodchop|pallof/) && !out.has('bands') && !has(name, /band/)) out.add('cable');
   if (has(name, /pull-?up|chin-?up|hanging|toes to bar/) && !has(name, /machine|band-assisted pulldown/)) out.add('pullup_bar');
   if (has(name, /bench|incline|decline|step-?up|bulgarian|box squat|hip thrust/) && (out.has('dumbbells') || out.has('barbell') || has(name, /bench|step-?up|bulgarian/))) out.add('bench');

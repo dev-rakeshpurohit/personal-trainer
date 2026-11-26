@@ -1,27 +1,73 @@
 /** Writes generated plans to the DB, adapts plans to equipment, and applies setup changes (history is never touched). */
-import { db, setMeta, uid } from './db';
+import { db, getMeta, setMeta, uid } from './db';
+import datasetJson from '../../seed/library.dataset.json';
 import { buildExercises, DEFAULT_HABITS, importDietTemplate, importProgramTemplate, parseMediaIndex, parseResearch, parseSeedProgram } from './seed-import';
-import { adaptToEquipment, PRESETS } from '@/domain/equipment';
+import { adaptToEquipment, bestReplacement, PRESETS } from '@/domain/equipment';
+import type { NormDay, NormPlan } from '@/domain/aiPlan';
 import { generateDiet } from '@/domain/dietGen';
-import { generateProgram } from '@/domain/generator';
+import { generateProgram, type GenDay } from '@/domain/generator';
 import { dayKey, weekStartOf } from '@/domain/schedule';
 import type { Exercise, PlannedExercise, Profile } from '@/domain/types';
 
 export const equipmentOf = (p: Pick<Profile, 'equipment'>): string[] => p.equipment ?? PRESETS.full_gym;
 
-/** Static exercise library (seed + research alternates); pure, used for previews before anything is saved. */
+/** Bump when the bundled library changes so existing installs pick up new exercises and metadata. */
+export const LIBRARY_VERSION = 2;
+
+/** Curated plan exercises (seed + research alternates), enriched with 3D demo metadata. */
+let cachedCurated: Exercise[] | undefined;
+export function curatedLibrary(): Exercise[] {
+  cachedCurated ??= [...buildExercises(parseSeedProgram(), parseMediaIndex(), parseResearch()).values()];
+  return cachedCurated;
+}
+
+/** Full static library: curated + ~1,100 exercises from the 3D dataset. Pure, used for previews before anything is saved. */
 let cachedLibrary: Exercise[] | undefined;
 export function staticLibrary(): Exercise[] {
-  cachedLibrary ??= [...buildExercises(parseSeedProgram(), parseMediaIndex(), parseResearch()).values()];
+  cachedLibrary ??= [...curatedLibrary(), ...(datasetJson.exercises as Exercise[])];
   return cachedLibrary;
 }
 
-/** Make sure every library exercise exists (keeps the user's own edits and custom exercises). */
-export async function ensureLibrary() {
+/** Library metadata we own and may refresh on existing rows (never the user's own settings like Track weight). */
+const REFRESH_FIELDS = ['demoId', 'secondaryMuscles', 'bodyPart', 'source', 'instructions', 'pattern', 'level', 'primaryMuscles'] as const;
+
+/**
+ * Make sure every library exercise exists and carries current metadata.
+ * Keeps custom exercises and user-edited fields (cue, Track weight, alternates) untouched.
+ */
+export async function ensureLibrary(): Promise<{ added: number; updated: number }> {
   const lib = staticLibrary();
-  const have = new Set(await db.exercises.toCollection().primaryKeys());
-  const missing = lib.filter((e) => !have.has(e.id));
-  if (missing.length) await db.exercises.bulkAdd(missing);
+  const existing = new Map((await db.exercises.toArray()).map((e) => [e.id, e]));
+  const missing = lib.filter((e) => !existing.has(e.id));
+  const updates: Exercise[] = [];
+  for (const e of lib) {
+    const cur = existing.get(e.id);
+    if (!cur || cur.custom) continue;
+    const next = { ...cur };
+    let changed = false;
+    for (const k of REFRESH_FIELDS) {
+      const v = e[k];
+      if (v !== undefined && JSON.stringify(cur[k]) !== JSON.stringify(v)) {
+        (next as Record<string, unknown>)[k] = v;
+        changed = true;
+      }
+    }
+    if (changed) updates.push(next);
+  }
+  await db.transaction('rw', [db.exercises, db.meta], async () => {
+    if (missing.length) await db.exercises.bulkAdd(missing);
+    if (updates.length) await db.exercises.bulkPut(updates);
+    await setMeta('libraryVersion', LIBRARY_VERSION);
+  });
+  return { added: missing.length, updated: updates.length };
+}
+
+/** Run once per library version on existing installs (called lazily from the app shell). */
+export async function upgradeLibraryIfNeeded(): Promise<boolean> {
+  if (((await getMeta<number>('libraryVersion')) ?? 0) >= LIBRARY_VERSION) return false;
+  if (!(await db.profile.get('me'))) return false;
+  await ensureLibrary();
+  return true;
 }
 
 export function previewProgram(p: Pick<Profile, 'goal' | 'experience' | 'trainingDays' | 'sessionMin' | 'equipment'>) {
@@ -38,17 +84,22 @@ export function previewProgram(p: Pick<Profile, 'goal' | 'experience' | 'trainin
 export async function saveGeneratedProgram(p: Profile, today = new Date()): Promise<string> {
   await ensureLibrary();
   const gen = previewProgram(p);
+  return saveProgramDays(p, gen.name, gen.days, `generated:${p.goal ?? 'lean'}`, today);
+}
+
+/** Write a full week (generated or AI) as the new active program. History is never touched. */
+export async function saveProgramDays(p: Profile, name: string, genDays: GenDay[], templateId: string, today = new Date()): Promise<string> {
   const seed = parseSeedProgram();
   const research = parseResearch();
   const eq = equipmentOf(p);
   const programId = uid();
-  const days = gen.days.map((d, i) => ({ id: uid(), programId, weekday: d.weekday, type: d.type, title: d.title, durationMin: d.durationMin, notes: d.notes, order: i }));
-  const planned: PlannedExercise[] = gen.days.flatMap((d, i) => d.exercises.map((e, j) => ({ id: uid(), dayId: days[i].id, order: j, ...e })));
+  const days = genDays.map((d, i) => ({ id: uid(), programId, weekday: d.weekday, type: d.type, title: d.title, durationMin: d.durationMin, notes: d.notes, order: i }));
+  const planned: PlannedExercise[] = genDays.flatMap((d, i) => d.exercises.map((e, j) => ({ id: uid(), dayId: days[i].id, order: j, ...e })));
   await db.transaction('rw', [db.programs, db.programDays, db.plannedExercises], async () => {
     await db.programs.toCollection().modify({ active: false });
     await db.programs.add({
       id: programId,
-      name: gen.name,
+      name,
       active: true,
       startedOn: dayKey(weekStartOf(today, 'mon')),
       warmup: [
@@ -61,12 +112,62 @@ export async function saveGeneratedProgram(p: Profile, today = new Date()): Prom
       cooldown: '5 min walk + stretch hips, hamstrings, chest, calves',
       rules: seed.rules.filter((r) => eq.includes('bands') || !/band/i.test(r)),
       progression: { ...seed.progression, weeks: research.periodization.weeks.map((w) => ({ ...w, setsDelta: w.setsDelta ?? 0 })) },
-      templateId: `generated:${p.goal ?? 'lean'}`,
+      templateId,
     });
     await db.programDays.bulkAdd(days);
     await db.plannedExercises.bulkAdd(planned);
   });
   return programId;
+}
+
+/** Save an AI coach workout: adds a gym-safe swap for each exercise from its alternates or same-pattern lifts. */
+export async function saveAiWorkout(p: Profile, w: { name: string; days: NormDay[] }): Promise<string> {
+  await ensureLibrary();
+  const eq = equipmentOf(p);
+  const lib = await db.exercises.toArray();
+  const byId = new Map(lib.map((e) => [e.id, e]));
+  const days: GenDay[] = w.days.map((d) => {
+    const used = d.exercises.map((e) => e.exerciseId);
+    return {
+      weekday: d.weekday,
+      type: d.type,
+      title: d.title,
+      durationMin: d.durationMin ?? p.sessionMin,
+      notes: d.notes,
+      exercises: d.exercises.map((e) => {
+        const ex = byId.get(e.exerciseId);
+        const cands = ex ? [...(ex.alternates ?? []).map((id) => byId.get(id)), ...lib.filter((x) => x.pattern && x.pattern === ex.pattern && x.source === 'curated')] : [];
+        const swap = ex ? bestReplacement(ex, cands, eq, used) : undefined;
+        return { ...e, swapExerciseId: swap?.id, cue: e.cue ?? ex?.cue };
+      }),
+    };
+  });
+  return saveProgramDays(p, w.name, days, 'ai-coach');
+}
+
+/** Save an AI coach diet as the active diet plan. */
+export async function saveAiDiet(diet: NonNullable<NormPlan['diet']>) {
+  const dietPlanId = uid();
+  await db.transaction('rw', [db.dietPlans, db.plannedMeals, db.habitDefs], async () => {
+    await db.dietPlans.toCollection().modify({ active: false });
+    await db.dietPlans.add({ id: dietPlanId, name: `AI coach · ${diet.kcalTarget.toLocaleString()} kcal`, active: true, kcalTarget: diet.kcalTarget, proteinTargetG: diet.proteinTargetG });
+    await db.plannedMeals.bulkAdd(
+      diet.meals.map((m, i) => ({
+        id: uid(),
+        dietPlanId,
+        order: i,
+        time: m.time.padStart(5, '0'),
+        meal: m.meal,
+        items: m.items,
+        rotate: m.rotate,
+        kcal: Math.round(m.kcal),
+        proteinG: Math.round(m.proteinG),
+        optional: m.optional,
+      })),
+    );
+    if (!(await db.habitDefs.count())) await db.habitDefs.bulkPut(DEFAULT_HABITS);
+  });
+  return dietPlanId;
 }
 
 export async function saveGeneratedDiet(p: Profile, kcal?: number, protein?: number) {

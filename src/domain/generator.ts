@@ -22,6 +22,7 @@ const P = {
   hpull: 'horizontal pull', vpull: 'vertical pull', curl: 'elbow flexion', ext: 'elbow extension', lat: 'lateral delt',
   rear: 'rear delt/scap', antiExt: 'core anti-extension', antiRot: 'core anti-rotation', flex: 'core flexion',
   carry: 'carry', power: 'power/plyometric', cardio: 'conditioning/cardio', mobility: 'mobility',
+  kneeFlex: 'knee flexion', kneeExt: 'knee extension', calves: 'calves', fly: 'chest fly', glute: 'glute',
 } as const;
 type PKey = keyof typeof P;
 type Role = 'main' | 'acc' | 'core' | 'steady' | 'interval' | 'power' | 'carry' | 'mobility';
@@ -41,16 +42,16 @@ interface DayT {
 
 const s = (slot: string, p: PKey, role: Role, group?: string): SlotT => ({ slot, p, role, group });
 const T: Record<string, DayT> = {
-  FB_A: { key: 'FB_A', title: 'Full body A', type: 'strength', slots: [s('A1', 'squat', 'main', 'A'), s('A2', 'hpush', 'main', 'A'), s('B1', 'vpull', 'main', 'B'), s('B2', 'hinge', 'main', 'B'), s('C', 'vpush', 'acc'), s('D', 'antiExt', 'core'), s('E', 'flex', 'core')] },
-  FB_B: { key: 'FB_B', title: 'Full body B', type: 'strength', slots: [s('A1', 'squat', 'main', 'A'), s('A2', 'hpush', 'main', 'A'), s('B1', 'hpull', 'main', 'B'), s('B2', 'lunge', 'main', 'B'), s('C', 'rear', 'acc'), s('D1', 'curl', 'acc', 'D'), s('D2', 'ext', 'acc', 'D')] },
-  FB_C: { key: 'FB_C', title: 'Full body C – heavier', type: 'strength', slots: [s('A', 'hinge', 'main'), s('B1', 'vpull', 'main', 'B'), s('B2', 'hpush', 'main', 'B'), s('C', 'lunge', 'acc'), s('D1', 'lat', 'acc', 'D'), s('D2', 'antiRot', 'core', 'D'), s('E', 'carry', 'carry')] },
+  FB_A: { key: 'FB_A', title: 'Full body A', type: 'strength', slots: [s('A1', 'squat', 'main', 'A'), s('A2', 'hpush', 'main', 'A'), s('B1', 'vpull', 'main', 'B'), s('B2', 'hinge', 'main', 'B'), s('C', 'vpush', 'acc'), s('D', 'antiExt', 'core'), s('E', 'flex', 'core'), s('F', 'calves', 'acc')] },
+  FB_B: { key: 'FB_B', title: 'Full body B', type: 'strength', slots: [s('A1', 'squat', 'main', 'A'), s('A2', 'hpush', 'main', 'A'), s('B1', 'hpull', 'main', 'B'), s('B2', 'lunge', 'main', 'B'), s('C', 'rear', 'acc'), s('D1', 'curl', 'acc', 'D'), s('D2', 'ext', 'acc', 'D'), s('E', 'kneeFlex', 'acc')] },
+  FB_C: { key: 'FB_C', title: 'Full body C – heavier', type: 'strength', slots: [s('A', 'hinge', 'main'), s('B1', 'vpull', 'main', 'B'), s('B2', 'hpush', 'main', 'B'), s('C', 'lunge', 'acc'), s('D1', 'lat', 'acc', 'D'), s('D2', 'antiRot', 'core', 'D'), s('E', 'carry', 'carry'), s('F', 'glute', 'acc')] },
   UA: { key: 'UA', title: 'Upper A', type: 'strength', slots: [s('A1', 'hpush', 'main', 'A'), s('A2', 'hpull', 'main', 'A'), s('B1', 'vpush', 'main', 'B'), s('B2', 'vpull', 'main', 'B'), s('C1', 'lat', 'acc', 'C'), s('C2', 'rear', 'acc', 'C'), s('D1', 'curl', 'acc', 'D'), s('D2', 'ext', 'acc', 'D')] },
   UB: { key: 'UB', title: 'Upper B', type: 'strength', slots: [s('A1', 'vpull', 'main', 'A'), s('A2', 'hpush', 'main', 'A'), s('B1', 'hpull', 'main', 'B'), s('B2', 'vpush', 'main', 'B'), s('C1', 'rear', 'acc', 'C'), s('C2', 'lat', 'acc', 'C'), s('D1', 'ext', 'acc', 'D'), s('D2', 'curl', 'acc', 'D')] },
-  LA: { key: 'LA', title: 'Lower A', type: 'strength', slots: [s('A', 'squat', 'main'), s('B', 'hinge', 'main'), s('C', 'lunge', 'acc'), s('D', 'antiExt', 'core'), s('E', 'flex', 'core'), s('F', 'carry', 'carry')] },
-  LB: { key: 'LB', title: 'Lower B', type: 'strength', slots: [s('A', 'hinge', 'main'), s('B', 'squat', 'main'), s('C', 'lunge', 'acc'), s('D', 'antiRot', 'core'), s('E', 'flex', 'core'), s('F', 'carry', 'carry')] },
-  PUSH: { key: 'PUSH', title: 'Push', type: 'strength', slots: [s('A', 'hpush', 'main'), s('B', 'vpush', 'main'), s('C', 'hpush', 'acc'), s('D1', 'lat', 'acc', 'D'), s('D2', 'ext', 'acc', 'D'), s('E', 'antiExt', 'core')] },
+  LA: { key: 'LA', title: 'Lower A', type: 'strength', slots: [s('A', 'squat', 'main'), s('B', 'hinge', 'main'), s('C', 'lunge', 'acc'), s('D1', 'kneeFlex', 'acc', 'D'), s('D2', 'calves', 'acc', 'D'), s('E', 'antiExt', 'core'), s('F', 'flex', 'core'), s('G', 'carry', 'carry')] },
+  LB: { key: 'LB', title: 'Lower B', type: 'strength', slots: [s('A', 'hinge', 'main'), s('B', 'squat', 'main'), s('C', 'lunge', 'acc'), s('D1', 'kneeExt', 'acc', 'D'), s('D2', 'glute', 'acc', 'D'), s('E', 'antiRot', 'core'), s('F', 'calves', 'acc'), s('G', 'carry', 'carry')] },
+  PUSH: { key: 'PUSH', title: 'Push', type: 'strength', slots: [s('A', 'hpush', 'main'), s('B', 'vpush', 'main'), s('C', 'hpush', 'acc'), s('D1', 'lat', 'acc', 'D'), s('D2', 'ext', 'acc', 'D'), s('E', 'fly', 'acc'), s('F', 'antiExt', 'core')] },
   PULL: { key: 'PULL', title: 'Pull', type: 'strength', slots: [s('A', 'vpull', 'main'), s('B', 'hpull', 'main'), s('C', 'hpull', 'acc'), s('D1', 'rear', 'acc', 'D'), s('D2', 'curl', 'acc', 'D'), s('E', 'carry', 'carry')] },
-  LEGS: { key: 'LEGS', title: 'Legs', type: 'strength', slots: [s('A', 'squat', 'main'), s('B', 'hinge', 'main'), s('C', 'lunge', 'acc'), s('D', 'squat', 'acc'), s('E', 'flex', 'core'), s('F', 'antiRot', 'core')] },
+  LEGS: { key: 'LEGS', title: 'Legs', type: 'strength', slots: [s('A', 'squat', 'main'), s('B', 'hinge', 'main'), s('C', 'lunge', 'acc'), s('D1', 'kneeFlex', 'acc', 'D'), s('D2', 'kneeExt', 'acc', 'D'), s('E', 'calves', 'acc'), s('F', 'flex', 'core'), s('G', 'antiRot', 'core')] },
   CARDIO: { key: 'CARDIO', title: 'Steady cardio + core', type: 'cardio', slots: [s('1', 'cardio', 'steady'), s('2', 'flex', 'core'), s('3', 'antiExt', 'core'), s('4', 'antiRot', 'core'), s('5', 'mobility', 'mobility')] },
   COND: { key: 'COND', title: 'Athletic power + intervals', type: 'conditioning', slots: [s('1', 'power', 'power'), s('2', 'power', 'power'), s('3a', 'hinge', 'power', 'C'), s('3b', 'carry', 'carry', 'C'), s('4', 'cardio', 'interval')] },
 };
@@ -127,6 +128,11 @@ export function prescription(goal: Goal, exp: Experience, role: Role, unit: Unit
   }
 }
 
+/** Variants that confuse more than they help in a generated plan (still available to pick by hand). */
+const ODD_VARIANT = /exercise ball|stability ball|bosu|\(v\d\)|arm blaster|stork|throw down|pov|on knees|towel|wall\)|one leg|single leg platform|twisting|lying femoral|rotary|donkey|self assisted|kneeling jump|pirate|side lying/i;
+/** Plain gym staples for the isolation patterns. */
+const STAPLE = /^(machine (lying|seated) leg curl|machine leg extension|machine standing calf raise|dumbbell standing calf raise|bodyweight standing calf raise|machine seated calf raise|dumbbell fly|cable middle fly|machine seated fly|barbell glute bridge|glute bridge two legs on bench|cable standing hip extension|dumbbell incline fly)$/i;
+
 const TARGET_LEVEL: Record<Experience, number> = { beginner: 2, intermediate: 3, advanced: 4 };
 const MAX_LEVEL: Record<Experience, number> = { beginner: 3, intermediate: 4, advanced: 5 };
 
@@ -141,12 +147,17 @@ function candidatesFor(lib: Exercise[], p: PKey, role: Role, exp: Experience, eq
     const reps = list.filter((e) => e.defaultUnit === 'reps');
     if (reps.length) list = reps;
   }
-  // main lifts: prefer loaded, proven compound movements (the library's "parent" exercises carry alternates)
+  // main lifts: prefer loaded, proven compound movements (the library's "parent" exercises carry alternates).
+  // The 3D dataset fills patterns the curated list lacks; prefer its plain gym staples over odd variants.
   const score = (e: Exercise) =>
     Math.abs((e.level ?? target) - target) +
     (role === 'main' && e.isBodyweight ? 1.5 : 0) -
     ((role === 'main' || role === 'acc') && e.alternates?.length ? 1 : 0) +
-    (role === 'main' && /assisted|machine|back extension|hyperextension/i.test(e.name) ? 0.75 : 0);
+    (role === 'main' && /assisted|machine|back extension|hyperextension/i.test(e.name) ? 0.75 : 0) +
+    (e.source === 'dataset' ? 1.5 : 0) +
+    (ODD_VARIANT.test(e.name) ? 3 : 0) -
+    (STAPLE.test(e.name) ? 2 : 0) +
+    (role === 'main' && /pullover/i.test(e.name) ? 2 : 0);
   return [...list].sort((a, b) => score(a) - score(b) || a.name.localeCompare(b.name));
 }
 

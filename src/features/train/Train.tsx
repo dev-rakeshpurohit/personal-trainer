@@ -1,6 +1,6 @@
 import { format, isSameDay } from 'date-fns';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { BookOpen, CalendarDays, Check, ChevronRight, Dumbbell, HeartPulse, Moon, Play, Zap } from 'lucide-react';
+import { BookOpen, CalendarDays, Check, ChevronRight, Dumbbell, Eye, HeartPulse, Lock, Moon, Play, Sparkles, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, PageHeader, SectionTitle } from '@/components/ui';
@@ -10,6 +10,7 @@ import { useExerciseMap, useProgram, useWeekPlan } from '@/data/hooks';
 import { cycleEntry, cycleWeek, dayKey, weekDates } from '@/domain/schedule';
 import { isTrainingType, type DayType, type ProgramDay } from '@/domain/types';
 import { exerciseThumb } from '@/lib/clips';
+import { PlanCheck } from './PlanCheck';
 
 export const DAY_ICON: Record<DayType, typeof Dumbbell> = { strength: Dumbbell, cardio: HeartPulse, conditioning: Zap, rest: Moon, active_recovery: HeartPulse };
 
@@ -19,7 +20,12 @@ export default function Train() {
   const week = useWeekPlan(now, bundle);
   const exMap = useExerciseMap();
   const nav = useNavigate();
-  const [open, setOpen] = useState<ProgramDay | null>(null);
+  const [openState, setOpenState] = useState<{ day: ProgramDay; date: Date } | null>(null);
+  const open = openState?.day ?? null;
+  const setOpen = (day: ProgramDay | null, date?: Date) => setOpenState(day && date ? { day, date } : null);
+  const todayDay = week?.byDate[dayKey(now)];
+  // Only today's session can be started; any other day is a read-only preview.
+  const openIsToday = !!openState && isSameDay(openState.date, now) && todayDay?.id === openState.day.id;
   const dates = weekDates(now);
   const sessions = useLiveQuery(() => db.sessions.where('dayKey').between(dayKey(dates[0]), dayKey(dates[6]), true, true).toArray(), [dayKey(dates[0])]);
   const doneOn = (k: string) => sessions?.some((s) => s.dayKey === k && s.status === 'done');
@@ -56,7 +62,7 @@ export default function Train() {
               <li key={k}>
               <button
                 type="button"
-                onClick={() => day && setOpen(day)}
+                onClick={() => day && setOpen(day, d)}
                 aria-label={`${format(d, 'EEEE')}: ${day?.title ?? 'Rest'}${done ? ', done' : ''}`}
                 className={`flex min-h-[72px] w-full flex-col items-center justify-center gap-1 rounded-btn border ${today ? 'border-primary bg-primary/10' : 'border-line/50 bg-surface'}`}
               >
@@ -89,7 +95,7 @@ export default function Train() {
               <li key={k}>
                 <button
                   type="button"
-                  onClick={() => setOpen(day)}
+                  onClick={() => setOpen(day, d)}
                   className={`flex min-h-[72px] w-full items-center gap-3 rounded-card border p-3 text-left ${isSameDay(d, now) ? 'border-primary/50 bg-surface' : 'border-line/50 bg-surface'} ${done ? 'opacity-70' : ''}`}
                 >
                   <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-btn ${isTrainingType(day.type) ? 'bg-primary/15 text-primary-ink' : 'bg-surface2 text-muted'}`}>
@@ -116,7 +122,17 @@ export default function Train() {
           ))}
         </ul>
 
-        <div className="mt-6 grid grid-cols-2 gap-2">
+        {bundle && <PlanCheck bundle={bundle} exMap={exMap} />}
+        <Link to="/more/coach" className="mt-2 flex min-h-[64px] items-center gap-3 rounded-card border border-line/50 bg-surface px-4 py-3">
+          <Sparkles size={22} className="text-primary-ink" aria-hidden />
+          <span className="min-w-0 flex-1">
+            <span className="block font-semibold">Ask the AI coach</span>
+            <span className="block text-caption text-muted">“Make Friday shorter”, “my knee hurts”, “more variety”…</span>
+          </span>
+          <ChevronRight size={18} className="text-muted" aria-hidden />
+        </Link>
+
+        <div className="mt-2 grid grid-cols-2 gap-2">
           <Link to="/train/library" className="flex min-h-[64px] items-center gap-3 rounded-card border border-line/50 bg-surface px-4 font-semibold">
             <BookOpen size={22} className="text-primary-ink" aria-hidden /> Library
           </Link>
@@ -132,10 +148,22 @@ export default function Train() {
         title={open?.title ?? ''}
         tall
         footer={
-          open && isTrainingType(open.type) && (bundle?.planned.some((p) => p.dayId === open.id) ?? false) ? (
-            <Button block size="lg" onClick={() => nav(`/workout/start/${open.id}`)}>
-              <Play size={20} fill="currentColor" aria-hidden /> Start this session
-            </Button>
+          open && openState && isTrainingType(open.type) && (bundle?.planned.some((p) => p.dayId === open.id) ?? false) ? (
+            openIsToday ? (
+              <Button block size="lg" onClick={() => nav('/workout/today')}>
+                <Play size={20} fill="currentColor" aria-hidden /> Start this session
+              </Button>
+            ) : (
+              <div className="space-y-2">
+                <p className="flex items-center justify-center gap-1.5 text-[15px] text-muted">
+                  <Lock size={15} aria-hidden />
+                  {openState.date < now ? `Was planned for ${format(openState.date, 'EEEE')}` : `Starts on ${format(openState.date, 'EEEE d MMM')}`}
+                </p>
+                <Button block size="lg" variant="secondary" onClick={() => nav(`/workout/start/${open.id}?preview=${dayKey(openState.date)}`)}>
+                  <Eye size={20} aria-hidden /> Preview full session
+                </Button>
+              </div>
+            )
           ) : undefined
         }
       >

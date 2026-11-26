@@ -66,7 +66,7 @@ test('plan editor: add an exercise, edit sets, reorder by keyboard', async ({ pa
   await page.goto('/more/plan');
   await page.getByRole('link', { name: /Strength A/ }).click();
   await page.getByRole('button', { name: 'Add exercise' }).click();
-  await page.getByPlaceholder('Search 190+ exercises').fill('face pull');
+  await page.getByPlaceholder(/Search [0-9,]+ exercises/).fill('face pull');
   await page.getByRole('dialog').getByRole('button', { name: /^Face pull/ }).first().click();
   await expect(page.getByRole('button', { name: /Edit Face pull/ })).toBeVisible();
   await page.getByRole('button', { name: /Edit Face pull/ }).click();

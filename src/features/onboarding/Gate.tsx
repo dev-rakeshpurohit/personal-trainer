@@ -16,7 +16,7 @@ export function Gate({ onUnlock }: { onUnlock: () => void }) {
     const ok = await checkCode(code);
     setBusy(false);
     if (ok) {
-      markUnlocked();
+      markUnlocked(code);
       onUnlock();
       return;
     }

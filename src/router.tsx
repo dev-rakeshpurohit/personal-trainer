@@ -27,6 +27,7 @@ const DayEditor = lazy(() => import('./features/plan-editor/DayEditor'));
 const DietEditor = lazy(() => import('./features/plan-editor/DietEditor'));
 const Templates = lazy(() => import('./features/plan-editor/Templates'));
 const Setup = lazy(() => import('./features/settings/Setup'));
+const Coach = lazy(() => import('./features/coach/Coach'));
 
 const L = (el: ReactNode) => (
   <Suspense fallback={<div className="flex h-40 items-center justify-center text-muted" aria-busy="true">Loading…</div>}>{el}</Suspense>
@@ -64,6 +65,7 @@ export const router: ReturnType<typeof createBrowserRouter> = createBrowserRoute
         ],
       },
       { path: '/onboarding', element: L(<Onboarding />) },
+      { path: '/more/coach', element: L(<Coach />) },
       { path: '/workout', element: <Player /> },
       { path: '/workout/today', element: <Prestart /> },
       { path: '/workout/start/:dayId', element: <Prestart /> },

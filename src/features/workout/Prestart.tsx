@@ -1,6 +1,7 @@
-import { CheckCircle2, Circle, Clock, Info, Play, Zap } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, Info, Lock, Play, Zap } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { BackButton } from '@/components/BackButton';
 import { Button, Card, Empty, SectionTitle } from '@/components/ui';
 import { Segmented } from '@/components/Segmented';
@@ -19,7 +20,13 @@ export default function Prestart() {
   const week = useWeekPlan(now, bundle);
   const active = useActiveSession();
   const exMap = useExerciseMap();
-  const dayId = param ?? week?.byDate[dayKey(now)]?.id;
+  const [search] = useSearchParams();
+  const todayId = week?.byDate[dayKey(now)]?.id;
+  const dayId = param ?? todayId;
+  // Sessions other than today's are view-only: you can look ahead, not start early.
+  const previewOnly = !!param && !!week && param !== todayId;
+  const previewKey = search.get('preview');
+  const previewDate = previewKey ? parseISO(previewKey) : undefined;
   const [mode, setMode] = useState<SessionMode>('full');
   const [prep, setPrep] = useState<Prepared>();
   const [touched, setTouched] = useState(false);
@@ -39,7 +46,7 @@ export default function Prestart() {
     };
   }, [dayId, mode, touched]);
 
-  if (active) return <Navigate to="/workout" replace />;
+  if (active && !previewOnly) return <Navigate to="/workout" replace />;
   if (bundle === undefined || (!param && !week)) return null;
   if (!dayId)
     return (
@@ -163,9 +170,16 @@ export default function Prestart() {
         </ul>
       </main>
       <footer className="border-t border-line/50 px-4 pb-[calc(12px+env(safe-area-inset-bottom))] pt-3">
-        <Button size="xl" block onClick={begin} disabled={!prep || busy || !prep.plan.length}>
-          <Play size={22} fill="currentColor" aria-hidden /> Begin workout
-        </Button>
+        {previewOnly ? (
+          <p className="flex min-h-[56px] items-center justify-center gap-2 rounded-btn bg-surface2 px-4 text-center text-[15px] font-semibold text-muted" role="status">
+            <Lock size={18} aria-hidden />
+            {previewDate && previewDate > now ? `Preview · starts on ${format(previewDate, 'EEEE d MMM')}` : previewDate ? `Preview · was planned for ${format(previewDate, 'EEEE')}` : 'Preview · only today’s session can be started'}
+          </p>
+        ) : (
+          <Button size="xl" block onClick={begin} disabled={!prep || busy || !prep.plan.length}>
+            <Play size={22} fill="currentColor" aria-hidden /> Begin workout
+          </Button>
+        )}
       </footer>
     </div>
   );

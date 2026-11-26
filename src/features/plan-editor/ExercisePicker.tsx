@@ -5,7 +5,7 @@ import { Button, Chip } from '@/components/ui';
 import { Field, TextInput, Toggle } from '@/components/Field';
 import { Sheet } from '@/components/Sheet';
 import { db } from '@/data/db';
-import { slugify } from '@/data/seed-import';
+import { slugify } from '@/lib/slug';
 import type { Category, Exercise, Unit } from '@/domain/types';
 import { exerciseThumb } from '@/lib/clips';
 import { isAvailable, PRESETS } from '@/domain/equipment';
@@ -19,7 +19,10 @@ export function ExercisePicker({ open, onClose, onPick, title = 'Add exercise' }
     const all = await db.exercises.orderBy('name').toArray();
     return { list: all.filter((e) => isAvailable(e, eq)), hidden: all.filter((e) => !isAvailable(e, eq)).length };
   }, []);
-  const shown = (data?.list ?? []).filter((e) => !q || e.name.toLowerCase().includes(q.toLowerCase())).slice(0, 60);
+  const [limit, setLimit] = useState(60);
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const matches = (data?.list ?? []).filter((e) => !words.length || words.every((w) => `${e.name} ${e.primaryMuscles.join(' ')} ${e.pattern ?? ''}`.toLowerCase().includes(w)));
+  const shown = matches.slice(0, limit);
   return (
     <Sheet open={open} onClose={() => { setCreating(false); onClose(); }} title={creating ? 'Custom exercise' : title} tall>
       {creating ? (
@@ -36,7 +39,7 @@ export function ExercisePicker({ open, onClose, onPick, title = 'Add exercise' }
           <label className="relative block">
             <span className="sr-only">Search exercises</span>
             <Search size={20} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" aria-hidden />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search 190+ exercises" className="min-h-[48px] w-full rounded-btn border border-line bg-surface2 pl-11 pr-4 text-[17px] outline-none focus:border-primary" />
+            <input value={q} onChange={(e) => { setQ(e.target.value); setLimit(60); }} placeholder={`Search ${(data?.list.length ?? 0).toLocaleString()} exercises`} className="min-h-[48px] w-full rounded-btn border border-line bg-surface2 pl-11 pr-4 text-[17px] outline-none focus:border-primary" />
           </label>
           <button type="button" onClick={() => setCreating(true)} className="mt-2 flex min-h-[52px] w-full items-center gap-2 rounded-btn px-2 font-semibold text-primary-ink active:bg-surface2">
             <Plus size={20} aria-hidden /> Create custom exercise{q ? `: "${q}"` : ''}
@@ -58,6 +61,11 @@ export function ExercisePicker({ open, onClose, onPick, title = 'Add exercise' }
               );
             })}
           </ul>
+          {matches.length > limit && (
+            <Button variant="ghost" block onClick={() => setLimit((n) => n + 60)}>
+              Show more ({(matches.length - limit).toLocaleString()})
+            </Button>
+          )}
         </div>
       )}
     </Sheet>

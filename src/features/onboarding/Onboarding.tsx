@@ -43,7 +43,7 @@ function Wizard({ existing }: { existing?: import('@/domain/types').Profile }) {
   const steps = FLOW[mode];
   const step = steps[i];
 
-  async function finish() {
+  async function finish(then?: string) {
     setBusy(true);
     try {
       const builder = await import('@/data/plan-builder');
@@ -78,7 +78,7 @@ function Wizard({ existing }: { existing?: import('@/domain/types').Profile }) {
       if (!existing) await setMeta('onboardedAt', new Date().toISOString());
       await setMeta('setupChangedAt', new Date().toISOString());
       await requestPersistence();
-      nav(existing ? '/today' : '/today?welcome=1', { replace: true });
+      nav(then ?? (existing ? '/today' : '/today?welcome=1'), { replace: true });
       if (existing) toast('Fresh plan ready. Your history is kept.', { tone: 'success' });
     } catch (e) {
       console.error(e);
@@ -117,7 +117,7 @@ function Wizard({ existing }: { existing?: import('@/domain/types').Profile }) {
             ))}
           </div>
           {i > 0 && !last ? (
-            <button type="button" onClick={finish} disabled={busy} className="h-12 min-w-12 px-3 text-[15px] font-semibold text-muted">
+            <button type="button" onClick={() => finish()} disabled={busy} className="h-12 min-w-12 px-3 text-[15px] font-semibold text-muted">
               Skip
             </button>
           ) : (
@@ -165,13 +165,20 @@ function Wizard({ existing }: { existing?: import('@/domain/types').Profile }) {
 
       <footer className="px-5 pb-[calc(16px+env(safe-area-inset-bottom))] pt-2">
         {last ? (
-          <Button size="lg" block onClick={finish} disabled={busy}>
-            {busy ? 'Building your plan…' : (
-              <>
-                <Sparkles size={20} aria-hidden /> {fresh ? 'Use this plan' : "Let's train"}
-              </>
+          <div className="space-y-2">
+            <Button size="lg" block onClick={() => finish()} disabled={busy}>
+              {busy ? 'Building your plan…' : (
+                <>
+                  <Sparkles size={20} aria-hidden /> {fresh ? 'Use this plan' : "Let's train"}
+                </>
+              )}
+            </Button>
+            {mode === 'generated' && (
+              <Button size="lg" block variant="secondary" onClick={() => finish('/more/coach?first=1')} disabled={busy || !navigator.onLine}>
+                Personalise further with AI coach
+              </Button>
             )}
-          </Button>
+          </div>
         ) : (
           <Button size="lg" block onClick={() => setI(i + 1)}>
             {step === 'welcome' ? 'Get started' : 'Continue'}

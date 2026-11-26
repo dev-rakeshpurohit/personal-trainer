@@ -1,13 +1,17 @@
 import { format, parseISO } from 'date-fns';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Trophy } from 'lucide-react';
-import { useMemo } from 'react';
+import { CalendarPlus, Check, Trophy } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { BackButton } from '@/components/BackButton';
 import { DemoPlayer } from '@/components/DemoPlayer';
 import { Toggle } from '@/components/Field';
 import { Sparkline } from '@/components/Sparkline';
-import { Card, Empty, SectionTitle } from '@/components/ui';
+import { Button, Card, Empty, SectionTitle } from '@/components/ui';
+import { Sheet } from '@/components/Sheet';
+import { activeDays, addExerciseToDay } from '@/data/plan-edit';
+import { isAvailable, PRESETS } from '@/domain/equipment';
+import { useUI } from '@/store/ui';
 import { db } from '@/data/db';
 import { useProfile } from '@/data/hooks';
 import { e1rm } from '@/domain/progression';
@@ -82,12 +86,20 @@ export default function ExerciseDetail() {
         )}
 
         <div className="flex flex-wrap gap-1.5">
-          {[...ex.primaryMuscles, ...ex.equipment, ex.category].filter(Boolean).map((t) => (
+          {[...ex.primaryMuscles, ...ex.equipment.filter((x) => x !== 'other'), ex.category].filter(Boolean).map((t) => (
             <span key={t} className="rounded-full bg-surface2 px-3 py-1.5 text-[13px] font-medium capitalize">
               {t}
             </span>
           ))}
+          {(ex.secondaryMuscles ?? []).map((t) => (
+            <span key={`s-${t}`} className="rounded-full border border-line px-3 py-1.5 text-[13px] font-medium capitalize text-muted">
+              {t}
+            </span>
+          ))}
         </div>
+        {(ex.secondaryMuscles?.length ?? 0) > 0 && <p className="-mt-1 text-caption text-muted">Filled chips: main muscles · outlined: helpers</p>}
+
+        <AddToPlan exerciseId={ex.id} name={ex.name} />
 
         <Card className="!py-1">
           <Toggle checked={!ex.isBodyweight} onChange={(v) => db.exercises.update(ex.id, { isBodyweight: !v })} label="Track weight" sub="Turn off for bodyweight-only movements" />
@@ -147,6 +159,55 @@ export default function ExerciseDetail() {
         )}
       </div>
     </div>
+  );
+}
+
+function AddToPlan({ exerciseId, name }: { exerciseId: string; name: string }) {
+  const [open, setOpen] = useState(false);
+  const toast = useUI((s) => s.toast);
+  const data = useLiveQuery(async () => {
+    const days = await activeDays();
+    const ex = await db.exercises.get(exerciseId);
+    const eq = (await db.profile.get('me'))?.equipment ?? PRESETS.full_gym;
+    const planned = await db.plannedExercises.where('dayId').anyOf(days.map((d) => d.id)).toArray();
+    return { days, fits: ex ? isAvailable(ex, eq) : true, inDays: new Set(planned.filter((p) => p.exerciseId === exerciseId).map((p) => p.dayId)) };
+  }, [exerciseId]);
+  if (!data?.days.length) return null;
+  return (
+    <>
+      <Button variant="secondary" block onClick={() => setOpen(true)}>
+        <CalendarPlus size={18} aria-hidden /> Add to my plan
+      </Button>
+      <Sheet open={open} onClose={() => setOpen(false)} title={`Add ${name}`}>
+        {!data.fits && <p className="mb-2 rounded-btn bg-warning/10 p-3 text-[15px] text-warning">Needs equipment you haven't selected in My plan setup.</p>}
+        <ul className="space-y-2 pb-3">
+          {data.days.map((d) => {
+            const already = data.inDays.has(d.id);
+            return (
+              <li key={d.id}>
+                <button
+                  type="button"
+                  disabled={already}
+                  onClick={async () => {
+                    await addExerciseToDay(d.id, exerciseId);
+                    setOpen(false);
+                    toast(`Added to ${d.title} · 3 sets`, { tone: 'success' });
+                  }}
+                  className="flex min-h-[56px] w-full items-center justify-between rounded-card border border-line/50 bg-surface px-4 text-left disabled:opacity-60"
+                >
+                  <span>
+                    <span className="block text-caption font-semibold text-muted">{d.weekday}</span>
+                    <span className="block font-semibold">{d.title}</span>
+                  </span>
+                  {already ? <Check size={18} className="text-success" aria-label="Already in this day" /> : <span className="text-caption text-muted capitalize">{d.type.replace('_', ' ')}</span>}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="pb-2 text-caption text-muted">Adds 3 sets at the end of the day. Fine-tune sets, reps and rest in Plan editor.</p>
+      </Sheet>
+    </>
   );
 }
 

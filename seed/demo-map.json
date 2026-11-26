@@ -388,5 +388,19 @@
     "3563": "videos/3563-U5INZY6.gif",
     "3582": "videos/3582-PM1PZjg.gif",
     "3666": "videos/3666-rjiM4L3.gif"
-  }
+  },
+  "fallbackPhotos": [
+    "Backward_Drag",
+    "Box_Jump_Multiple_Response",
+    "Cat_Stretch",
+    "Front_Box_Jump",
+    "Groiners",
+    "Knee_Tuck_Jump",
+    "Kneeling_Hip_Flexor",
+    "Lateral_Box_Jump",
+    "Plate_Pinch",
+    "Rowing_Stationary",
+    "Sled_Push",
+    "Step-up_with_Knee_Raise"
+  ]
 }

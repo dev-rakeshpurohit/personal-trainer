@@ -1,5 +1,5 @@
 /**
- * Downloads the animated exercise demos listed in seed/demo-map.json and converts them to
+ * Downloads the animated exercise demos listed in seed/demo-map.json + seed/library.dataset.json and converts them to
  * animated WebP (≈⅓ the size of the GIF, plays natively in Safari) + a still thumbnail.
  *
  *   pnpm fetch:demos          # skips files that already exist
@@ -12,13 +12,14 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
 import map from '../seed/demo-map.json' with { type: 'json' };
+import dataset from '../seed/library.dataset.json' with { type: 'json' };
 
 const BASE = 'https://raw.githubusercontent.com/hasaneyldrm/exercises-dataset/main/';
 const OUT = join(import.meta.dirname, '..', 'public', 'media', 'demos');
 const force = process.argv.includes('--force');
 
 mkdirSync(OUT, { recursive: true });
-const files = map.files as Record<string, string>;
+const files = { ...(dataset.files as Record<string, string>), ...(map.files as Record<string, string>) };
 const ids = Object.keys(files);
 
 async function fetchRetry(url: string, tries = 3): Promise<Buffer> {
