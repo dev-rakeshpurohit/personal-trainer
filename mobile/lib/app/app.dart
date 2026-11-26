@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../dev/demo_bootstrap.dart';
+import '../domain/models.dart';
+import '../features/workout/start.dart';
 import '../state/providers.dart';
 import '../state/ui_state.dart';
 import '../ui/theme.dart';
@@ -14,6 +19,7 @@ final appStartupProvider = FutureProvider<void>((ref) async {
   await ref.watch(seedDataProvider.future);
   final lib = await ref.watch(libraryServiceProvider.future);
   await lib.upgradeLibraryIfNeeded();
+  if (kDemoMode) await runDemoBootstrap(ref.read(storesProvider), await ref.watch(planBuilderProvider.future));
 });
 
 /// Bridges the profile stream to go_router so it re-evaluates redirects when onboarding completes.
@@ -44,8 +50,30 @@ class _RepfellowAppState extends ConsumerState<RepfellowApp> {
     },
   );
 
+  Timer? _tour;
+
+  void _startTour() {
+    if (_tour != null || kDemoTour.isEmpty) return;
+    final steps = kDemoTour.split(',');
+    var i = 0;
+    _tour = Timer.periodic(const Duration(seconds: kTourStepSeconds), (t) async {
+      if (i >= steps.length) return t.cancel();
+      final step = steps[i++].trim();
+      if (step == 'start') {
+        final bundle = await ref.read(programBundleProvider.future);
+        final today = Weekday.ofDate(DateTime.now());
+        final day = bundle?.days.where((d) => d.weekday == today).firstOrNull;
+        final ctx = rootNavigatorKey.currentContext;
+        if (day != null && ctx != null && ctx.mounted) await startWorkout(ref, ctx, dayId: day.id);
+      } else {
+        _router.go(step);
+      }
+    });
+  }
+
   @override
   void dispose() {
+    _tour?.cancel();
     _refresh.dispose();
     super.dispose();
   }
@@ -57,6 +85,7 @@ class _RepfellowAppState extends ConsumerState<RepfellowApp> {
     final startup = ref.watch(appStartupProvider);
     final profile = ref.watch(profileProvider);
     final ready = startup.hasValue && !profile.isLoading;
+    if (kDemoMode && ready) _startTour();
     return MaterialApp.router(
       title: 'Repfellow',
       debugShowCheckedModeBanner: false,

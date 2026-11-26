@@ -129,7 +129,7 @@ class PlannedMealCard extends ConsumerWidget {
         Row(children: [
           Expanded(child: RfButton(label: 'Swap', icon: CupertinoIcons.arrow_2_squarepath, kind: RfButtonKind.secondary, expand: true, onPressed: () => _swap(context, ref))),
           const SizedBox(width: 8),
-          Expanded(child: RfButton(label: 'Something else', icon: CupertinoIcons.pencil, kind: RfButtonKind.secondary, expand: true, onPressed: onSomethingElse)),
+          Expanded(child: RfButton(label: 'Other', icon: CupertinoIcons.pencil, kind: RfButtonKind.secondary, expand: true, onPressed: onSomethingElse)),
         ]),
       ]),
     );

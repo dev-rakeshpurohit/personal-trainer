@@ -141,10 +141,15 @@ class _LiftLine extends StatelessWidget {
               showTitles: true,
               reservedSize: 22,
               interval: (range.days / 3).roundToDouble(),
-              getTitlesWidget: (v, meta) => SideTitleWidget(
-                meta: meta,
-                child: Text(df.format(addDays(start, v.round())), style: RfType.caption.copyWith(color: c.muted, fontSize: 11)),
-              ),
+              getTitlesWidget: (v, meta) {
+                // fl_chart always adds the axis max; drop it when it would collide with the last interval label.
+                final step = (range.days / 3).roundToDouble();
+                if (v == meta.max && step > 0 && (v % step) > 0 && (v % step) < step * 0.6) return const SizedBox.shrink();
+                return SideTitleWidget(
+                  meta: meta,
+                  child: Text(df.format(addDays(start, v.round())), style: RfType.caption.copyWith(color: c.muted, fontSize: 11)),
+                );
+              },
             ),
           ),
         ),
