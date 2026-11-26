@@ -30,7 +30,7 @@
 - **Propose, never impose.** AI changes are diffs the user approves, and every change can be undone.
 - **Copy:** no "failed", "missed your goal" or "streak lost". Plain, warm English.
 - **Accessibility:** Semantics labels on custom controls, and support for Dynamic Type (`MediaQuery.textScaler`). Honour Reduce Motion (`context.reduceMotion`).
-- **Safe areas:** the tab bar is translucent and the Scaffold uses `extendBody`. Pad scrollable tab content at the bottom by `kTabBarHeight + MediaQuery.paddingOf(context).bottom + 16` (`kTabBarHeight` is in `lib/app/shell.dart`).
+- **Safe areas:** the tab bar is translucent and the Scaffold uses `extendBody`. Because of `extendBody`, `MediaQuery.paddingOf(context).bottom` inside a tab body already includes the tab bar, so pad scrollable content by that value + 16. Do not add `kTabBarHeight` again.
 
 ## Data
 - Riverpod 3 providers live in `lib/state/providers.dart`; read the file for exact names. Services are in `lib/data/services/*`, models and pure logic in `lib/domain/*`.

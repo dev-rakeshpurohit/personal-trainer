@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A1622"/>
+      <stop offset="1" stop-color="#0B0B0F"/>
+    </linearGradient>
+    <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFB347"/>
+      <stop offset="1" stop-color="#FF7A00"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <!-- R letterform made of a bar + bowl + leg, like a loaded barbell stance -->
+  <g fill="url(#mg)">
+    <rect x="292" y="248" width="128" height="528" rx="40"/>
+    <path d="M356 248 H560 A170 170 0 0 1 560 588 H420 V470 H556 A52 52 0 0 0 556 366 H356 Z"/>
+    <path d="M500 560 L640 560 L768 776 L620 776 Z"/>
+  </g>
+  <!-- violet coach dot: the coach that shows its working -->
+  <circle cx="742" cy="300" r="62" fill="#9A8CFF"/>
+</svg>

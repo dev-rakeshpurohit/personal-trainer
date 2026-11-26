@@ -3,17 +3,11 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../state/providers.dart';
+import '../state/ui_state.dart';
 import '../ui/theme.dart';
 import 'router.dart';
 
-/// When true the whole app uses the dark, high-contrast Gym mode (set while a workout runs).
-final gymModeProvider = NotifierProvider<GymMode, bool>(GymMode.new);
-
-class GymMode extends Notifier<bool> {
-  @override
-  bool build() => false;
-  void set(bool on) => state = on;
-}
+export '../state/ui_state.dart' show gymModeProvider, GymMode;
 
 /// One-time startup: load seeds and merge any newly bundled exercises into the local library.
 final appStartupProvider = FutureProvider<void>((ref) async {
