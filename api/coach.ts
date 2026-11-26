@@ -6,8 +6,8 @@
  * from validated fields, output tokens are capped, and each instance rate-limits per IP.
  */
 import { createHash } from 'node:crypto';
-import { ACCESS_HASH, ACCESS_SALT } from '../src/config/access';
-import { buildPrompt, coachRequestSchema, extractJson, type CoachResponse } from '../src/domain/aiPlan';
+import { ACCESS_HASH, ACCESS_SALT } from '../src/config/access.js';
+import { buildPrompt, coachRequestSchema, extractJson, type CoachResponse } from '../src/domain/aiPlan.js';
 
 const MODEL = process.env.OPENROUTER_MODEL || 'anthropic/claude-haiku-5.5';
 const LIMIT_PER_HOUR = 12;
