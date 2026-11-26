@@ -1,6 +1,8 @@
 // Typed collections over the document table (the Dexie-like API the rest of the app uses).
 import 'dart:convert';
 
+import 'dart:async';
+
 import 'package:drift/drift.dart';
 
 import '../../domain/models.dart';
@@ -22,6 +24,16 @@ class Collection<T> {
   final Map<String, Object?> Function(T) toJson;
   final String Function(T) idOf;
   final StoreKeys<T> keys;
+
+  /// Called after every write through this collection (set by [Stores] to drive [Stores.live]).
+  void Function(String store)? onWrite;
+
+  // The statement is dispatched before the counter moves (the argument is evaluated first), and drift
+  // runs statements in order, so a live query started after the bump always sees this write.
+  Future<V> _w<V>(Future<V> f) {
+    onWrite?.call(name);
+    return f;
+  }
 
   T _decode(DocRow r) => fromJson((jsonDecode(r.data) as Map).cast<String, Object?>());
 
@@ -85,15 +97,15 @@ class Collection<T> {
   Stream<List<T>> watchK1Between(String lo, String hi) =>
       (_q()..where((t) => t.k1.isBetweenValues(lo, hi))).watch().map((rows) => rows.map(_decode).toList());
 
-  Future<void> put(T v) => db.into(db.docs).insertOnConflictUpdate(_row(v));
-  Future<void> putAll(Iterable<T> vs) => db.batch((b) => b.insertAllOnConflictUpdate(db.docs, vs.map(_row).toList()));
+  Future<void> put(T v) => _w(db.into(db.docs).insertOnConflictUpdate(_row(v)));
+  Future<void> putAll(Iterable<T> vs) => _w(db.batch((b) => b.insertAllOnConflictUpdate(db.docs, vs.map(_row).toList())));
 
   /// Insert only rows whose id doesn't exist yet.
   Future<void> addMissing(Iterable<T> vs) =>
-      db.batch((b) => b.insertAll(db.docs, vs.map(_row).toList(), mode: InsertMode.insertOrIgnore));
-  Future<void> delete(String id) => (db.delete(db.docs)..where((t) => t.store.equals(name) & t.id.equals(id))).go();
-  Future<void> deleteWhereK1(String v) => (db.delete(db.docs)..where((t) => t.store.equals(name) & t.k1.equals(v))).go();
-  Future<void> clear() => (db.delete(db.docs)..where((t) => t.store.equals(name))).go();
+      _w(db.batch((b) => b.insertAll(db.docs, vs.map(_row).toList(), mode: InsertMode.insertOrIgnore)));
+  Future<void> delete(String id) => _w((db.delete(db.docs)..where((t) => t.store.equals(name) & t.id.equals(id))).go());
+  Future<void> deleteWhereK1(String v) => _w((db.delete(db.docs)..where((t) => t.store.equals(name) & t.k1.equals(v))).go());
+  Future<void> clear() => _w((db.delete(db.docs)..where((t) => t.store.equals(name))).go());
 
   /// Read-modify-write one record (no-op when missing).
   Future<T?> update(String id, T Function(T) change) async {
@@ -103,6 +115,11 @@ class Collection<T> {
     await put(next);
     return next;
   }
+
+  /// Dexie-style `update(id, patch)` on the JSON shape: keys set to null are removed (like
+  /// `undefined` in the PWA), other keys are replaced. No-op (returns null) when the row is missing.
+  Future<T?> patch(String id, Map<String, Object?> changes) =>
+      update(id, (cur) => fromJson({...toJson(cur), ...changes}..removeWhere((_, v) => v == null)));
 }
 
 /// A free-form key/value row (the PWA's `meta` store).
@@ -135,7 +152,11 @@ class Stores {
         photos = Collection(db, 'photos', Photo.fromJson, (p) => p.toJson(), (p) => p.id, StoreKeys((p) => p.dayKey)),
         media = Collection(db, 'media', MediaBlob.fromJson, (m) => m.toJson(), (m) => m.id, StoreKeys((m) => m.kind)),
         clips = Collection(db, 'clips', ExerciseClip.fromJson, (c) => c.toJson(), (c) => c.exerciseId),
-        meta = Collection(db, 'meta', MetaEntry.fromJson, (m) => m.toJson(), (m) => m.key);
+        meta = Collection(db, 'meta', MetaEntry.fromJson, (m) => m.toJson(), (m) => m.key) {
+    for (final c in _all) {
+      c.onWrite = _bump;
+    }
+  }
 
   final AppDb db;
   final Collection<Profile> profile;
@@ -156,6 +177,34 @@ class Stores {
   final Collection<MediaBlob> media;
   final Collection<ExerciseClip> clips;
   final Collection<MetaEntry> meta;
+
+  // Only for store-independent members (name, onWrite): typed members like toJson can't be used through it.
+  List<Collection<Object?>> get _all => [
+        profile, exercises, programs, programDays, plannedExercises, sessions, sets, activeSession, dietPlans, //
+        plannedMeals, mealLogs, habitDefs, habitLogs, bodyLogs, photos, media, clips, meta,
+      ];
+
+  final Map<String, int> _versions = {};
+
+  void _bump(String store) => _versions[store] = (_versions[store] ?? 0) + 1;
+
+  /// Write counter of a store (changes whenever a collection of that name is written).
+  int versionOf(String store) => _versions[store] ?? 0;
+
+  /// Reactive query: emits [query] now and again after each committed write that touched one of
+  /// [stores] (store names, e.g. 'sessions'). All stores share one SQLite table, so this skips
+  /// re-running a query when an unrelated store changed (e.g. the 1,320-row exercise list on a set log).
+  Stream<R> live<R>(Set<String> stores, Future<R> Function() query) async* {
+    int sig() => stores.fold(0, (a, s) => a + versionOf(s));
+    var seen = sig();
+    yield await query();
+    await for (final _ in db.tableUpdates(TableUpdateQuery.onTable(db.docs))) {
+      final now = sig();
+      if (now == seen) continue;
+      seen = now;
+      yield await query();
+    }
+  }
 
   Future<T?> getMeta<T>(String key) async => (await meta.get(key))?.value as T?;
   Future<void> setMeta(String key, Object? value) => meta.put(MetaEntry(key, value));

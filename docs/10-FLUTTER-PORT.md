@@ -33,7 +33,7 @@ The developer account also hosts a client's app. Repmate uses its own bundle ID 
 ## Milestones
 - [x] F0 Project, dependencies, models, schedule and units.
 - [x] F1 Domain port: progression, stats, diet, coach, sessionFlow, sessionPlan, replan, equipment, generator, balance, dietGen, aiPlan. All tests green: 332 tests. Fuzz parity checks against the TS found zero differences (generator 2,430 programs, Plan check, diet generator 600 inputs, AI normaliser 3,000 replies).
-- [ ] F2 Data layer: drift schema ✅, seed import + library builder (1,320 exercises, field-identical to TS) ✅, asset sync ✅; still to do: plan builder, repos, providers.
+- [x] F2 Data layer: drift store, seed import + library builder (1,320 exercises), asset sync, services (plan builder, session engine, repo, backup, coach client, dev seed) and Riverpod providers. 390 tests.
 - [x] **UX0 UX/UI competitor research and Repmate UX spec** (reports/Repmate UX competitor analysis.md; owner decisions in DECISIONS.md, 2026-11-26). This sets the selling point, personas, end-to-end user journeys, information architecture, key flows and design system. It is the owner's #1 priority: the journey and UX are the product's differentiator. Screens F3–F7 follow this spec, not the PWA layout. The PWA is only the reference for behaviour and logic.
 - [ ] F3 App shell: theme, tabs, gate, onboarding (template, generated, blank), Today.
 - [ ] F4 Workout loop: prestart, player (log set, rest timer with notification and haptics, swaps/alternates), summary and feedback. First TestFlight build at this point.
