@@ -66,3 +66,14 @@
 - **Model:** `anthropic/claude-haiku-5.5` by default (override with `OPENROUTER_MODEL`). A live test took 47 s and cost US$0.009 for a full 5-day workout + diet.
 - **Safety of output:** The model may only choose exercise ids from an equipment-filtered list the app sends. `normaliseAiPlan` drops unknown ids, clamps numbers, fills the week and checks diet totals. The user previews before anything is saved, and history is kept.
 - **Privacy:** The coach screen says exactly what is sent (age, height, weight, goal, schedule, equipment, food preferences, the note). Everything else stays on the device. Without internet the coach is disabled and the saved plan keeps working offline.
+
+## 2026-11-26: Owner's product decisions for the native (Flutter) app
+These follow from the UX competitor analysis (reports/Repmate UX competitor analysis.md, outside the repo).
+- **Navigation:** 5 tabs (Today · Train · Eat · Progress · Coach). The Coach tab holds the AI coach and the user's trainer in one thread and is where plan-change proposals appear. No social feed.
+- **Trainer economics:** the client pays. A trainer's code gives the client a Pro discount and the trainer earns a recurring revenue share on each paying client. Exact percentages are TBD.
+- **Paywall:** organic users see a soft paywall once, right after the personalised plan reveal: a 7-day trial on annual, with the timeline "today → reminder day 5 → charged day 7" and a clear "Continue free". Trainer and promo users never see it.
+- **Validation:** build to the spec first, then learn from real use on TestFlight with the trainer's clients (in-app feedback) rather than holding for interviews.
+- **Trainer deal:** the trainer's code gives the client 30% off Pro, and the trainer earns 25% of Repmate's net revenue from that client, recurring for as long as the client pays.
+- **Language at launch:** English UI, with Hinglish free-text and voice input for meals and coach requests; the AI replies in the user's style. Full Hindi UI comes later.
+- **Name:** "Repmate" conflicts with repmateapp.com, so the product will be renamed. The new name must have no existing app, domain or web presence.
+- **Product name: Repfellow** (chosen 2026-11-26). Checks that day: repfellow.com and repfellow.app unregistered (RDAP 404), no App Store app with the name, no web brand. Bundle ID `com.repfellow.app`. The internal Dart package stays `repmate` (never user-visible). Before filing a trademark, run an IP India search in classes 9, 41 and 44.
