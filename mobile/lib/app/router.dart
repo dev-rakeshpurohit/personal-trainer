@@ -14,9 +14,11 @@ import 'shell.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
-GoRouter buildRouter({String initialLocation = '/today'}) => GoRouter(
+GoRouter buildRouter({String initialLocation = '/today', Listenable? refresh, GoRouterRedirect? redirect}) => GoRouter(
       navigatorKey: rootNavigatorKey,
       initialLocation: initialLocation,
+      refreshListenable: refresh,
+      redirect: redirect,
       routes: [
         GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingScreen()),
         GoRoute(path: '/workout', builder: (_, _) => const WorkoutScreen()),
