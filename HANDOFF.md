@@ -64,3 +64,15 @@ pnpm i && pnpm build                         # optional local check
 pnpm dlx vercel@latest deploy --prod --yes   # production → https://repmate-test.vercel.app
 ```
 The Vercel ↔ GitHub auto-connect didn't link during setup (the Vercel GitHub app probably doesn't have access to the repo). To deploy on every push, connect the repo in Vercel → Project → Settings → Git.
+
+## Update 2026-11-26: 3D library, Plan check, AI coach
+
+- **3D demos for every exercise:** 1,320 exercises with animated 3D demos (© Gym visual, personal use). The media is git-ignored, so run `pnpm fetch:demos` (≈2 min, 45 MB) before building or deploying from a fresh clone. `pnpm import:dataset` regenerates `seed/library.dataset.json`.
+- **Offline demos:** Your plan's demos are cached automatically. More → Storage → "Download all demos" fetches the rest (≈40 MB).
+- **Plan check (Train tab):** weekly sets per muscle group against your goal, with one-tap fixes for any gap. For your plan it flags calves (0 sets a week).
+- **Other days are preview-only:** you can open any day's session to look at it, but only today's can be started.
+- **AI coach** (More → AI coach, Train tab, or the end of onboarding): describe yourself or a change in plain words, preview the plan, then apply it. History is kept.
+  - Server: `api/coach.ts` on Vercel, with `OPENROUTER_API_KEY` stored as an encrypted production env var. Optional `OPENROUTER_MODEL`, default `anthropic/claude-haiku-5.5`.
+  - Cost: ≈US$0.004 for a diet and ≈US$0.009 for a full workout + diet. Takes 30–50 s.
+  - Access: the invite code is required, and requests are rate-limited to 12 per hour per IP.
+  - **Recommended:** set a monthly credit limit on that key in the OpenRouter dashboard, or create a dedicated key just for Repmate.

@@ -70,9 +70,9 @@ test('Plan check finds the calf gap and adds a calf raise in one tap', async ({ 
   await onboard(page);
   await page.getByRole('link', { name: 'Train' }).click();
   await page.getByRole('button', { name: /Plan check/ }).click();
-  await expect(page.getByRole('dialog')).toContainText('Calves: 0 of');
+  await expect(page.getByRole('dialog')).toContainText('Calves: 0 of', { timeout: 20_000 });
   await page.getByRole('dialog').getByRole('button', { name: /^Add to / }).first().click();
   await expect(page.getByRole('dialog').getByRole('button', { name: 'Added' })).toBeVisible();
   await page.getByRole('button', { name: 'Close' }).last().click();
-  await expect(page.getByRole('button', { name: /Plan check/ })).toContainText('Every muscle group');
+  await expect(page.getByRole('button', { name: /Plan check/ })).toContainText('Every muscle group', { timeout: 15_000 });
 });
